@@ -4,7 +4,9 @@
 #
 version: 2
 jobs:
-  deploy:
+  build:
     branches:
       ignore:
         - gh-pages
+    steps:
+      - run: echo "No tests needed."

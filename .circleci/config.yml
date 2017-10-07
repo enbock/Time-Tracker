@@ -8,3 +8,5 @@ jobs:
     branches:
       ignore:
         - gh-pages
+      steps:
+        - run: echo "No tests needed."

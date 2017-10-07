@@ -4,5 +4,7 @@
     </Header>
     <Content style={{width: '100%'}}>
         <ProgressBar style={{width: '100%'}} indeterminate/>
+
+        Hello World !
     </Content>
 </Layout>

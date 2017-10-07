@@ -5,12 +5,17 @@
   "private": true,
   "dependencies": {
     "axios": "^0.16.2",
+    "enzyme": "^3.1.0",
+    "enzyme-adapter-react-16": "^1.0.1",
     "eslint": "^4.8.0",
     "gh-pages": "^1.0.0",
+    "jest-enzyme": "^4.0.0",
+    "raf": "^3.4.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-mdl": "^1.10.3",
-    "react-scripts": "1.0.14"
+    "react-scripts": "1.0.14",
+    "react-test-renderer": "^16.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -18,5 +23,16 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "deploy": "gh-pages -d build"
+  },
+  "jest": {
+    "coverageThreshold": {"global": {"branches": 80}},
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "!src/bootstrap.js",
+      "!src/index.js",
+      "!src/setupTests.js",
+      "!src/**/index.js",
+      "!src/registerServiceWorker.js"
+    ]
   }
 }

@@ -68,12 +68,11 @@ jobs:
       - run: yarn run build
       - run: yarn run deploy
 
-
 workflows:
   version: 2
   test_and_deploy:
     jobs:
       - test
       - deploy:
-        requires:
-          - test
+          requires:
+            - test

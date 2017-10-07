@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Added
+* [#6] Test on circle
+    * Create tests for the current components.
+    * Activate auto deployment to gh-pages.
 * [#4] Add this CHANGELOG.md file. 
 
 ## [0.1.0] - 2017-10-06

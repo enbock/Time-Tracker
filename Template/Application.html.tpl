@@ -6,5 +6,7 @@
         <ProgressBar style={{width: '100%'}} indeterminate/>
 
         Hello World !
+        
+        Huhu
     </Content>
 </Layout>

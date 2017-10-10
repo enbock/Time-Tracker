@@ -27,6 +27,17 @@ class Application extends Component {
     this.components = {
       MainMenu: Menu.Main
     };
+
+    this.state = Object.assign(
+      this.state,
+      {
+        menuOpen: false
+      }
+    );
+  }
+
+  onMenuButtonClick() {
+    this.setState({menuOpen: !this.state.menuOpen});
   }
 }
 

@@ -3,10 +3,19 @@ import React from 'react';
 import {shallow} from 'enzyme';
 import Application from './Application';
 
+jest.mock('../Menu', () => 'Menu');
+
 /**
  * Test Application Container.
  */
 describe('Application', function testApplication() {
+  /**
+   * Reset global mocks.
+   */
+  beforeEach(function beforeEach() {
+    Babel.transform.mockClear();
+  });
+
 
   /**
    * Test if correct layout loaded.
@@ -34,9 +43,16 @@ describe('Application', function testApplication() {
         return promise;
       }
     );
+    Babel.transform.mockReturnValue(
+      {
+        code: 'React.createElement(\'button\', { onClick: this.onMenuButtonClick.bind(this) })'
+      }
+    );
 
-    shallow(<Application/>);
+    const wrapper = shallow(<Application/>);
     bound({data: 'TEMPLATE'});
+    wrapper.update();
+    wrapper.find('button').simulate('click');
     expect(success).toBe(true);
   });
 });

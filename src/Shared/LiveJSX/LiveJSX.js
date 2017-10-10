@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Axios from 'axios';
 
 // Bridge to templates
@@ -104,8 +105,10 @@ class LiveJSX extends React.Component {
 
   /**
    * Abstract function for JSX mount info.
+   *
+   * @param {HTMLElement} domNode
    */
-  onTemplateMounted() {
+  onTemplateMounted(domNode) {
   }
 
   /**
@@ -118,7 +121,7 @@ class LiveJSX extends React.Component {
   componentDidUpdate(prevProps, prevState, prevContext) {
     if (this.firstShow) {
       this.firstShow = false;
-      this.onTemplateMounted();
+      this.onTemplateMounted(ReactDOM.findDOMNode(this));
     }
   }
 

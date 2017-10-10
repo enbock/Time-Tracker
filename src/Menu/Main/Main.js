@@ -1,4 +1,5 @@
 import Component from '../../Shared/LiveJSX';
+import {MDCPersistentDrawer} from '@material/drawer';
 
 /**
  * The Main menu.
@@ -16,6 +17,20 @@ class MainMenu extends Component
     return '/Template/Menu/Main.html.tpl';
   }
 
+  /**
+   * Abstract function for JSX mount info.
+   *
+   * @param {HTMLElement} domNode
+   */
+  onTemplateMounted(domNode) {
+    this.drawer = new MDCPersistentDrawer(domNode);
+  }
+
+  componentWillUpdate(nextProps, nextContext) {
+    if (this.drawer) {
+      this.drawer.open = nextProps.open;
+    }
+  }
 }
 
 export default MainMenu;

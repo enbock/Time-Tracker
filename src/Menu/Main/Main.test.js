@@ -3,6 +3,17 @@ import React from 'react';
 import {shallow} from 'enzyme';
 import Main from './Main';
 
+jest.mock('@material/drawer', () => {
+  return {
+    MDCPersistentDrawer: jest.fn()
+  };
+});
+jest.mock('react-dom', () => {
+  return {
+    findDOMNode: jest.fn()
+  };
+});
+
 /**
  * Test Main Container.
  */
@@ -35,8 +46,10 @@ describe('Main Menu', function testMain() {
       }
     );
 
-    shallow(<Main/>);
+    const wrapper = shallow(<Main/>);
     bound({data: 'TEMPLATE'});
+    wrapper.setProps({open: false});
+    wrapper.setProps({open: true});
     expect(success).toBe(true);
   });
 });

@@ -1,6 +1,7 @@
 import {mockAxiosAction} from 'axios';
 import React from 'react';
 import {shallow} from 'enzyme';
+jest.mock('react-dom');
 import LiveJSX from './LiveJSX';
 
 /**

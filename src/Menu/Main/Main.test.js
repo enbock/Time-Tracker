@@ -1,12 +1,12 @@
 import {mockAxiosAction} from 'axios';
 import React from 'react';
 import {shallow} from 'enzyme';
-import Application from './Application';
+import Main from './Main';
 
 /**
- * Test Application Container.
+ * Test Main Container.
  */
-describe('Application', function testApplication() {
+describe('Main Menu', function testMain() {
 
   /**
    * Test if correct layout loaded.
@@ -28,14 +28,14 @@ describe('Application', function testApplication() {
     mockAxiosAction(
       'get',
       function onRequest(url) {
-        expect(url).toBe('/Template/Application.html.tpl');
+        expect(url).toBe('/Template/Menu/Main.html.tpl');
         success = true;
 
         return promise;
       }
     );
 
-    shallow(<Application/>);
+    shallow(<Main/>);
     bound({data: 'TEMPLATE'});
     expect(success).toBe(true);
   });

@@ -1,4 +1,4 @@
-import * as MDL from 'react-mdl';
+import MDL from './Shared/MDL';
 import Application from './Application';
 import './material.min.css'; // custom colors
 

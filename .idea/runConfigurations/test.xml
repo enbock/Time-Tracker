@@ -2,6 +2,7 @@
   <configuration default="false" name="test" type="JavaScriptTestRunnerJest" factoryName="Jest">
     <node-interpreter value="project" />
     <working-dir value="$PROJECT_DIR$" />
+    <jest-options value=" --env=jsdom --coverage --verbose" />
     <envs />
     <scope-kind value="ALL" />
     <method />

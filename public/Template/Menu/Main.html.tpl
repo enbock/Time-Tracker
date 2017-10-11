@@ -1,9 +1,9 @@
-<aside class="mdc-persistent-drawer">
-    <nav class="mdc-persistent-drawer__drawer">
-        <div class="mdc-persistent-drawer__toolbar-spacer"></div>
+<aside class="mdc-temporary-drawer" style={{marginTop: "64px"}}>
+    <nav class="mdc-temporary-drawer__drawer">
+        <div class="mdc-temporary-drawer__toolbar-spacer"></div>
         <div class="mdc-list-group">
             <nav class="mdc-list">
-                <a class="mdc-list-item mdc-persistent-drawer--selected" href="#">
+                <a class="mdc-list-item mdc-temporary-drawer--selected" href="#">
                     <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">inbox</i>Inbox
                 </a>
                 <a class="mdc-list-item" href="#">

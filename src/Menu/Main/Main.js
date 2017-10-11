@@ -1,5 +1,5 @@
 import Component from '../../Shared/LiveJSX';
-import {MDCPersistentDrawer} from '@material/drawer';
+import {MDCTemporaryDrawer} from '@material/drawer';
 
 /**
  * The Main menu.
@@ -23,7 +23,7 @@ class MainMenu extends Component
    * @param {HTMLElement} domNode
    */
   onTemplateMounted(domNode) {
-    this.drawer = new MDCPersistentDrawer(domNode);
+    this.drawer = new MDCTemporaryDrawer(domNode);
   }
 
   componentWillUpdate(nextProps, nextContext) {

@@ -5,7 +5,7 @@ import Main from './Main';
 
 jest.mock('@material/drawer', () => {
   return {
-    MDCPersistentDrawer: jest.fn()
+    MDCTemporaryDrawer: jest.fn()
   };
 });
 jest.mock('react-dom', () => {

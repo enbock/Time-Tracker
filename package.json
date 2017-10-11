@@ -57,7 +57,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build-org": "react-scripts build",
-    "build": "bash -c 'NODE_ENV=production webpack --config config/webpack.config.prod.js'",
+    "build": "bash -c 'mkdir -p build; cp -r public/* build/; NODE_ENV=production webpack --config config/webpack.config.prod.js'",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "deploy": "gh-pages -d build"

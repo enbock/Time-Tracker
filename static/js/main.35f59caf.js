@@ -4348,7 +4348,7 @@ var _createClass=function(){function defineProperties(target,props){for(var i=0;
    * Abstract function for JSX mount info.
    *
    * @param {HTMLElement} domNode
-   */value:function onTemplateMounted(domNode){this.drawer=new __WEBPACK_IMPORTED_MODULE_1__material_drawer__["a" /* MDCPersistentDrawer */](domNode);}},{key:'componentWillUpdate',value:function componentWillUpdate(nextProps,nextContext){if(this.drawer){this.drawer.open=nextProps.open;}}}],[{key:'template',/**
+   */value:function onTemplateMounted(domNode){this.drawer=new __WEBPACK_IMPORTED_MODULE_1__material_drawer__["a" /* MDCTemporaryDrawer */](domNode);}},{key:'componentWillUpdate',value:function componentWillUpdate(nextProps,nextContext){if(this.drawer){this.drawer.open=nextProps.open;}}}],[{key:'template',/**
    * Place of main menu layout.
    * @returns {string}
    */get:function get(){return'/Template/Menu/Main.html.tpl';}}]);return MainMenu;}(__WEBPACK_IMPORTED_MODULE_0__Shared_LiveJSX__["a" /* default */]);/* harmony default export */ __webpack_exports__["a"] = (MainMenu);
@@ -4360,10 +4360,10 @@ var _createClass=function(){function defineProperties(target,props){for(var i=0;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__temporary__ = __webpack_require__(64);
-/* unused harmony reexport MDCTemporaryDrawer */
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_1__temporary__["a"]; });
 /* unused harmony reexport MDCTemporaryDrawerFoundation */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__persistent__ = __webpack_require__(70);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_2__persistent__["a"]; });
+/* unused harmony reexport MDCPersistentDrawer */
 /* unused harmony reexport MDCPersistentDrawerFoundation */
 /* unused harmony reexport util */
 /**
@@ -4484,7 +4484,7 @@ class MDCTemporaryDrawer extends __WEBPACK_IMPORTED_MODULE_0__material_base__["a
     });
   }
 }
-/* unused harmony export MDCTemporaryDrawer */
+/* harmony export (immutable) */ __webpack_exports__["a"] = MDCTemporaryDrawer;
 
 
 
@@ -5158,7 +5158,7 @@ class MDCPersistentDrawer extends __WEBPACK_IMPORTED_MODULE_0__material_base__["
     });
   }
 }
-/* harmony export (immutable) */ __webpack_exports__["a"] = MDCPersistentDrawer;
+/* unused harmony export MDCPersistentDrawer */
 
 
 

@@ -76,7 +76,7 @@ class LiveJSX extends React.Component {
   loadTemplate(props, state) {
     let template = props.template || this.template || Object.getPrototypeOf(this).constructor.template;
 
-    if(!template) return;
+    if (!template) return;
 
     const url = state.publicUrl + template;
 

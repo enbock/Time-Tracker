@@ -36,6 +36,16 @@ class Application extends Component {
     );
   }
 
+  /**
+   * Set state to menu is closed.
+   */
+  onMenuClose() {
+    this.setState({menuOpen: false});
+  }
+
+  /**
+   * Toggle open state.
+   */
   onMenuButtonClick() {
     this.setState({menuOpen: !this.state.menuOpen});
   }

@@ -53,6 +53,7 @@ describe('Application', function testApplication() {
     bound({data: 'TEMPLATE'});
     wrapper.update();
     wrapper.find('button').simulate('click');
+    wrapper.instance().onMenuClose();
     expect(success).toBe(true);
   });
 });

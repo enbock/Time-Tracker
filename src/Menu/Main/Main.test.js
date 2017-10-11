@@ -3,16 +3,6 @@ import React from 'react';
 import {shallow} from 'enzyme';
 import Main from './Main';
 
-jest.mock('@material/drawer', () => {
-  return {
-    MDCTemporaryDrawer: jest.fn()
-  };
-});
-jest.mock('react-dom', () => {
-  return {
-    findDOMNode: jest.fn()
-  };
-});
 
 /**
  * Test Main Container.
@@ -46,10 +36,24 @@ describe('Main Menu', function testMain() {
       }
     );
 
-    const wrapper = shallow(<Main/>);
+    let wasOpen  = false;
+    let wasClose = false;
+
+    const wrapper = shallow(<Main className="test" onOpen={() => wasOpen = true} onClose={() => wasClose = true}/>);
     bound({data: 'TEMPLATE'});
-    wrapper.setProps({open: false});
-    wrapper.setProps({open: true});
     expect(success).toBe(true);
+
+    let instance = wrapper.instance();
+    instance.onOpen();
+    instance.onClose();
+    expect(wasOpen).toBe(true);
+    expect(wasClose).toBe(true);
+
+
+    // cover else path
+    const wrapperCov = shallow(<Main className="test"/>);
+    instance = wrapperCov.instance();
+    instance.onOpen();
+    instance.onClose();
   });
 });

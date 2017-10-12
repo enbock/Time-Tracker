@@ -4,10 +4,16 @@
             <div class={this.props.className + "__toolbar-spacer"}></div>
             <div class="mdc-list-group">
                 <nav class="mdc-list">
-                    <a class={this.props.className + "--selected mdc-list-item"}>
+                    <a
+                            ref="menuInbox"
+                            class={(this.props.page == 'inbox' ? this.props.className + "--selected " : "") + "mdc-list-item"}
+                    >
                         <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">inbox</i>Inbox
                     </a>
-                    <a class="mdc-list-item">
+                    <a
+                            ref="menuStar"
+                            class={(this.props.page == 'star' ? this.props.className + "--selected " : "") + "mdc-list-item"}
+                    >
                         <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">star</i>Star
                     </a>
                 </nav>

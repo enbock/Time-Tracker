@@ -15,10 +15,16 @@
                 class="mdc-temporary-drawer"
                 open={this.state.menuOpen}
                 onClose={this.onMenuClose.bind(this)}
+                page={this.state.history.page}
+                onMenu={this.onMenuClick.bind(this)}
         />
 
         <main>
-            <h1 class="mdc-typography--display1">Hello World!</h1>
+            <br />
+            <div style={{textAlign:"right"}}>
+            Page: {this.state.history.page}<br />
+            Component: {this.state.currentComponent}
+            </div>
         </main>
     </div>
 </div>

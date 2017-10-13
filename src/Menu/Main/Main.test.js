@@ -1,6 +1,7 @@
 import {mockAxiosAction} from 'axios';
 import React from 'react';
 import {shallow} from 'enzyme';
+jest.mock('react-dom');
 import Main from './Main';
 
 
@@ -12,7 +13,7 @@ describe('Main Menu', function testMain() {
   /**
    * Test if correct layout loaded.
    */
-  it('Loads the correct layout', function testLoadLayout() {
+  it('Loads layout and do interactions', function testLoadLayout() {
     let bound     = null;
     const promise = {
       then:  function onThen(callback) {
@@ -36,24 +37,39 @@ describe('Main Menu', function testMain() {
       }
     );
 
-    let wasOpen  = false;
-    let wasClose = false;
+    let wasMenu = "";
+    let registeredHandler = false;
 
-    const wrapper = shallow(<Main className="test" onOpen={() => wasOpen = true} onClose={() => wasClose = true}/>);
-    bound({data: 'TEMPLATE'});
-    expect(success).toBe(true);
+    const adapter =  {
+      registerMenuToggleHandler: (handler) => registeredHandler = handler,
+      deregisterMenuToggleHandler: jest.fn()
+    };
 
+    const wrapper = shallow(<Main adapter={adapter} className="test" onMenu={(menu) => wasMenu = menu}/>);
     let instance = wrapper.instance();
-    instance.onOpen();
-    instance.onClose();
-    expect(wasOpen).toBe(true);
-    expect(wasClose).toBe(true);
+    instance.refs = {
+      settingsMenu: {
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn()
+      }
+    };
+    bound({data: 'TEMPLATE'});
+    wrapper.setProps({});
+
+    expect(success).toBe(true);
+    expect(registeredHandler).not.toBe(false);
+    registeredHandler();
+
+    instance.onMenuClick("one");
+    expect(wasMenu).toBe("one");
+
+    wrapper.unmount();
+    expect(instance.refs.settingsMenu.removeEventListener).toHaveBeenCalled();
 
 
     // cover else path
     const wrapperCov = shallow(<Main className="test"/>);
     instance = wrapperCov.instance();
-    instance.onOpen();
-    instance.onClose();
+    instance.onMenuClick("two");
   });
 });

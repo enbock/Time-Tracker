@@ -60,6 +60,13 @@ class Drawer extends React.Component {
 
     if (this.drawer) {
       this.drawer.open = this.props.open;
+      /**
+       * Interaction with MDC could be via adapter...but currently I use the refs-List of React to take the click
+       * events of the drawer elements.
+       *
+      console.log("Adapter", this.drawer.foundation_.adapter_);
+      this.drawer.foundation_.adapter_.registerDrawerInteractionHandler('click', (event) => console.log('?!!>> ', event));
+       */
     }
   }
 

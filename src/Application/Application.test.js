@@ -16,7 +16,6 @@ describe('Application', function testApplication() {
     Babel.transform.mockClear();
   });
 
-
   /**
    * Test if correct layout loaded.
    */
@@ -45,15 +44,24 @@ describe('Application', function testApplication() {
     );
     Babel.transform.mockReturnValue(
       {
-        code: 'React.createElement(\'button\', { onClick: this.onMenuButtonClick.bind(this) })'
+        code: 'React.createElement(\'button\', { onClick: this.onMainButtonClick.bind(this) })'
       }
     );
 
-    const wrapper = shallow(<Application/>);
+    const wrapper     = shallow(<Application/>);
+    const instance    = wrapper.instance();
+    const buttonClick = jest.fn();
+
+    instance.menuAdapter.registerMenuToggleHandler(buttonClick);
     bound({data: 'TEMPLATE'});
     wrapper.update();
+
     wrapper.find('button').simulate('click');
-    wrapper.instance().onMenuClose();
+    expect(buttonClick).toHaveBeenCalled();
     expect(success).toBe(true);
+
+    instance.onMenuChange('newMenu');
+    instance.menuAdapter.deregisterMenuToggleHandler(buttonClick);
+    instance.menuAdapter.deregisterMenuToggleHandler(buttonClick); // check that double remove don't break
   });
 });

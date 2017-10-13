@@ -1,5 +1,6 @@
 import Component from '../../Shared/LiveJSX';
 import PropTypes from 'prop-types';
+import emptyFunction from 'fbjs/lib/emptyFunction';
 
 /**
  * The Main menu.
@@ -23,30 +24,94 @@ class MainMenu extends Component
   static get propTypes() {
     return {
       className: PropTypes.string.isRequired,
-      onOpen:    PropTypes.func,
-      onClose:   PropTypes.func,
-      open:      PropTypes.bool
+      adapter:   PropTypes.object,
+      onMenu:    PropTypes.func
     };
   }
 
   /**
-   * Proxy open event, if bound.
-   * @param event
+   * Default adapter to interact with outer world.
+   *
+   * @returns {Object}
    */
-  onOpen(event) {
-    if (this.props.onOpen) {
-      this.props.onOpen(event);
-    }
+  static get defaultAdapter() {
+    return {
+      registerMenuToggleHandler:   emptyFunction,
+      deregisterMenuToggleHandler: emptyFunction
+    };
   }
 
   /**
-   * Proxy close event, if bound.
-   * @param event
+   * Constructor.
+   *
+   * @param {Object} props
+   * @param {Object} context
+   * @param {Object} updater
    */
-  onClose(event) {
-    if (this.props.onClose) {
-      this.props.onClose(event);
+  constructor(props, context, updater) {
+    super(props, context, updater);
+
+    Object.assign(
+      this.state,
+      {
+        open: false
+      }
+    );
+
+    /**
+     * @type {MainMenu.defaultAdapter}
+     */
+    this.adapter = Object.assign(
+      MainMenu.defaultAdapter,
+      props.adapter
+    );
+
+    this.boundToggleMenu        = this.toggleMenu.bind(this);
+    this.boundMenuSettingsClick = this.onMenuClick.bind(this, 'settings');
+  }
+
+  /**
+   * Menu state toggle.
+   */
+  toggleMenu() {
+    this.setState({open: !this.state.open});
+  }
+
+  /**
+   * Close menu.
+   */
+  closeMenu() {
+    this.setState({open: false});
+  }
+
+  /**
+   * Menu click proxy.
+   *
+   * @param {string} menu
+   */
+  onMenuClick(menu) {
+    if (this.props.onMenu) {
+      this.props.onMenu(menu);
     }
+    this.closeMenu();
+  }
+
+  /**
+   * Connect low level events and adapter interactions.
+   *
+   * *Notice:* MDC Drawer caches the event, so take them from low level.
+   */
+  onTemplateMounted(domNode) {
+    this.refs.settingsMenu.addEventListener('click', this.boundMenuSettingsClick);
+    this.adapter.registerMenuToggleHandler(this.boundToggleMenu);
+  }
+
+  /**
+   * Release interaction connections.
+   */
+  componentWillUnmount() {
+    this.refs.settingsMenu.removeEventListener('click', this.boundMenuSettingsClick);
+    this.adapter.deregisterMenuToggleHandler(this.boundToggleMenu);
   }
 }
 

@@ -1,5 +1,7 @@
+import React from 'react';
 import Component from '../Shared/LiveJSX';
 import Menu from '../Menu';
+import Router from './Router';
 
 /**
  * Root Application.
@@ -31,23 +33,67 @@ class Application extends Component {
     this.state = Object.assign(
       this.state,
       {
-        menuOpen: false
+        currentComponent: <div/>,
+        history:          {
+          page: 'none'
+        }
       }
     );
+
+    this.menuAdapter = {
+      registerMenuToggleHandler:   this.registerMenuToggleHandler.bind(this),
+      deregisterMenuToggleHandler: this.deregisterMenuToggleHandler.bind(this)
+    };
+
+    this.registeredButtonHandler = [];
+  }
+
+  onMainButtonClick() {
+    this.registeredButtonHandler.forEach(handler => handler());
   }
 
   /**
    * Set state to menu is closed.
    */
-  onMenuClose() {
-    this.setState({menuOpen: false});
+  onMenuChange(menu) {
+    // TODO: router stuff here?
+    this.setState({history: {page: menu}});
   }
 
   /**
-   * Toggle open state.
+   * Register handle for the main button click.
+   *
+   * @param {[[Function]]} handler
    */
-  onMenuButtonClick() {
-    this.setState({menuOpen: !this.state.menuOpen});
+  registerMenuToggleHandler(handler) {
+    this.registeredButtonHandler.push(handler);
+  }
+
+  /**
+   * Remove handler for main button click.
+   *
+   * @param {[[Function]]} handler
+   */
+  deregisterMenuToggleHandler(handler) {
+    const index = this.registeredButtonHandler.indexOf(handler);
+    if (index === -1) {
+      return;
+    }
+    this.registeredButtonHandler.splice(index, 1);
+  }
+
+  /**
+   * Adding singleton components to application.
+   *
+   * @returns {XML}
+   */
+  render() {
+    return (
+      <div>
+        <Router/>
+        {super.render()}
+      </div>
+    );
   }
 }
 

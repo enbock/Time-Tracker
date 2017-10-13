@@ -315,8 +315,13 @@ module.exports = {
       navigateFallbackWhitelist: [/^(?!\/__).*/],
       staticFileGlobs: [
         'public/css/**.*',
+        'public/font/**.*',
         'public/lib/**.*',
+        'public/**.png',
+        'public/**.ico',
+        'public/**.webp',
         'public/Template/**.*',
+        'public/Template/Menu/**.*',
       ],
       stripPrefix: 'public/', // stripPrefixMulti is also supported
       mergeStaticsConfig: true, // if you don't set this to true, you won't see any webpack-emitted assets in your serviceworker config

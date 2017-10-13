@@ -5,7 +5,7 @@
                 <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
                     <a
                             class="material-icons mdc-toolbar__icon--menu"
-                            onClick={this.onMenuButtonClick.bind(this)}
+                            onClick={this.onMainButtonClick.bind(this)}
                     >menu</a>
                     <span class="mdc-toolbar__title catalog-title">Time Tracker</span>
                 </section>
@@ -13,10 +13,9 @@
         </header>
         <this.components.MainMenu
                 class="mdc-temporary-drawer"
-                open={this.state.menuOpen}
-                onClose={this.onMenuClose.bind(this)}
+                adapter={this.menuAdapter}
                 page={this.state.history.page}
-                onMenu={this.onMenuClick.bind(this)}
+                onMenu={this.onMenuChange.bind(this)}
         />
 
         <main>

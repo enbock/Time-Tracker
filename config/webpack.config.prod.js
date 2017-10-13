@@ -318,7 +318,7 @@ module.exports = {
         'public/lib/**.*',
         'public/Template/**.*',
       ],
-      stripPrefix: 'src/static/', // stripPrefixMulti is also supported
+      stripPrefix: 'public/', // stripPrefixMulti is also supported
       mergeStaticsConfig: true, // if you don't set this to true, you won't see any webpack-emitted assets in your serviceworker config
       // Don't precache sourcemaps (they're large) and build asset manifest:
       staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],

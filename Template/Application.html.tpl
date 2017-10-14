@@ -22,6 +22,7 @@
             <br />
             <div style={{textAlign:"right"}}>
             Page: {this.state.history.page}<br />
+            Path: {this.state.pathname}<br />
             Component: {this.state.currentComponent}
             </div>
         </main>

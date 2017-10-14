@@ -19,11 +19,13 @@
         />
 
         <main>
-            <br />
-            <div style={{textAlign:"right"}}>
-            Page: {this.state.history.page}<br />
-            Component: {this.state.currentComponent}
-            </div>
+            <br/>
+            <pre style={{textAlign:"right"}}>
+                Root: {this.state.history.root}<br/>
+                Page: {this.state.history.page}<br/>
+                Path: {this.state.pathname}<br/>
+            </pre>
+            {this.state.currentComponent}
         </main>
     </div>
 </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import Component from '../Shared/LiveJSX';
 import Menu from '../Menu';
-import Router from './Router';
+import Router from '../Shared/Router';
 
 /**
  * Root Application.
@@ -14,6 +14,18 @@ class Application extends Component {
    */
   static get template() {
     return '/Template/Application.html.tpl';
+  }
+
+  /**
+   * Setup routes of the application.
+   *
+   * @returns {Object}
+   */
+  static get routes() {
+    return {
+      index: '/',
+      settings: '/settings/' // option page
+    };
   }
 
   /**
@@ -35,8 +47,10 @@ class Application extends Component {
       {
         currentComponent: <div/>,
         history:          {
-          page: 'none'
-        }
+          page: 'none',
+          root: ''
+        },
+        pathname:         ''
       }
     );
 
@@ -46,6 +60,8 @@ class Application extends Component {
     };
 
     this.registeredButtonHandler = [];
+
+    this.boundPathChange = this.onPathChange.bind(this);
   }
 
   onMainButtonClick() {
@@ -57,7 +73,23 @@ class Application extends Component {
    */
   onMenuChange(menu) {
     // TODO: router stuff here?
-    this.setState({history: {page: menu}});
+    const history = this.state.history;
+    history.page = menu;
+    this.setState({history: history});
+  }
+
+  /**
+   * Received router change.
+   *
+   * @param event
+   */
+  onPathChange(event) {
+    this.setState(
+      {
+        pathname: event.pathname,
+        history:  event.state
+      }
+    );
   }
 
   /**
@@ -83,6 +115,56 @@ class Application extends Component {
   }
 
   /**
+   * Decide the page
+   * @param pathname
+   */
+  restorePageByPathName(pathname) {
+    const pages  = Application.routes;
+
+    // fallback
+    let history = {
+      page: 'index',
+      root: ''
+    };
+
+    let found = false;
+    // create history by pathname detection.
+    for(let page in pages) {
+      let index = pathname.indexOf(pages[page]);
+      /**
+       * Check if in path and goes to end.
+       * TODO: When data attached to path, is it needed to change this logic.
+       */
+      if(index !== -1 && pages[page].length + index === pathname.length) {
+        history = {
+          page: page
+        };
+
+        break;
+      }
+    }
+
+    // actualize root pathname
+    history.root = pathname.substr(0, pathname.lastIndexOf(pages[history.page]));
+
+    return history;
+  }
+
+  /**
+   * Decider routing
+   *
+   * @param {Object} nextProps
+   * @param {Object} nextState
+   */
+  componentWillUpdate(nextProps, nextState) {
+    if (nextState.history === null) {
+      nextState.history = this.restorePageByPathName(nextState.pathname);
+    }
+    // Go to route
+    nextState.pathname = nextState.history.root + Application.routes[nextState.history.page];
+  }
+
+  /**
    * Adding singleton components to application.
    *
    * @returns {XML}
@@ -90,7 +172,11 @@ class Application extends Component {
   render() {
     return (
       <div>
-        <Router/>
+        <Router
+          onChange={this.boundPathChange}
+          state={this.state.history}
+          pathname={this.state.pathname}
+        />
         {super.render()}
       </div>
     );

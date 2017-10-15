@@ -6,6 +6,7 @@ import {shallow} from 'enzyme';
 import Application from './Application';
 
 jest.mock('../Menu', () => 'Menu');
+jest.mock('../Settings', () => 'Settings');
 jest.mock('../Shared/Router', () => 'Router');
 
 /**

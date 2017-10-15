@@ -2,6 +2,7 @@ import React from 'react';
 import Component from '../Shared/LiveJSX';
 import Menu from '../Menu';
 import Router from '../Shared/Router';
+import Settings from '../Settings';
 
 /**
  * Root Application.
@@ -162,6 +163,19 @@ class Application extends Component {
     }
     // Go to route
     nextState.pathname = nextState.history.root + Application.routes[nextState.history.page];
+
+    // Select component
+    switch(nextState.history.page)
+    {
+      case 'settings':
+        nextState.currentComponent = (
+            <Settings/>
+        );
+        break;
+      default:
+        nextState.currentComponent = <div>Index</div>;
+        break;
+    }
   }
 
   /**

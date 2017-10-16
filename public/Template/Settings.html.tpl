@@ -11,19 +11,21 @@
                 <div class="mdc-list-item__text">Sprache</div>
             </div>
             <div class="settings-content mdc-list-item">
-                <div class="mdc-select language" role="listbox" tabIndex="0">
-                    <span class="mdc-select__selected-text">Deutsch</span>
-                    <div class="mdc-simple-menu mdc-select__menu">
-                        <ul class="mdc-list mdc-simple-menu__items">
-                            <li class="mdc-list-item" role="option" id="german" tabIndex="0">
-                                Deutsch
-                            </li>
-                            <li class="mdc-list-item" role="option" id="english" tabIndex="0">
-                                Englisch
-                            </li>
-                        </ul>
+                <MDC.Select onChange={this.onSelectionChange.bind(this)} name="language">
+                    <div class="mdc-select" role="listbox" tabIndex="0">
+                        <span class="mdc-select__selected-text">Deutsch</span>
+                        <div class="mdc-simple-menu mdc-select__menu">
+                            <ul class="mdc-list mdc-simple-menu__items">
+                                <li class="mdc-list-item" role="option" id="german" tabIndex="0">
+                                    Deutsch
+                                </li>
+                                <li class="mdc-list-item" role="option" id="english" tabIndex="0">
+                                    Englisch
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
+                </MDC.Select>
             </div>
         </div>
         <div class="settings-block">
@@ -32,22 +34,24 @@
                 Farbschema
             </div>
             <div class="settings-content mdc-list-item">
-                <div class="mdc-select color" role="listbox" tabIndex="0">
-                    <span class="mdc-select__selected-text">Standard</span>
-                    <div class="mdc-simple-menu mdc-select__menu">
-                        <ul class="mdc-list mdc-simple-menu__items">
-                            <li class="mdc-list-item" role="option" id="german" tabIndex="0">
-                                Standard
-                            </li>
-                            <li class="mdc-list-item" role="option" id="english" tabIndex="0">
-                                Codefrog
-                            </li>
-                            <li class="mdc-list-item" role="option" id="english" tabIndex="0">
-                                Dunkel
-                            </li>
-                        </ul>
+                <MDC.Select onChange={this.onSelectionChange.bind(this)} name="color">
+                    <div class="mdc-select" role="listbox" tabIndex="0">
+                        <span class="mdc-select__selected-text">Standard</span>
+                        <div class="mdc-simple-menu mdc-select__menu">
+                            <ul class="mdc-list mdc-simple-menu__items">
+                                <li class="mdc-list-item" role="option" id="default" tabIndex="0">
+                                    Standard
+                                </li>
+                                <li class="mdc-list-item" role="option" id="codefrog" tabIndex="0">
+                                    Codefrog
+                                </li>
+                                <li class="mdc-list-item" role="option" id="dark" tabIndex="0">
+                                    Dunkel
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
+                </MDC.Select>
             </div>
         </div>
     </div>

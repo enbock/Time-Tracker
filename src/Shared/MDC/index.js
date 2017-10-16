@@ -1,5 +1,7 @@
 import Drawer from './Drawer';
+import Select from './Select';
 
 export default {
-  Drawer: Drawer
+  Drawer: Drawer,
+  Select: Select
 };

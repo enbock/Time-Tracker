@@ -140,7 +140,7 @@ module.exports = {
             test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
             loader: require.resolve('url-loader'),
             options: {
-              limit: 10000,
+              //limit: 100000,
               name: 'static/media/[name].[hash:8].[ext]',
             },
           },
@@ -314,7 +314,7 @@ module.exports = {
       // https://github.com/facebookincubator/create-react-app/issues/2237#issuecomment-302693219
       navigateFallbackWhitelist: [/^(?!\/__).*/],
       staticFileGlobs: [
-        'public/css/**.*',
+        'public/Style/**.*',
         'public/font/**.*',
         'public/lib/**.*',
         'public/**.png',
@@ -322,6 +322,7 @@ module.exports = {
         'public/**.webp',
         'public/Template/**.*',
         'public/Template/Menu/**.*',
+        'https://unpkg.com/babel-standalone@6/babel.min.js'
       ],
       stripPrefix: 'public/', // stripPrefixMulti is also supported
       mergeStaticsConfig: true, // if you don't set this to true, you won't see any webpack-emitted assets in your serviceworker config

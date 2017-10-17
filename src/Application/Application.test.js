@@ -91,6 +91,9 @@ describe('Application', function testApplication() {
     bound({data: 'TEMPLATE'});
     wrapper.update();
 
+
+    global.process.env.PUBLIC_URL = "/MainPath";
+
     // start on sub page in a sub directory of hosting page
     instance.onPathChange(
       {
@@ -113,17 +116,6 @@ describe('Application', function testApplication() {
     expect(instance.state.history.page).toBe('index');
     expect(instance.state.history.root).toBe('/MainPath');
 
-    // start on sub page in a root directory of hosting page
-    instance.onPathChange(
-      {
-        pathname: '/',
-        state: null
-      }
-    );
-    expect(instance.state.pathname).toBe('/');
-    expect(instance.state.history.page).toBe('index');
-    expect(instance.state.history.root).toBe('');
-
     // reload page with using state data
     instance.onPathChange(
       {
@@ -134,5 +126,18 @@ describe('Application', function testApplication() {
     expect(instance.state.pathname).toBe('/MainPath/');
     expect(instance.state.history.page).toBe('index');
     expect(instance.state.history.root).toBe('/MainPath');
+
+    global.process.env.PUBLIC_URL = "";
+
+    // start on sub page in a root directory of hosting page
+    instance.onPathChange(
+      {
+        pathname: '/',
+        state: null
+      }
+    );
+    expect(instance.state.pathname).toBe('/');
+    expect(instance.state.history.page).toBe('index');
+    expect(instance.state.history.root).toBe('');
   });
 });

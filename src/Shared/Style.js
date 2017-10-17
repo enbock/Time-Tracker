@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Axios from 'axios';
 
 /**
  * An CSS file loader and importer.
@@ -27,10 +28,14 @@ class Style extends React.Component {
    */
   constructor(props, context, updater) {
     super(props, context, updater);
+
+    this.state = {
+      publicUrl: process.env.PUBLIC_URL || ''
+    };
   }
 
   render() {
-    return <link rel="stylesheet" href={this.props.enabled === false ? '' : this.props.src}/>;
+    return <link rel="stylesheet" href={this.props.enabled === false ? '' : this.state.publicUrl + this.props.src}/>;
   }
 }
 

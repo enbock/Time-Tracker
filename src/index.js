@@ -7,7 +7,7 @@ import './bootstrap';
 
 registerServiceWorker();
 
-Axios.get('/lib/babel.min.js')
+Axios.get(process.env.PUBLIC_URL + '/lib/babel.min.js')
   .then(
     response => {
       const babel = new Function(response.data);

@@ -50,7 +50,7 @@ class Application extends Component {
         currentComponent: <div/>,
         history:          {
           page: 'none',
-          root: ''
+          root: process.env.PUBLIC_URL
         },
         pathname:         ''
       }
@@ -126,7 +126,7 @@ class Application extends Component {
     // fallback
     let history = {
       page: 'index',
-      root: ''
+      root: process.env.PUBLIC_URL
     };
 
     let found = false;
@@ -147,7 +147,7 @@ class Application extends Component {
     }
 
     // actualize root pathname
-    history.root = pathname.substr(0, pathname.lastIndexOf(pages[history.page]));
+    history.root = process.env.PUBLIC_URL ; //pathname.substr(0, pathname.lastIndexOf(pages[history.page]));
 
     return history;
   }
@@ -192,8 +192,8 @@ class Application extends Component {
           state={this.state.history}
           pathname={this.state.pathname}
         />
-        <Style src="/css/google.css" />
-        <Style src="/css/material-components-web.min.css" />
+        <Style src="/Style/google.css" />
+        <Style src="/Style/material-components-web.min.css" />
         {super.render()}
       </div>
     );

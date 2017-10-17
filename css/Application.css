@@ -1,0 +1,19 @@
+
+html {
+    height: 100%;
+}
+body {
+    padding: 0;
+    margin: 0;
+    height: 100vh;
+}
+.height100p {
+    height: 100vh;
+}
+
+/**
+ * Put drawer under the toolbar.
+ */
+.mdc-toolbar {
+    z-index: 60;
+}

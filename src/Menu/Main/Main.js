@@ -23,7 +23,6 @@ class MainMenu extends Component
    */
   static get propTypes() {
     return {
-      className: PropTypes.string.isRequired,
       adapter:   PropTypes.object,
       onMenu:    PropTypes.func
     };

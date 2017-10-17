@@ -1,4 +1,5 @@
 <div class="page-wrapper mdc-typography">
+    <Style src="/css/Application.css"/>
     <div class="content">
         <header class="mdc-toolbar mdc-elevation--z4">
             <div class="mdc-toolbar__row">
@@ -12,7 +13,6 @@
             </div>
         </header>
         <this.components.MainMenu
-                class="mdc-temporary-drawer"
                 adapter={this.menuAdapter}
                 page={this.state.history.page}
                 onMenu={this.onMenuChange.bind(this)}

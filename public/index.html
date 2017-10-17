@@ -11,116 +11,11 @@
     <link rel="apple-touch-icon" sizes="128x128" href="%PUBLIC_URL%/favicon-128.png">
     <link rel="apple-touch-icon-precomposed" sizes="128x128" href="%PUBLIC_URL%/favicon-128.png">
     <title>Codefrog Time Tracker</title>
-    <script src="%PUBLIC_URL%/lib/babel.min.js"></script>
-    <style>
-        html {
-            height: 100%;
-        }
-        body {
-            padding: 0;
-            margin: 0;
-            height: 100vh;
-        }
-        .height100p {
-            height: 100vh;
-        }
-        .page-wrapper {
-            display: flex;
-            flex-direction: row;
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-            height: 100vh;
-            width: 100%;
-        }
-        .content {
-            display: inline-flex;
-            flex-direction: column;
-            flex-grow: 1;
-            height: 100vh;
-            box-sizing: border-box;
-        }
-
-        /**
-         * Put drawer under the toolbar.
-         */
-        .mdc-toolbar {
-            z-index: 60;
-        }
-
-        /**
-         * Seetings Page layout
-         */
-        .settings-card-container {
-            width: 60%;
-            margin: 0 auto;
-            padding-top: 10px;
-        }
-        .setting-cart-container, .hint {
-            color: var(--mdc-theme-text-hint-on-light);
-        }
-
-        .settings-block {
-            margin: var(--mdc-layout-grid-margin-desktop)
-        }
-
-        .settings-block .mdc-list-item {
-            height: auto;
-        }
-
-        .settings-label {
-            width: 40%;
-            float: left;
-        }
-
-        .settings-content {
-            width: 100% !important;
-        }
-
-        .settings-content .mdc-select {
-            width: 100% !important;
-        }
-
-        @media (min-width: 840px) {
-            .settings-content {
-                width: 60% !important;
-                float: left;
-            }
-            .settings-content .mdc-select {
-                width: 100% !important;
-            }
-        }
-
-
-        @media (min-width: 480px) and (max-width: 839px) {
-            .settings-card-container {
-                width: 80%;
-            }
-            .settings-block {
-                margin: var(--mdc-layout-grid-margin-tablet)
-            }
-        }
-        @media (max-width: 479px) {
-            .settings-card-container {
-                width: 94%;
-            }
-            .settings-card-container .mdc-card {
-                box-shadow: unset;
-            }
-
-            .settings-block {
-                margin: var(--mdc-layout-grid-margin-phone)
-            }
-        }
-    </style>
 </head>
 <body>
 <noscript>
-    <img height="96px" src="%PUBLIC_URL%/favicon-128.png">
     You need to enable JavaScript to run this app.
 </noscript>
 <div id="root" class="height100p"></div>
-<link rel="stylesheet" href="%PUBLIC_URL%/css/google.css">
-<link rel="stylesheet" href="%PUBLIC_URL%/css/material-components-web.min.css">
 </body>
 </html>

@@ -3,6 +3,7 @@ import Component from '../Shared/LiveJSX';
 import Menu from '../Menu';
 import Router from '../Shared/Router';
 import Settings from '../Settings';
+import Style from '../Shared/Style';
 
 /**
  * Root Application.
@@ -191,6 +192,8 @@ class Application extends Component {
           state={this.state.history}
           pathname={this.state.pathname}
         />
+        <Style src="/css/google.css" />
+        <Style src="/css/material-components-web.min.css" />
         {super.render()}
       </div>
     );

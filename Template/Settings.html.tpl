@@ -1,5 +1,5 @@
 <div class="settings-card-container">
-    <Style src="/css/Settings.css" />
+    <Style src="/Style/Settings.css" />
     <div class="mdc-card__horizontal-block">
         <div class="mdc-card__actions mdc-typography--body2 hint">
             Sprache und Farbe

@@ -1,5 +1,5 @@
 <div class="page-wrapper mdc-typography">
-    <Style src="/css/Application.css"/>
+    <Style src="/Style/Application.css"/>
     <div class="content">
         <header class="mdc-toolbar mdc-elevation--z4">
             <div class="mdc-toolbar__row">

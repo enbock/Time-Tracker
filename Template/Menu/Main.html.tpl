@@ -1,6 +1,6 @@
 <MDC.Drawer class="mdc-temporary-drawer" open={this.state.open} onClose={this.closeMenu.bind(this)}>
     <aside class="mdc-temporary-drawer">
-        <Style src="/css/Menu/Main.css"/>
+        <Style src="/Style/Menu/Main.css"/>
         <nav class="mdc-temporary-drawer__drawer">
             <div class="mdc-temporary-drawer__toolbar-spacer"></div>
             <div class="mdc-list-group">

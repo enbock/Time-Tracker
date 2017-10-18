@@ -47,16 +47,36 @@ class Router extends React.Component
   }
 
   /**
-   * Push new state if needed.
+   * Push or replace new state if needed.
+   * The history url will be replaced, when the state are equal.
    *
    * @param nextProps
    */
   componentWillUpdate(nextProps) {
     const pathname = nextProps.pathname;
-    if (pathname !== this.pathname) {
-      this.history.pushState(nextProps.state, '', pathname);
-      this.popStateChanged(pathname, nextProps.state);
+    let command    = 'pushState';
+    let allEquals  = true;
+
+    if (this.history.state && nextProps.state) {
+      for (let key in nextProps.state) {
+        if (
+          !this.history.state.hasOwnProperty(key)
+          || this.history.state[key] !== nextProps.state[key]
+        ) {
+          allEquals = false;
+        }
+        if (allEquals === true) {
+          command = 'replaceState';
+        }
+      }
     }
+    if(allEquals && pathname === this.pathname) {
+      // do nothing when nothing changed.
+      return;
+    }
+
+    this.history[command](nextProps.state, '', pathname);
+    this.popStateChanged(pathname, nextProps.state);
   }
 
   /**
@@ -84,7 +104,7 @@ class Router extends React.Component
   popStateChanged(pathname, state)
   {
     this.pathname = pathname;
-    this.props.onChange({pathname: pathname, state: !state ? null : state});
+    this.props.onChange({pathname: pathname, state: !state || Object.keys(state).length === 0 ? null : state});
   }
 
   /**

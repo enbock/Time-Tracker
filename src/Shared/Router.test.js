@@ -51,5 +51,19 @@ describe('Shared: Router', function testRouter() {
     // test (indirect) event firing
     instance.boundPopState({state: {foo: 'bar2'}});
     expect(lastEvent.state).toEqual({foo: 'bar2'});
+
+    // bring state in correctness
+    let lengthBefore = global.history.length;
+    wrapper.setProps({state: {foo: 'bar2'}, pathname: '/newPage/'});
+    expect(lastEvent.pathname).toBe('/newPage/');
+    expect(lastEvent.state).toEqual({foo: 'bar2'});
+    expect(global.history.length).toBeGreaterThan(lengthBefore);
+
+    // check replacement
+    lengthBefore = global.history.length;
+    wrapper.setProps({state: {foo: 'bar2'}, pathname: '/replacedPage/'});
+    expect(lastEvent.pathname).toBe('/replacedPage/');
+    expect(lastEvent.state).toEqual({foo: 'bar2'});
+    expect(global.history.length).toBe(lengthBefore);
   });
 });

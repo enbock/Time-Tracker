@@ -10,6 +10,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
     * Create tests for the current components.
     * Activate auto deployment to gh-pages.
 * [#4] Add this CHANGELOG.md file. 
+* [#1] Option page.
+    * Add main menu drawer.
+    * Add router (History API) integration.
+    * Add style loader.
+    
+### Changed
+* [#1] Replace MDL with MDC.
 
 ## [0.1.0] - 2017-10-06
 ### Added

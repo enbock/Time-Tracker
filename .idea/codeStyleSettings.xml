@@ -4,6 +4,11 @@
     <option name="PER_PROJECT_SETTINGS">
       <value>
         <option name="LINE_SEPARATOR" value="&#10;" />
+        <option name="HTML_ATTRIBUTE_WRAP" value="4" />
+        <option name="HTML_ALIGN_TEXT" value="true" />
+        <option name="HTML_ENFORCE_QUOTES" value="true" />
+        <option name="HTML_NEWLINE_BEFORE_FIRST_ATTRIBUTE" value="When multiline" />
+        <option name="HTML_NEWLINE_AFTER_LAST_ATTRIBUTE" value="When multiline" />
         <JSCodeStyleSettings>
           <option name="FORCE_SEMICOLON_STYLE" value="true" />
           <option name="ALIGN_OBJECT_PROPERTIES" value="1" />
@@ -15,6 +20,16 @@
           <option name="IMPORT_PREFER_ABSOLUTE_PATH" value="TRUE" />
           <option name="IMPORT_USE_NODE_RESOLUTION" value="TRUE" />
         </JSCodeStyleSettings>
+        <XML>
+          <option name="XML_ATTRIBUTE_WRAP" value="4" />
+          <option name="XML_SPACE_INSIDE_EMPTY_TAG" value="true" />
+          <option name="XML_KEEP_WHITE_SPACES_INSIDE_CDATA" value="true" />
+        </XML>
+        <codeStyleSettings language="HTML">
+          <indentOptions>
+            <option name="CONTINUATION_INDENT_SIZE" value="4" />
+          </indentOptions>
+        </codeStyleSettings>
         <codeStyleSettings language="JavaScript">
           <option name="ALIGN_MULTILINE_BINARY_OPERATION" value="true" />
           <option name="ALIGN_MULTILINE_TERNARY_OPERATION" value="true" />
@@ -42,6 +57,16 @@
             <option name="INDENT_SIZE" value="2" />
             <option name="CONTINUATION_INDENT_SIZE" value="2" />
             <option name="TAB_SIZE" value="2" />
+          </indentOptions>
+        </codeStyleSettings>
+        <codeStyleSettings language="Twig">
+          <indentOptions>
+            <option name="CONTINUATION_INDENT_SIZE" value="2" />
+          </indentOptions>
+        </codeStyleSettings>
+        <codeStyleSettings language="XML">
+          <indentOptions>
+            <option name="CONTINUATION_INDENT_SIZE" value="2" />
           </indentOptions>
         </codeStyleSettings>
       </value>

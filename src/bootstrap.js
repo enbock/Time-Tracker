@@ -1,16 +1,7 @@
-import * as MDL from 'react-mdl';
-import Application from './Application';
-import './material.min.css'; // custom colors
+//import './material.min.css'; // custom colors
 
-/**
- * Expose MDL for Templates
- */
-for(let key in MDL) {
-  global[key] = MDL[key];
-}
+import MDC from './Shared/MDC';
+import Style from './Shared/Style';
 
-/**
- * Expose Application for Templates
- */
-global.Application = Application;
-
+global.MDC = MDC;
+global.Style = Style;

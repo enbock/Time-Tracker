@@ -1,6 +1,6 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Axios from 'axios';
-import {ProgressBar} from 'react-mdl';
 
 // Bridge to templates
 global.React = React;
@@ -21,13 +21,14 @@ class LiveJSX extends React.Component {
 
     this.state = {
       view:      function () {
-        return <ProgressBar indeterminate/>;
+        return <div className="mdl-progress mdl-js-progress mdl-progress__indeterminate"/>;
       },
       publicUrl: process.env.PUBLIC_URL || ''
     };
 
     // remember loaded template
     this.loadedTemplateUrl = '';
+    this.firstShow         = false;
   }
 
   /**
@@ -37,9 +38,18 @@ class LiveJSX extends React.Component {
    * @returns {*}
    */
   static generate(data) {
+    let template = data.trim();
+    template     = template.replace(/class=/g, 'className=');
+
+    let code = global.Babel.transform(template, {presets: ['react']}).code;
+    code     = code.replace(/React.createElement\(/, 'return React.createElement(');
+
+    //console.log(template);
+    //console.log(code);
+
     // https://github.com/babel/babel/tree/master/packages/babel-standalone#usage
     // eslint-disable-next-line
-    return new Function('return ' + global.Babel.transform(data.trim(), {presets: ['react']}).code);
+    return new Function(code);
   }
 
   /**
@@ -66,6 +76,8 @@ class LiveJSX extends React.Component {
   loadTemplate(props, state) {
     let template = props.template || this.template || Object.getPrototypeOf(this).constructor.template;
 
+    if (!template) return;
+
     const url = state.publicUrl + template;
 
     if (this.loadedTemplateUrl === url) {
@@ -86,8 +98,31 @@ class LiveJSX extends React.Component {
    * @param {Object} response
    */
   onTemplate(response) {
-    const jsx = LiveJSX.generate(response.data);
+    const jsx      = LiveJSX.generate(response.data);
+    this.firstShow = true;
     this.setState({view: jsx});
+  }
+
+  /**
+   * Abstract function for JSX mount info.
+   *
+   * @param {HTMLElement} domNode
+   */
+  onTemplateMounted(domNode) {
+  }
+
+  /**
+   * Call template mounted on first view.
+   *
+   * @param prevProps
+   * @param prevState
+   * @param prevContext
+   */
+  componentDidUpdate(prevProps, prevState, prevContext) {
+    if (this.firstShow) {
+      this.firstShow = false;
+      this.onTemplateMounted(ReactDOM.findDOMNode(this));
+    }
   }
 
   /**

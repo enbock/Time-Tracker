@@ -1,4 +1,7 @@
 # Time Tracker
+![CircleCI](./doc/assets/circle-logo-horizontal-black-66x18.svg)
+[![CircleCI](https://circleci.com/gh/enbock/Time-Tracker.svg?style=svg)](https://circleci.com/gh/enbock/Time-Tracker)
+
 A progressive web app to track working time.
 
 ## Planned/Ideas

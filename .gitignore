@@ -8,6 +8,7 @@
 
 # production
 /build
+/packages
 
 # misc
 .DS_Store

@@ -1,6 +1,7 @@
 import {mockAxiosAction} from 'axios';
 import React from 'react';
 import {shallow} from 'enzyme';
+jest.mock('react-dom');
 import LiveJSX from './LiveJSX';
 
 /**
@@ -45,9 +46,10 @@ describe('LiveJSX', function testLiveJSX() {
       }
     );
 
-    const wrapper = shallow(<LiveJSX template="the_template.url"/>);
+    const wrapper = shallow(<LiveJSX />);
+    wrapper.setProps({template: "the_template.url"});
     bound({data: 'TEMPLATE'});
-    wrapper.update();
+    wrapper.setProps({}); // update component again (wrapper.update() seems not executing the life cycle)
     expect(wrapper.html()).toBe('<div>JSX</div>');
     expect(Babel.transform.mock.calls[0]).toEqual(['TEMPLATE', {presets: ['react']}]);
   });

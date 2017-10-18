@@ -22,10 +22,11 @@
 .settings-label {
     width: 40%;
     float: left;
+    color: var(--mdc-theme-text-primary-on-primary-light);
 }
 
 .settings-content {
-    width: 100% !important;
+    width: 100%;
 }
 
 .settings-content .mdc-select {
@@ -34,7 +35,7 @@
 
 @media (min-width: 840px) {
     .settings-content {
-        width: 60% !important;
+        width: 60%;
         float: left;
     }
     .settings-content .mdc-select {

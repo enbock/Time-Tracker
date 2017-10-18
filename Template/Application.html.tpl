@@ -1,5 +1,6 @@
 <div class="page-wrapper mdc-typography">
     <Style src="/Style/Application.css"/>
+    <Style src="/Style/Themes/Google.css" comment="TODO #2 Style Manager here"/>
     <div class="content">
         <header class="mdc-toolbar mdc-elevation--z4">
             <div class="mdc-toolbar__row">

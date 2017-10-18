@@ -41,7 +41,7 @@
                         <div class="mdc-simple-menu mdc-select__menu">
                             <ul class="mdc-list mdc-simple-menu__items">
                                 <li class="mdc-list-item" role="option" id="default" tabIndex="0">
-                                    Standard
+                                    Google
                                 </li>
                                 <li class="mdc-list-item" role="option" id="codefrog" tabIndex="0">
                                     Codefrog

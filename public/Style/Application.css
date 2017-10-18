@@ -11,6 +11,14 @@ body {
     height: 100vh;
 }
 
+.content {
+    background-color: var(--mdc-theme-background);
+}
+
+.mdc-card {
+    background-color: var(--mdc-theme-secondary-light);
+}
+
 /**
  * Put drawer under the toolbar.
  */

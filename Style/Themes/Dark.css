@@ -16,11 +16,11 @@
     --mdc-theme-text-disabled-on-primary: hsla(0,0%,100%,.5);
     --mdc-theme-text-icon-on-primary: hsla(0,0%,100%,.5);
 
-    --mdc-theme-text-primary-on-primary-light: hsla(0,0%,0%,.87);
-    --mdc-theme-text-secondary-on-primary-light: hsla(0,0%,0%,.54);
-    --mdc-theme-text-hint-on-primary-light: hsla(0,0%,0%,.38);
-    --mdc-theme-text-disabled-on-primary-light: hsla(0,0%,0%,.38);
-    --mdc-theme-text-icon-on-primary-light: hsla(0,0%,0%,.38);
+    --mdc-theme-text-primary-on-primary-light: hsla(0,0%,100%,.87);
+    --mdc-theme-text-secondary-on-primary-light: hsla(0,0%,100%,.54);
+    --mdc-theme-text-hint-on-primary-light: hsla(0,0%,100%,.38);
+    --mdc-theme-text-disabled-on-primary-light: hsla(0,0%,100%,.38);
+    --mdc-theme-text-icon-on-primary-light: hsla(0,0%,100%,.38);
 
     --mdc-theme-text-primary-on-primary-dark: hsla(0,0%,100%,.87);
     --mdc-theme-text-secondary-on-primary-dark: hsla(0,0%,100%,.7);
@@ -54,9 +54,9 @@
 
     --mdc-theme-text-primary-on-light: hsla(0,0%,0%,.87);
     --mdc-theme-text-secondary-on-light: hsla(0,0%,0%,.7);
-    --mdc-theme-text-hint-on-light: hsla(0,0%,0%,.5);
-    --mdc-theme-text-disabled-on-light: hsla(0,0%,0%,.5);
-    --mdc-theme-text-icon-on-light: hsla(0,0%,0%,.5);
+    --mdc-theme-text-hint-on-light: hsla(0,0%,100%,.5);
+    --mdc-theme-text-disabled-on-light: hsla(0,0%,100%,.5);
+    --mdc-theme-text-icon-on-light: hsla(0,0%,100%,.5);
 
     --mdc-theme-text-primary-on-dark: #fff;
     --mdc-theme-text-secondary-on-dark: hsla(0,0%,100%,.7);

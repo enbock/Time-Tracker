@@ -322,6 +322,8 @@ module.exports = {
       navigateFallbackWhitelist: [/^(?!\/__).*/],
       staticFileGlobs: [
         'public/Style/**.*',
+        'public/Style/Menu/**.*',
+        'public/Style/Themes/**.*',
         'public/font/**.*',
         'public/lib/**.*',
         'public/**.png',

@@ -30,6 +30,13 @@ class Application extends Component {
     };
   }
 
+  get components() {
+    return {
+      MainMenu:      Menu.Main,
+      ThemesManager: Settings.ThemesManager
+    };
+  }
+
   /**
    * Constructor.
    *
@@ -40,10 +47,6 @@ class Application extends Component {
   constructor(props, context, updater) {
     super(props, context, updater);
 
-    this.components = {
-      MainMenu: Menu.Main
-    };
-
     this.state = Object.assign(
       this.state,
       {
@@ -52,7 +55,8 @@ class Application extends Component {
           page: 'none',
           root: process.env.PUBLIC_URL
         },
-        pathname:         ''
+        pathname:         '',
+        theme:            'google'
       }
     );
 
@@ -92,6 +96,10 @@ class Application extends Component {
         history:  event.state
       }
     );
+  }
+
+  onThemesChange(name) {
+    this.setState({theme: name});
   }
 
   /**
@@ -170,7 +178,7 @@ class Application extends Component {
     {
       case 'settings':
         nextState.currentComponent = (
-            <Settings/>
+          <Settings onThemesChange={this.onThemesChange.bind(this)}/>
         );
         break;
       default:

@@ -58,6 +58,8 @@ describe('Application', function testApplication() {
     bound({data: 'TEMPLATE'});
     wrapper.update();
 
+    expect(instance.components).toBeDefined();
+
     // Template loaded?
     expect(success).toBe(true);
   });
@@ -139,5 +141,18 @@ describe('Application', function testApplication() {
     expect(instance.state.pathname).toBe('/');
     expect(instance.state.history.page).toBe('index');
     expect(instance.state.history.root).toBe('');
+  });
+
+  /**
+   * Test kinds of redirection.
+   */
+  it('Change the theme', function testRouterRedirect() {
+    const wrapper  = shallow(<Application/>);
+    const instance = wrapper.instance();
+    bound({data: 'TEMPLATE'});
+    wrapper.update();
+
+    instance.onThemesChange('new');
+    expect(instance.state.theme).toBe('new');
   });
 });

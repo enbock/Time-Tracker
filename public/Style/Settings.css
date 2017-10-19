@@ -22,7 +22,7 @@
 .settings-label {
     width: 40%;
     float: left;
-    color: var(--mdc-theme-text-primary-on-primary-light);
+    color: var(--mdc-theme-text-primary-on-secondary-light);
 }
 
 .settings-content {

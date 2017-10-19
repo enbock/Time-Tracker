@@ -2,7 +2,7 @@
     <aside class="mdc-temporary-drawer">
         <Style src="/Style/Menu/Main.css"/>
         <nav class="mdc-temporary-drawer__drawer">
-            <div class="mdc-temporary-drawer__toolbar-spacer"></div>
+            <div class="mdc-temporary-drawer__toolbar-spacer" style={{borderColor:'rgba(0,0,0,0)'}}></div>
             <div class="mdc-list-group">
                 <nav class="mdc-list">
                     <a

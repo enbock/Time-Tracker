@@ -10,13 +10,14 @@ jest.mock('react-dom');
  * Test Settings Container.
  */
 describe('Settings Page', function testSettings() {
+  let bound, templateLoaded, promise;
 
   /**
-   * Test change language.
+   * Test setup.
    */
-  it('Change language', function () {
-    let bound     = null;
-    const promise = {
+  beforeEach(function setup() {
+    bound     = null;
+    promise = {
       then:  function onThen(callback) {
         bound = callback;
         return promise;
@@ -26,7 +27,7 @@ describe('Settings Page', function testSettings() {
       }
     };
 
-    let templateLoaded = false;
+    templateLoaded = false;
 
     mockAxiosAction(
       'get',
@@ -37,8 +38,20 @@ describe('Settings Page', function testSettings() {
         return promise;
       }
     );
+  });
 
-    const wrapper = shallow(<Settings/>);
+  /**
+   * Test change language.
+   */
+  it('Change language', function () {
+    /**
+     * Checker for change.
+     */
+    function changeHelper() {
+
+    }
+
+    const wrapper = shallow(<Settings onThemesChange={changeHelper}/>);
     let instance  = wrapper.instance();
     bound({data: 'TEMPLATE'});
     wrapper.setProps({});
@@ -53,5 +66,34 @@ describe('Settings Page', function testSettings() {
     );
 
     wrapper.unmount();
+  });
+
+  /**
+   * Test change color.
+   */
+  it('Change language', function () {
+    let theme = '';
+    /**
+     * Checker for change.
+     */
+    function changeHelper(value) {
+      theme = value;
+    }
+    const wrapper = shallow(<Settings onThemesChange={changeHelper}/>);
+    let instance  = wrapper.instance();
+    bound({data: 'TEMPLATE'});
+    wrapper.setProps({});
+
+    instance.onSelectionChange(
+      {
+        name:            'color',
+        selectedOptions: ['google'],
+        selectedIndex:   1,
+        value:           'google'
+      }
+    );
+
+    expect(theme).toBe('google');
+
   });
 });

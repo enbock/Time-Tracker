@@ -15,6 +15,16 @@ body {
     background-color: var(--mdc-theme-background);
 }
 
+/**
+ * Lists
+ */
+.mdc-temporary-drawer--selected.mdc-list-item {
+    color: var(--mdc-theme-text-secondary-on-primary-light)
+}
+
+/**
+ * Cards
+ */
 .mdc-card {
     background-color: var(--mdc-theme-secondary-light);
 }

@@ -1,6 +1,9 @@
 <div class="page-wrapper mdc-typography">
     <Style src="/Style/Application.css"/>
-    <Style src="/Style/Themes/Google.css" comment="TODO #2 Style Manager here"/>
+    <this.components.ThemesManager
+            theme={this.state.theme}
+            themes={{'google':'Google.css', 'codefrog':'Codefrog.css', 'dark':'Dark.css'}}
+    />
     <div class="content">
         <header class="mdc-toolbar mdc-elevation--z4">
             <div class="mdc-toolbar__row">

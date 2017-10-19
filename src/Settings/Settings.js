@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Component from '../Shared/LiveJSX';
 
 /**
@@ -15,6 +16,16 @@ class Settings extends Component {
   }
 
   /**
+   * Define properties.
+   * @returns {Object}
+   */
+  static get propTypes() {
+    return {
+      onThemesChange: PropTypes.func.isRequired
+    };
+  }
+
+  /**
    * On Selection change.
    *
    * @param {Object} event
@@ -22,6 +33,11 @@ class Settings extends Component {
    * @see ../Shared/Select.onChange
    */
   onSelectionChange(event) {
+    switch (event.name) {
+      case 'color':
+        this.props.onThemesChange(event.value);
+        break;
+    }
   }
 }
 

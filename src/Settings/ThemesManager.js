@@ -1,11 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Style from '../Shared/Style';
 
-/**
- * An CSS file loader and importer.
- */
-class Style extends React.Component {
-
+class ThemesManager extends React.Component {
   /**
    * Define properties.
    *
@@ -13,8 +10,8 @@ class Style extends React.Component {
    */
   static get propTypes() {
     return {
-      src:     PropTypes.string.isRequired,
-      enabled: PropTypes.bool
+      themes: PropTypes.object.isRequired,
+      theme: PropTypes.string.isRequired
     };
   }
 
@@ -27,15 +24,18 @@ class Style extends React.Component {
    */
   constructor(props, context, updater) {
     super(props, context, updater);
-
-    this.state = {
-      publicUrl: process.env.PUBLIC_URL || ''
-    };
   }
 
+  /**
+   * Create output for load css file.
+   *
+   * @returns {XML}
+   */
   render() {
-    return <link rel="stylesheet" href={this.props.enabled === false ? '' : this.state.publicUrl + this.props.src}/>;
+    let file = this.props.themes[this.props.theme];
+
+    return <Style src={"/Style/Themes/" + file} />;
   }
 }
 
-export default Style;
+export default ThemesManager;

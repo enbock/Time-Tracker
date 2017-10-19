@@ -40,8 +40,8 @@
                         <span class="mdc-select__selected-text">Standard</span>
                         <div class="mdc-simple-menu mdc-select__menu">
                             <ul class="mdc-list mdc-simple-menu__items">
-                                <li class="mdc-list-item" role="option" id="default" tabIndex="0">
-                                    Standard
+                                <li class="mdc-list-item" role="option" id="google" tabIndex="0">
+                                    Google
                                 </li>
                                 <li class="mdc-list-item" role="option" id="codefrog" tabIndex="0">
                                     Codefrog

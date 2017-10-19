@@ -119,7 +119,7 @@ module.exports = {
               presets: ['react'],
               plugins: []
             }
-          }/*,
+          },
           {
             options: {
               formatter:  eslintFormatter,
@@ -127,7 +127,7 @@ module.exports = {
 
             },
             loader:  require.resolve('eslint-loader')
-          }*/
+          }
         ],
         include: paths.appSrc,
       },
@@ -165,7 +165,7 @@ module.exports = {
           // "style" loader turns CSS into JS modules that inject <style> tags.
           // In production, we use a plugin to extract that CSS to a file, but
           // in development "style" loader enables hot editing of CSS.
-          {
+          /*{
             test: /\.css$/,
             use: [
               require.resolve('style-loader'),
@@ -196,7 +196,7 @@ module.exports = {
                 },
               },
             ],
-          },
+          },*/
           // "file" loader makes sure those assets get served by WebpackDevServer.
           // When you `import` an asset, you get its (virtual) filename.
           // In production, they would get copied to the `build` folder.

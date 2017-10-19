@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
     * Add main menu drawer.
     * Add router (History API) integration.
     * Add style loader.
+* [#2] Style Manager.
     
 ### Changed
 * [#1] Replace MDL with MDC.

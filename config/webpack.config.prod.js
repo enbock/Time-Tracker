@@ -119,13 +119,20 @@ module.exports = {
         enforce: 'pre',
         use: [
           {
+            loader:  'babel-loader',
+            options: {
+              presets: ['react'],
+              plugins: []
+            }
+          }/*,
+          {
             options: {
               formatter: eslintFormatter,
               eslintPath: require.resolve('eslint'),
 
             },
             loader: require.resolve('eslint-loader'),
-          },
+          }*/
         ],
         include: paths.appSrc,
       },

@@ -112,7 +112,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         enforce: 'pre',
-        use: [
+        use:     [
           {
             loader:  'babel-loader',
             options: {
@@ -120,14 +120,14 @@ module.exports = {
               plugins: []
             }
           }/*,
-           {
-           options: {
-           formatter: eslintFormatter,
-           eslintPath: require.resolve('eslint'),
+          {
+            options: {
+              formatter:  eslintFormatter,
+              eslintPath: require.resolve('eslint')
 
-           },
-           loader: require.resolve('eslint-loader'),
-           }*/
+            },
+            loader:  require.resolve('eslint-loader')
+          }*/
         ],
         include: paths.appSrc,
       },

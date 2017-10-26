@@ -29,6 +29,7 @@
                 Root: {this.state.history.root}<br/>
                 Page: {this.state.history.page}<br/>
                 Path: {this.state.pathname}<br/>
+                TTI: {window.performance.timing.domInteractive - window.performance.timing.requestStart}ms
             </pre>
         </main>
     </div>

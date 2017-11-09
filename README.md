@@ -1,6 +1,7 @@
 # Time Tracker
 ![CircleCI](./doc/assets/circle-logo-horizontal-black-66x18.svg)
 [![CircleCI](https://circleci.com/gh/enbock/Time-Tracker.svg?style=svg)](https://circleci.com/gh/enbock/Time-Tracker)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/enbock/Time-Tracker/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/enbock/Time-Tracker/?branch=develop)
 
 A progressive web app to track working time.
 

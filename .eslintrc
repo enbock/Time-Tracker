@@ -8,15 +8,7 @@
   },
   "rules": {
     "semi": 2,
-    "no-console": [
-      "error",
-      {
-        "allow": [
-          "warn",
-          "error"
-        ]
-      }
-    ]
+    "no-console": 2
   },
   "env": {
     "browser": true,

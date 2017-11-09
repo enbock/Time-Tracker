@@ -57,6 +57,7 @@ measureFileSizesBeforeBuild(paths.appBuild)
   .then(
     ({ stats, previousFileSizes, warnings }) => {
       if (warnings.length) {
+        /* eslint no-console: ["error", { allow: ["log", "warn", "error"] }] */
         console.log(chalk.yellow('Compiled with warnings.\n'));
         console.log(warnings.join('\n\n'));
         console.log(
@@ -70,6 +71,7 @@ measureFileSizesBeforeBuild(paths.appBuild)
             ' to the line before.\n'
         );
       } else {
+        /* eslint no-console: ["error", { allow: ["log", "warn", "error"] }] */
         console.log(chalk.green('Compiled successfully.\n'));
       }
 

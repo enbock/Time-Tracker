@@ -87,6 +87,7 @@ class LiveJSX extends React.Component {
 
     this.loadedTemplateUrl = url;
 
+    /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
     Axios.get(url)
       .then(response => this.onTemplate(response))
       .catch(error => console.error(error));

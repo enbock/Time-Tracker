@@ -100,7 +100,7 @@ class MainMenu extends Component
    *
    * *Notice:* MDC Drawer caches the event, so take them from low level.
    */
-  onTemplateMounted(domNode) {
+  onTemplateMounted() {
     this.refs.settingsMenu.addEventListener('click', this.boundMenuSettingsClick);
     this.adapter.registerMenuToggleHandler(this.boundToggleMenu);
   }

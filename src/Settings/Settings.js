@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import Component from '../Shared/LiveJSX';
 
@@ -36,6 +35,8 @@ class Settings extends Component {
     switch (event.name) {
       case 'color':
         this.props.onThemesChange(event.value);
+        break;
+      default:
         break;
     }
   }

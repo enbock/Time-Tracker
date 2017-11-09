@@ -1,5 +1,7 @@
 'use strict';
 
+/* eslint no-console: ["error", { allow: ["log", "warn", "error"] }] */
+
 // Do this as the first thing so that any code reading it knows the right env.
 process.env.BABEL_ENV = 'development';
 process.env.NODE_ENV = 'development';
@@ -36,7 +38,7 @@ const isInteractive = process.stdout.isTTY;
 
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
-  process.exit(1);
+  process.exit();
 }
 
 // Tools like Cloud9 rely on this.
@@ -88,5 +90,5 @@ choosePort(HOST, DEFAULT_PORT)
     if (err && err.message) {
       console.log(err.message);
     }
-    process.exit(1);
+    process.exit();
   });

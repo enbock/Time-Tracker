@@ -8,7 +8,7 @@
 // To learn more about the benefits of this model, read https://goo.gl/KwvDNy.
 // This link also includes instructions on opting out of this behavior.
 
-/* eslint no-console: ["error", { allow: ["log", "warn", "error"] }] */
+/* global: navigator */
 
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
@@ -59,6 +59,7 @@ function registerValidSW(swUrl) {
               // It's the perfect time to display a "New content is
               // available; please refresh." message in your web app.
               // TODO
+              /* eslint no-console: ["error", { allow: ["log", "warn", "error"] }] */
               console.log('New content is available; please refresh.');
               global.location.reload();
             } else {
@@ -66,6 +67,7 @@ function registerValidSW(swUrl) {
               // It's the perfect time to display a
               // "Content is cached for offline use." message.
               // TODO
+              /* eslint no-console: ["error", { allow: ["log", "warn", "error"] }] */
               console.log('Content is cached for offline use.');
             }
           }
@@ -98,6 +100,7 @@ function checkValidServiceWorker(swUrl) {
       }
     })
     .catch(() => {
+      /* eslint no-console: ["error", { allow: ["log", "warn", "error"] }] */
       console.log(
         'No internet connection found. App is running in offline mode.'
       );

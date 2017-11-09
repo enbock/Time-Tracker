@@ -1,3 +1,5 @@
+/* global: jest, Babel */
+
 import 'raf/polyfill';
 import 'jest-enzyme';
 import Enzyme from 'enzyme';

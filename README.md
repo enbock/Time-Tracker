@@ -4,6 +4,7 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/enbock/Time-Tracker/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/enbock/Time-Tracker/)
 [![Code Coverage](https://scrutinizer-ci.com/g/enbock/Time-Tracker/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/enbock/Time-Tracker/)
 [![Build Status](https://scrutinizer-ci.com/g/enbock/Time-Tracker/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/enbock/Time-Tracker/build-status/)
+[![Floobits Status](https://floobits.com/enbock/Time-Tracker.svg)](https://floobits.com/enbock/Time-Tracker/redirect)
 
 A progressive web app to track working time.
 

@@ -44,16 +44,16 @@ class Select extends React.Component {
    */
   componentDidMount() {
     this.domNode     = ReactDOM.findDOMNode(this);
-    this.boundChnage = this.onChange.bind(this);
+    this.boundChange = this.onChange.bind(this);
     this.select      = new MDCSelect(this.domNode);
-    this.select.listen('MDCSelect:change', this.boundChnage);
+    this.select.listen('MDCSelect:change', this.boundChange);
   }
 
   /**
    * Disconnect from MDC.
    */
   componentWillUnmount() {
-    this.select.unlisten('MDCSelect:change', this.boundChnage);
+    this.select.unlisten('MDCSelect:change', this.boundChange);
     this.select.destroy();
     this.select = undefined;
   }

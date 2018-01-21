@@ -45,12 +45,12 @@ class Drawer extends React.Component {
   componentDidMount() {
     this.domNode = ReactDOM.findDOMNode(this);
     switch (this.props.className) {
-      case 'mdc-persistent-drawer':
+      case 'mdc-drawer--persistent':
         this.drawer = new MDC.MDCPersistentDrawer(this.domNode);
         this.domNode.addEventListener('MDCPersistentDrawer:open', this.onOpen.bind(this));
         this.domNode.addEventListener('MDCPersistentDrawer:close', this.onClose.bind(this));
         break;
-      case 'mdc-temporary-drawer':
+      case 'mdc-drawer--temporary':
         this.drawer = new MDC.MDCTemporaryDrawer(this.domNode);
         this.domNode.addEventListener('MDCTemporaryDrawer:open', this.onOpen.bind(this));
         this.domNode.addEventListener('MDCTemporaryDrawer:close', this.onClose.bind(this));

@@ -55,7 +55,7 @@ describe('MDC: Drawer', function testMDCDrawer() {
 
     let wrapper = shallow(
       <Drawer
-        className="mdc-temporary-drawer"
+        className="mdc-drawer--temporary"
         onOpen={() => wasOpen = true}
         onClose={() => wasClose = true}
       />
@@ -78,8 +78,6 @@ describe('MDC: Drawer', function testMDCDrawer() {
    * Test persistent drawer.
    */
   it('Connect persistent drawer', function testTemporaryDrawer() {
-    let wasOpen = false, wasClose = false;
-
     const domNode = {
       addEventListener: jest.fn()
     };
@@ -91,7 +89,7 @@ describe('MDC: Drawer', function testMDCDrawer() {
     MDC.mock.destroy.mockClear();
 
     let wrapper = shallow(
-      <Drawer className="mdc-persistent-drawer"/>
+      <Drawer className="mdc-drawer--persistent"/>
     );
     wrapper.setProps({open: true});
 
@@ -109,8 +107,6 @@ describe('MDC: Drawer', function testMDCDrawer() {
    * Test persistent drawer.
    */
   it('Do nothing on passive drawer', function testTemporaryDrawer() {
-    let wasOpen = false, wasClose = false;
-
     const domNode = {
       addEventListener: jest.fn()
     };
@@ -122,7 +118,7 @@ describe('MDC: Drawer', function testMDCDrawer() {
     MDC.mock.destroy.mockClear();
 
     let wrapper = shallow(
-      <Drawer className="mdc-permanent-drawer"/>
+      <Drawer className="mdc-drawer--permanent"/>
     );
     // Cover else branch
     wrapper.setProps({open: true});

@@ -70,6 +70,9 @@ class Application extends Component {
     this.boundPathChange = this.onPathChange.bind(this);
   }
 
+  /**
+   * Menu button click handler.
+   */
   onMainButtonClick() {
     this.registeredButtonHandler.forEach(handler => handler());
   }
@@ -137,7 +140,6 @@ class Application extends Component {
       root: process.env.PUBLIC_URL
     };
 
-    let found = false;
     // create history by pathname detection.
     for(let page in pages) {
       let index = pathname.indexOf(pages[page]);

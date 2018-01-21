@@ -7,40 +7,26 @@
     margin: 0 auto;
     padding-top: 10px;
 }
+
+/* Color of title */
 .setting-cart-container, .hint {
     color: var(--mdc-theme-text-hint-on-light);
 }
 
+/* Margin around each select */
 .settings-block {
     margin: var(--mdc-layout-grid-margin-desktop)
 }
 
-.settings-block .mdc-list-item {
-    height: auto;
-}
-
-.settings-label {
-    width: 40%;
-    float: left;
-    color: var(--mdc-theme-text-primary-on-secondary-light);
-}
-
-.settings-content {
+/* Full with of select */
+.settings-block .mdc-select {
     width: 100%;
 }
 
-.settings-content .mdc-select {
-    width: 100% !important;
-}
-
-@media (min-width: 840px) {
-    .settings-content {
-        width: 60%;
-        float: left;
-    }
-    .settings-content .mdc-select {
-        width: 100% !important;
-    }
+/* Correct size of icon */
+.settings-block .mdc-select .material-icons{
+    font-size: 100%;
+    padding-right: 6px;
 }
 
 

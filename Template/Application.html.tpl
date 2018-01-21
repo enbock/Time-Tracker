@@ -2,14 +2,14 @@
     <Style src="/Style/Application.css"/>
     <this.components.ThemesManager
             theme={this.state.theme}
-            themes={{'google':'Google.css', 'codefrog':'Codefrog.css', 'dark':'Dark.css'}}
+            themes={{google:'Google.css', codefrog:'Codefrog.css', dark:'Dark.css'}}
     />
     <div class="content">
         <header class="mdc-toolbar mdc-elevation--z4">
             <div class="mdc-toolbar__row">
                 <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
                     <a
-                            class="material-icons mdc-toolbar__icon--menu"
+                            class="material-icons mdc-toolbar__menu-icon"
                             onClick={this.onMainButtonClick.bind(this)}
                     >menu</a>
                     <span class="mdc-toolbar__title catalog-title">Time Tracker</span>

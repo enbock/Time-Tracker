@@ -5,6 +5,7 @@
             themes={{google:'Google.css', codefrog:'Codefrog.css', dark:'Dark.css'}}
     />
     <this.components.LanguageManager
+            language={this.state.language}
             languages={new Array('de_DE', 'en_US')}
     />
     <div class="content">

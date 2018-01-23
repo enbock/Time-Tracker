@@ -57,7 +57,8 @@ class Application extends Component {
           root: process.env.PUBLIC_URL
         },
         pathname:         '',
-        theme:            'google'
+        theme:            'google',
+        language:         'de_DE'
       }
     );
 

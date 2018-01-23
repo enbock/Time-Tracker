@@ -7,7 +7,7 @@
     </div>
     <div class="mdc-card">
         <div class="settings-block">
-            <MDC.Select onChange={this.onSelectionChange.bind(this)} name="language">
+            <MDC.Select onChange={this.onSelectionChange.bind(this)} id="language">
                 <div class="mdc-select" role="listbox">
                     <div class="mdc-select__surface" tabIndex="0">
                         <div class="mdc-select__label mdc-select__label--float-above">
@@ -19,10 +19,10 @@
                     </div>
                     <div class="mdc-simple-menu mdc-select__menu">
                         <ul class="mdc-list mdc-simple-menu__items">
-                            <li class="mdc-list-item" role="option" id="german" tabIndex="0" aria-selected="true">
+                            <li class="mdc-list-item" role="option" id="de_DE" tabIndex="0" aria-selected="true">
                                 Deutsch
                             </li>
-                            <li class="mdc-list-item" role="option" id="english" tabIndex="0">
+                            <li class="mdc-list-item" role="option" id="en_US" tabIndex="0">
                                 Englisch
                             </li>
                         </ul>
@@ -31,7 +31,7 @@
             </MDC.Select>
         </div>
         <div class="settings-block">
-            <MDC.Select onChange={this.onSelectionChange.bind(this)} name="color">
+            <MDC.Select onChange={this.onSelectionChange.bind(this)} id="color">
                 <div class="mdc-select" role="listbox">
                     <div class="mdc-select__surface" tabIndex="0">
                         <div class="mdc-select__label mdc-select__label--float-above">

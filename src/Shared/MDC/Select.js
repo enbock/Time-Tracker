@@ -14,7 +14,7 @@ class Select extends React.Component {
   static get propTypes() {
     return {
       onChange: PropTypes.func.isRequired,
-      name:     PropTypes.string.isRequired
+      id:       PropTypes.string.isRequired
     };
   }
 
@@ -25,13 +25,13 @@ class Select extends React.Component {
     let selectedOptions = [], index;
 
     // Convert options to array
-    const options       = this.select.selectedOptions;
+    const options = this.select.selectedOptions;
     for (index = 0; index < options.length; index++) {
       selectedOptions[index] = options[index].id;
     }
 
     const event = {
-      name:            this.props.name,
+      name:            this.props.id,
       selectedOptions: selectedOptions,
       selectedIndex:   this.select.selectedIndex,
       value:           this.select.value

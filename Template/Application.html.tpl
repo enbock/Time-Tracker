@@ -4,6 +4,9 @@
             theme={this.state.theme}
             themes={{google:'Google.css', codefrog:'Codefrog.css', dark:'Dark.css'}}
     />
+    <this.components.LanguageManager
+            languages={new Array('de_DE', 'en_US')}
+    />
     <div class="content">
         <header class="mdc-toolbar mdc-elevation--z4">
             <div class="mdc-toolbar__row">

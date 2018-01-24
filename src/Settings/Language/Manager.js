@@ -29,8 +29,7 @@ class Manager extends React.Component {
    */
   static get propTypes() {
     return {
-      language:  PropTypes.string.isRequired,
-      languages: PropTypes.array.isRequired
+      language: PropTypes.string.isRequired
     };
   }
 
@@ -52,7 +51,7 @@ class Manager extends React.Component {
    */
   componentWillUpdate(nextProps) {
     if (this.props.language !== nextProps.language) {
-      updateDomains(nextProps.language);
+      this.updateDomains(nextProps.language);
     }
   }
 
@@ -67,7 +66,7 @@ class Manager extends React.Component {
     const domain = adapter.getDomain();
 
     if (!this.domainList.hasOwnProperty(domain)) {
-      this.domainList[domain] = new Translator(adapter);
+      this.domainList[domain] = Translator.factory(adapter);
       this.domainList[domain].onChange(this.props.language);
     }
 

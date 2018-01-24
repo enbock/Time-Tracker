@@ -85,7 +85,7 @@ function registerValidSW(swUrl) {
    */
 }
 
-function onServiceWorkerValidationResponse(response) {
+function onServiceWorkerValidationResponse(response, swUrl) {
   // Ensure service worker exists, and that we really are getting a JS file.
   if (
     response.status === 404 ||
@@ -105,7 +105,7 @@ function onServiceWorkerValidationResponse(response) {
 
 function checkValidServiceWorker(swUrl) {
   // Check if the service worker can be found. If it can't reload the page.
-  fetch(swUrl).then(onServiceWorkerValidationResponse)
+  fetch(swUrl).then(response => onServiceWorkerValidationResponse(response, swUrl))
   /*
    .catch(() => {
    console.log(

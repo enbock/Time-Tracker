@@ -25,7 +25,7 @@ class Settings extends Component {
     super(props, context, updater);
 
     this.languageAdapter = {
-      onChange:  this.onLanguageChange.bind(this),
+      onChange:  this.onLanguageLoaded.bind(this),
       getDomain: () => 'Settings'
     };
   }
@@ -55,7 +55,7 @@ class Settings extends Component {
    *
    * @param {string} language
    */
-  onLanguageChange(language) {
+  onLanguageLoaded(language) {
     this.setState({language: language});
   }
 

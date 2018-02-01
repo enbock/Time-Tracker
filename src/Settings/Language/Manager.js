@@ -65,10 +65,8 @@ class Manager extends React.Component {
   setup(adapter) {
     const domain = adapter.getDomain();
 
-    if (!this.domainList.hasOwnProperty(domain)) {
-      this.domainList[domain] = Translator.factory(adapter);
-      this.domainList[domain].onChange(this.props.language);
-    }
+    this.domainList[domain] = Translator.factory(adapter);
+    this.domainList[domain].onChange(this.props.language);
 
     return this.domainList[domain];
   }

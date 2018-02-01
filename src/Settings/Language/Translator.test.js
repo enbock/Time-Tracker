@@ -1,3 +1,5 @@
+/** global: jest */
+
 import {mockAxiosAction} from 'axios';
 import React from 'react';
 import Translator from './Translator';

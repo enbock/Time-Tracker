@@ -1,3 +1,5 @@
+/** global: jest */
+
 import {mockAxiosAction} from 'axios';
 import React from 'react';
 import {shallow} from 'enzyme';
@@ -10,13 +12,13 @@ jest.mock('react-dom');
  * Test Settings Container.
  */
 describe('Settings Page', function testSettings() {
-  let bound, templateLoaded, promise;
+  let bound, promise;
 
   /**
    * Test setup.
    */
   beforeEach(function setup() {
-    bound     = null;
+    bound   = null;
     promise = {
       then:  function onThen(callback) {
         bound = callback;
@@ -27,13 +29,10 @@ describe('Settings Page', function testSettings() {
       }
     };
 
-    templateLoaded = false;
-
     mockAxiosAction(
       'get',
       function onRequest(url) {
         expect(url).toBe('/Template/Settings.html.tpl');
-        templateLoaded = true;
 
         return promise;
       }
@@ -44,18 +43,32 @@ describe('Settings Page', function testSettings() {
    * Test change language.
    */
   it('Change language', function () {
+    let language = '';
+
     /**
      * Checker for change.
      */
-    function changeHelper() {
-
+    function changeHelper(lang) {
+      language = lang;
     }
 
-    const wrapper = shallow(<Settings onThemesChange={changeHelper}/>);
+    const lang = {
+      setup: function (adapter) {
+        adapter.onChange('test');
+        expect(adapter.getDomain()).toBe('Settings');
+      }
+    };
+
+    const wrapper = shallow(<Settings lang={lang} onThemesChange={jest.fn()} onLanguageChange={changeHelper}/>);
     let instance  = wrapper.instance();
     bound({data: 'TEMPLATE'});
     wrapper.setProps({});
 
+    instance.onSelectionChange(
+      {
+        name: 'dummy'
+      }
+    );
     instance.onSelectionChange(
       {
         name:            'language',
@@ -64,6 +77,8 @@ describe('Settings Page', function testSettings() {
         value:           'german'
       }
     );
+    expect(instance.state.language).toBe('test');
+    expect(language).toBe('german');
 
     wrapper.unmount();
   });
@@ -71,15 +86,21 @@ describe('Settings Page', function testSettings() {
   /**
    * Test change color.
    */
-  it('Change language', function () {
+  it('Change theme', function () {
     let theme = '';
+
     /**
      * Checker for change.
      */
     function changeHelper(value) {
       theme = value;
     }
-    const wrapper = shallow(<Settings onThemesChange={changeHelper}/>);
+
+    const wrapper = shallow(<Settings
+      lang={{setup: jest.fn()}}
+      onThemesChange={changeHelper}
+      onLanguageChange={jest.fn()}
+    />);
     let instance  = wrapper.instance();
     bound({data: 'TEMPLATE'});
     wrapper.setProps({});

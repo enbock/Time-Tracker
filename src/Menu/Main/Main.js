@@ -8,36 +8,13 @@ import emptyFunction from 'fbjs/lib/emptyFunction';
  * This menu should show the menu button.
  * Also it contain the menu menu which appear on left side.
  */
-class MainMenu extends Component
-{
+class Main extends Component {
   /**
    * Place of main menu layout.
    * @returns {string}
    */
   static get template() {
     return '/Template/Menu/Main.html.tpl';
-  }
-
-  /**
-   * Supported property types.
-   */
-  static get propTypes() {
-    return {
-      adapter:   PropTypes.object,
-      onMenu:    PropTypes.func
-    };
-  }
-
-  /**
-   * Default adapter to interact with outer world.
-   *
-   * @returns {Object}
-   */
-  static get defaultAdapter() {
-    return {
-      registerMenuToggleHandler:   emptyFunction,
-      deregisterMenuToggleHandler: emptyFunction
-    };
   }
 
   /**
@@ -61,12 +38,40 @@ class MainMenu extends Component
      * @type {MainMenu.defaultAdapter}
      */
     this.adapter = Object.assign(
-      MainMenu.defaultAdapter,
+      Main.defaultAdapter,
       props.adapter
     );
 
     this.boundToggleMenu        = this.toggleMenu.bind(this);
     this.boundMenuSettingsClick = this.onMenuClick.bind(this, 'settings');
+
+    this.languageAdapter = {
+      onChange:  this.onLanguageChange.bind(this),
+      getDomain: () => 'Menu/Main'
+    };
+  }
+
+  /**
+   * Default adapter to interact with outer world.
+   *
+   * @returns {Object}
+   */
+  static get defaultAdapter() {
+    return {
+      registerMenuToggleHandler:   emptyFunction,
+      deregisterMenuToggleHandler: emptyFunction
+    };
+  }
+
+  /**
+   * Supported property types.
+   */
+  static get propTypes() {
+    return {
+      lang:    PropTypes.object.isRequired,
+      adapter: PropTypes.object,
+      onMenu:  PropTypes.func
+    };
   }
 
   /**
@@ -81,6 +86,15 @@ class MainMenu extends Component
    */
   closeMenu() {
     this.setState({open: false});
+  }
+
+  /**
+   * Draw component after language loaded.
+   *
+   * @param {string} language
+   */
+  onLanguageChange(language) {
+    this.setState({language: language});
   }
 
   /**
@@ -106,6 +120,14 @@ class MainMenu extends Component
   }
 
   /**
+   * Setup language on mount.
+   */
+  componentWillMount() {
+    super.componentWillMount();
+    this.lang = this.props.lang.setup(this.languageAdapter);
+  }
+
+  /**
    * Release interaction connections.
    */
   componentWillUnmount() {
@@ -114,4 +136,4 @@ class MainMenu extends Component
   }
 }
 
-export default MainMenu;
+export default Main;

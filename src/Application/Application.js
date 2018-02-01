@@ -30,11 +30,15 @@ class Application extends Component {
     };
   }
 
+  /**
+   * Enable components for template.
+   *
+   * @returns {Object}
+   */
   get components() {
     return {
-      MainMenu:        Menu.Main,
-      ThemesManager:   Settings.ThemesManager,
-      LanguageManager: Settings.Language.Manager
+      MainMenu:      Menu.Main,
+      ThemesManager: Settings.ThemesManager
     };
   }
 
@@ -103,8 +107,22 @@ class Application extends Component {
     );
   }
 
+  /**
+   * Theme change handler.
+   *
+   * @param {string} name
+   */
   onThemesChange(name) {
     this.setState({theme: name});
+  }
+
+  /**
+   * Language change handler.
+   *
+   * @param {string} language
+   */
+  onLanguageChange(language) {
+    this.setState({language: language});
   }
 
   /**
@@ -130,7 +148,8 @@ class Application extends Component {
   }
 
   /**
-   * Decide the page
+   * Decide the page.
+   *
    * @param pathname
    */
   restorePageByPathName(pathname) {
@@ -159,7 +178,7 @@ class Application extends Component {
     }
 
     // actualize root pathname
-    history.root = process.env.PUBLIC_URL; //pathname.substr(0, pathname.lastIndexOf(pages[history.page]));
+    history.root = process.env.PUBLIC_URL;
 
     return history;
   }
@@ -181,13 +200,26 @@ class Application extends Component {
     switch (nextState.history.page) {
       case 'settings':
         nextState.currentComponent = (
-          <Settings onThemesChange={this.onThemesChange.bind(this)}/>
+          <Settings
+            onThemesChange={this.onThemesChange.bind(this)}
+            onLanguageChange={this.onLanguageChange.bind(this)}
+            lang={this.lang}
+          />
         );
         break;
       default:
         nextState.currentComponent = <div>Index</div>;
         break;
     }
+  }
+
+  /**
+   * Stores the reference of the language manager instance.
+   *
+   * @param {Manager} lang
+   */
+  storeLanguageManager(lang) {
+    this.lang = lang;
   }
 
   /**
@@ -205,6 +237,7 @@ class Application extends Component {
         />
         <Style src="/Style/google.css"/>
         <Style src="/Style/material-components-web.min.css"/>
+        <Settings.Language.Manager language={this.state.language} ref={this.storeLanguageManager.bind(this)}/>
         {super.render()}
       </div>
     );

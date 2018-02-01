@@ -76,7 +76,7 @@ describe('Application', function testApplication() {
   /**
    * Test if menu interaction works.
    */
-  it('Test menu interaction', function testLoadLayout() {
+  it('Test menu interaction', function testLMenuInteraction() {
     const wrapper     = shallow(<Application/>);
     const instance    = wrapper.instance();
     const buttonClick = jest.fn();
@@ -155,7 +155,7 @@ describe('Application', function testApplication() {
   /**
    * Test kinds of redirection.
    */
-  it('Change the theme', function testRouterRedirect() {
+  it('Change the theme', function testChangeTheme() {
     const wrapper  = shallow(<Application/>);
     const instance = wrapper.instance();
     bound({data: 'TEMPLATE'});
@@ -163,5 +163,22 @@ describe('Application', function testApplication() {
 
     instance.onThemesChange('new');
     expect(instance.state.theme).toBe('new');
+  });
+
+  /**
+   * Test kinds of redirection.
+   */
+  it('Store and change language', function testStoreAndChangeLanguage() {
+    const wrapper  = shallow(<Application/>);
+    const instance = wrapper.instance();
+    bound({data: 'TEMPLATE'});
+    wrapper.update();
+
+    instance.storeLanguageManager('manager');
+    expect(instance.lang).toBe('manager');
+
+
+    instance.onLanguageChange('new');
+    expect(instance.state.language).toBe('new');
   });
 });

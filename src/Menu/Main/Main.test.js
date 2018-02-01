@@ -1,8 +1,11 @@
+/** global: jest */
+
 import {mockAxiosAction} from 'axios';
 import React from 'react';
 import {shallow} from 'enzyme';
-jest.mock('react-dom');
 import Main from './Main';
+
+jest.mock('react-dom');
 
 
 /**
@@ -37,19 +40,26 @@ describe('Main Menu', function testMain() {
       }
     );
 
-    let wasMenu = "";
+    let wasMenu           = '';
     let registeredHandler = false;
 
-    const adapter =  {
-      registerMenuToggleHandler: (handler) => registeredHandler = handler,
+    const adapter = {
+      registerMenuToggleHandler:   (handler) => registeredHandler = handler,
       deregisterMenuToggleHandler: jest.fn()
     };
 
-    const wrapper = shallow(<Main adapter={adapter} className="test" onMenu={(menu) => wasMenu = menu}/>);
-    let instance = wrapper.instance();
+    const lang = {
+      setup: function (adapter) {
+        adapter.onChange('test');
+        expect(adapter.getDomain()).toBe('Menu/Main');
+      }
+    };
+
+    const wrapper = shallow(<Main lang={lang} adapter={adapter} className="test" onMenu={(menu) => wasMenu = menu}/>);
+    let instance  = wrapper.instance();
     instance.refs = {
       settingsMenu: {
-        addEventListener: jest.fn(),
+        addEventListener:    jest.fn(),
         removeEventListener: jest.fn()
       }
     };
@@ -58,18 +68,18 @@ describe('Main Menu', function testMain() {
 
     expect(success).toBe(true);
     expect(registeredHandler).not.toBe(false);
+    expect(instance.state.language).toBe('test');
     registeredHandler();
 
-    instance.onMenuClick("one");
-    expect(wasMenu).toBe("one");
+    instance.onMenuClick('one');
+    expect(wasMenu).toBe('one');
 
     wrapper.unmount();
     expect(instance.refs.settingsMenu.removeEventListener).toHaveBeenCalled();
 
-
     // cover else path
-    const wrapperCov = shallow(<Main className="test"/>);
-    instance = wrapperCov.instance();
-    instance.onMenuClick("two");
+    const wrapperCov = shallow(<Main lang={lang} className="test"/>);
+    instance         = wrapperCov.instance();
+    instance.onMenuClick('two');
   });
 });

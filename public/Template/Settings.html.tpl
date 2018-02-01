@@ -2,7 +2,7 @@
     <Style src="/Style/Settings.css"/>
     <div class="mdc-card__horizontal-block">
         <div class="mdc-card__actions mdc-typography--body2 hint">
-            Sprache und Farbe
+            {this.lang.translate('settingBox.title')}
         </div>
     </div>
     <div class="mdc-card">
@@ -12,18 +12,18 @@
                     <div class="mdc-select__surface" tabIndex="0">
                         <div class="mdc-select__label mdc-select__label--float-above">
                             <i class="material-icons" aria-hidden="true">language</i>
-                            Sprache wählen
+                            {this.lang.translate('settingBox.selection.lang.title')}
                         </div>
-                        <div class="mdc-select__selected-text"></div>
+                        <div class="mdc-select__selected-text">TODO</div>
                         <div class="mdc-select__bottom-line"></div>
                     </div>
                     <div class="mdc-simple-menu mdc-select__menu">
                         <ul class="mdc-list mdc-simple-menu__items">
                             <li class="mdc-list-item" role="option" id="de_DE" tabIndex="0" aria-selected="true">
-                                Deutsch
+                                {this.lang.translate('settingBox.selection.lang.german')}
                             </li>
                             <li class="mdc-list-item" role="option" id="en_US" tabIndex="0">
-                                Englisch
+                                {this.lang.translate('settingBox.selection.lang.english')}
                             </li>
                         </ul>
                     </div>
@@ -36,21 +36,21 @@
                     <div class="mdc-select__surface" tabIndex="0">
                         <div class="mdc-select__label mdc-select__label--float-above">
                             <i class="material-icons" aria-hidden="true">palette</i>
-                            Farbschema
+                            {this.lang.translate('settingBox.selection.color.title')}
                         </div>
-                        <div class="mdc-select__selected-text">Google</div>
+                        <div class="mdc-select__selected-text">TODO</div>
                         <div class="mdc-select__bottom-line"></div>
                     </div>
                     <div class="mdc-simple-menu mdc-select__menu">
                         <ul class="mdc-list mdc-simple-menu__items">
                             <li class="mdc-list-item" role="option" id="google" tabIndex="0" aria-selected="true">
-                                Google
+                                {this.lang.translate('settingBox.selection.color.google')}
                             </li>
                             <li class="mdc-list-item" role="option" id="codefrog" tabIndex="0">
-                                Codefrog
+                                {this.lang.translate('settingBox.selection.color.codefrog')}
                             </li>
                             <li class="mdc-list-item" role="option" id="dark" tabIndex="0">
-                                Dunkel
+                                {this.lang.translate('settingBox.selection.color.dark')}
                             </li>
                         </ul>
                     </div>

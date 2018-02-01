@@ -25,11 +25,16 @@ class Application extends Component {
    */
   static get routes() {
     return {
-      index: '/',
+      index:    '/',
       settings: '/settings/' // option page
     };
   }
 
+  /**
+   * Enable components for template.
+   *
+   * @returns {Object}
+   */
   get components() {
     return {
       MainMenu:      Menu.Main,
@@ -56,7 +61,8 @@ class Application extends Component {
           root: process.env.PUBLIC_URL
         },
         pathname:         '',
-        theme:            'google'
+        theme:            'google',
+        language:         'de_DE'
       }
     );
 
@@ -83,7 +89,7 @@ class Application extends Component {
   onMenuChange(menu) {
     // TODO: router stuff here?
     const history = this.state.history;
-    history.page = menu;
+    history.page  = menu;
     this.setState({history: history});
   }
 
@@ -101,8 +107,22 @@ class Application extends Component {
     );
   }
 
+  /**
+   * Theme change handler.
+   *
+   * @param {string} name
+   */
   onThemesChange(name) {
     this.setState({theme: name});
+  }
+
+  /**
+   * Language change handler.
+   *
+   * @param {string} language
+   */
+  onLanguageChange(language) {
+    this.setState({language: language});
   }
 
   /**
@@ -128,11 +148,12 @@ class Application extends Component {
   }
 
   /**
-   * Decide the page
+   * Decide the page.
+   *
    * @param pathname
    */
   restorePageByPathName(pathname) {
-    const pages  = Application.routes;
+    const pages = Application.routes;
 
     // fallback
     let history = {
@@ -141,13 +162,13 @@ class Application extends Component {
     };
 
     // create history by pathname detection.
-    for(let page in pages) {
+    for (let page in pages) {
       let index = pathname.indexOf(pages[page]);
       /**
        * Check if in path and goes to end.
        * TODO: When data attached to path, is it needed to change this logic.
        */
-      if(index !== -1 && pages[page].length + index === pathname.length) {
+      if (index !== -1 && pages[page].length + index === pathname.length) {
         history = {
           page: page
         };
@@ -157,7 +178,7 @@ class Application extends Component {
     }
 
     // actualize root pathname
-    history.root = process.env.PUBLIC_URL ; //pathname.substr(0, pathname.lastIndexOf(pages[history.page]));
+    history.root = process.env.PUBLIC_URL;
 
     return history;
   }
@@ -176,17 +197,29 @@ class Application extends Component {
     nextState.pathname = nextState.history.root + Application.routes[nextState.history.page];
 
     // Select component
-    switch(nextState.history.page)
-    {
+    switch (nextState.history.page) {
       case 'settings':
         nextState.currentComponent = (
-          <Settings onThemesChange={this.onThemesChange.bind(this)}/>
+          <Settings
+            onThemesChange={this.onThemesChange.bind(this)}
+            onLanguageChange={this.onLanguageChange.bind(this)}
+            lang={this.lang}
+          />
         );
         break;
       default:
         nextState.currentComponent = <div>Index</div>;
         break;
     }
+  }
+
+  /**
+   * Stores the reference of the language manager instance.
+   *
+   * @param {Manager} lang
+   */
+  storeLanguageManager(lang) {
+    this.lang = lang;
   }
 
   /**
@@ -202,8 +235,9 @@ class Application extends Component {
           state={this.state.history}
           pathname={this.state.pathname}
         />
-        <Style src="/Style/google.css" />
-        <Style src="/Style/material-components-web.min.css" />
+        <Style src="/Style/google.css"/>
+        <Style src="/Style/material-components-web.min.css"/>
+        <Settings.Language.Manager language={this.state.language} ref={this.storeLanguageManager.bind(this)}/>
         {super.render()}
       </div>
     );

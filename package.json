@@ -1,6 +1,6 @@
 {
   "name": "@enbock/time-tracker",
-  "version": "0.2.0-dev.7",
+  "version": "0.2.0-dev.8",
   "homepage": "https://enbock.github.io/Time-Tracker/",
   "description": "Tracking start and end of working time.",
   "dependencies": {

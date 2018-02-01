@@ -7,12 +7,12 @@ import * as MDC from '@material/select';
 
 jest.mock('@material/select', () => {
   const mockInstance = {
-    destroy: jest.fn(),
-    listen: jest.fn(),
-    unlisten: jest.fn(),
-    selectedOptions: ["option1"],
-    selectedIndex: 1,
-    value: "option"
+    destroy:         jest.fn(),
+    listen:          jest.fn(),
+    unlisten:        jest.fn(),
+    selectedOptions: ['option1'],
+    selectedIndex:   1,
+    value:           'option'
   };
   const mock         = jest.fn().mockImplementation(
     function onCreate() {
@@ -20,8 +20,8 @@ jest.mock('@material/select', () => {
     }
   );
   return {
-    mock:       mockInstance,
-    MDCSelect:  mock,
+    mock:      mockInstance,
+    MDCSelect: mock
   };
 });
 
@@ -42,9 +42,7 @@ jest.mock('react-dom', () => {
  * Test select interaction.
  */
 describe('MDC: Select', function testMDCDrawer() {
-  it("Emit event on change", function() {
-    let wasChanged = false;
-
+  it('Emit event on change', function () {
     const domNode = {
       addEventListener: jest.fn()
     };
@@ -59,17 +57,14 @@ describe('MDC: Select', function testMDCDrawer() {
      * Callback helper.
      * @param {Object} event
      */
-    function checkEvent(event)
-    {
-      wasChanged = true;
+    function checkEvent(event) {
     }
 
     let wrapper = shallow(
-      <Select name="selectMenu" onChange={checkEvent}/>
+      <Select id="selectMenu" onChange={checkEvent}/>
     );
     expect(MDC.mock.listen).toHaveBeenCalled();
     MDC.mock.listen.mock.calls[0][1](); // emulate emit
-
 
     wrapper.unmount();
     expect(MDC.mock.destroy).toHaveBeenCalled();

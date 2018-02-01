@@ -6,14 +6,23 @@ import {shallow} from 'enzyme';
 import Application from './Application';
 
 jest.mock('../Menu', () => 'Menu');
-jest.mock('../Settings', () => 'Settings');
+jest.mock(
+  '../Settings',
+  function createSettingModuleMock() {
+    let mock           = jest.fn();
+    mock.ThemesManager = 'ThemesManager';
+    mock.Language      = {Manager: 'Manager'};
+
+    return mock;
+  }
+);
 jest.mock('../Shared/Router', () => 'Router');
 
 /**
  * Test Application Container.
  */
 describe('Application', function testApplication() {
-  let bound     = null;
+  let bound   = null;
   let success = false;
   let promise;
 
@@ -53,8 +62,8 @@ describe('Application', function testApplication() {
    * Test if correct layout loaded.
    */
   it('Loads the correct layout', function testLoadLayout() {
-    const wrapper     = shallow(<Application/>);
-    const instance    = wrapper.instance();
+    const wrapper  = shallow(<Application/>);
+    const instance = wrapper.instance();
     bound({data: 'TEMPLATE'});
     wrapper.update();
 
@@ -67,7 +76,7 @@ describe('Application', function testApplication() {
   /**
    * Test if menu interaction works.
    */
-  it('Test menu interaction', function testLoadLayout() {
+  it('Test menu interaction', function testLMenuInteraction() {
     const wrapper     = shallow(<Application/>);
     const instance    = wrapper.instance();
     const buttonClick = jest.fn();
@@ -88,19 +97,19 @@ describe('Application', function testApplication() {
    * Test kinds of redirection.
    */
   it('Redirect from router to page', function testRouterRedirect() {
-    const wrapper     = shallow(<Application/>);
-    const instance    = wrapper.instance();
+    const wrapper  = shallow(<Application/>);
+    const instance = wrapper.instance();
     bound({data: 'TEMPLATE'});
     wrapper.update();
 
 
-    global.process.env.PUBLIC_URL = "/MainPath";
+    global.process.env.PUBLIC_URL = '/MainPath';
 
     // start on sub page in a sub directory of hosting page
     instance.onPathChange(
       {
         pathname: '/MainPath/settings/',
-        state: null
+        state:    null
       }
     );
     expect(instance.state.pathname).toBe('/MainPath/settings/');
@@ -111,7 +120,7 @@ describe('Application', function testApplication() {
     instance.onPathChange(
       {
         pathname: '/MainPath/',
-        state: null
+        state:    null
       }
     );
     expect(instance.state.pathname).toBe('/MainPath/');
@@ -122,20 +131,20 @@ describe('Application', function testApplication() {
     instance.onPathChange(
       {
         pathname: '/settings/', // <-- should be ignored if state present
-        state: {page:"index", root:"/MainPath"}
+        state:    {page: 'index', root: '/MainPath'}
       }
     );
     expect(instance.state.pathname).toBe('/MainPath/');
     expect(instance.state.history.page).toBe('index');
     expect(instance.state.history.root).toBe('/MainPath');
 
-    global.process.env.PUBLIC_URL = "";
+    global.process.env.PUBLIC_URL = '';
 
     // start on sub page in a root directory of hosting page
     instance.onPathChange(
       {
         pathname: '/',
-        state: null
+        state:    null
       }
     );
     expect(instance.state.pathname).toBe('/');
@@ -146,7 +155,7 @@ describe('Application', function testApplication() {
   /**
    * Test kinds of redirection.
    */
-  it('Change the theme', function testRouterRedirect() {
+  it('Change the theme', function testChangeTheme() {
     const wrapper  = shallow(<Application/>);
     const instance = wrapper.instance();
     bound({data: 'TEMPLATE'});
@@ -154,5 +163,22 @@ describe('Application', function testApplication() {
 
     instance.onThemesChange('new');
     expect(instance.state.theme).toBe('new');
+  });
+
+  /**
+   * Test kinds of redirection.
+   */
+  it('Store and change language', function testStoreAndChangeLanguage() {
+    const wrapper  = shallow(<Application/>);
+    const instance = wrapper.instance();
+    bound({data: 'TEMPLATE'});
+    wrapper.update();
+
+    instance.storeLanguageManager('manager');
+    expect(instance.lang).toBe('manager');
+
+
+    instance.onLanguageChange('new');
+    expect(instance.state.language).toBe('new');
   });
 });

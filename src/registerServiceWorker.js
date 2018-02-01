@@ -1,3 +1,5 @@
+/* global: navigator */
+
 // In production, we register a service worker to serve assets from local cache.
 
 // This lets the app load faster on subsequent visits in production, and gives
@@ -7,8 +9,6 @@
 
 // To learn more about the benefits of this model, read https://goo.gl/KwvDNy.
 // This link also includes instructions on opting out of this behavior.
-
-/* global: navigator */
 
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
@@ -20,17 +20,18 @@ const isLocalhost = Boolean(
   )
 );
 
-export default function register() {
-  /*if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
-   // The URL constructor is available in all browsers that support SW.
-   const publicUrl = new URL(process.env.PUBLIC_URL, window.location);
-   if (publicUrl.origin !== window.location.origin) {
-   // Our service worker won't work if PUBLIC_URL is on a different origin
-   // from what our page is served on. This might happen if a CDN is used to
-   // serve assets; see https://github.com/facebookincubator/create-react-app/issues/2374
-   return;
-   }*/
-
+/*
+ Origin check...do we need it?
+ if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
+ // The URL constructor is available in all browsers that support SW.
+ const publicUrl = new URL(process.env.PUBLIC_URL, window.location);
+ if (publicUrl.origin !== window.location.origin) {
+ // Our service worker won't work if PUBLIC_URL is on a different origin
+ // from what our page is served on. This might happen if a CDN is used to
+ // serve assets; see https://github.com/facebookincubator/create-react-app/issues/2374
+ return;
+ }*/
+export default function registerServiceWorker() {
   window.addEventListener('load', () => {
     const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
 
@@ -42,7 +43,6 @@ export default function register() {
       checkValidServiceWorker(swUrl);
     }
   });
-  //}
 }
 
 function onWorkerStateChange(installingWorker) {
@@ -85,7 +85,7 @@ function registerValidSW(swUrl) {
    */
 }
 
-function onServiceWorkerValidationResponse(response) {
+function onServiceWorkerValidationResponse(response, swUrl) {
   // Ensure service worker exists, and that we really are getting a JS file.
   if (
     response.status === 404 ||
@@ -105,7 +105,7 @@ function onServiceWorkerValidationResponse(response) {
 
 function checkValidServiceWorker(swUrl) {
   // Check if the service worker can be found. If it can't reload the page.
-  fetch(swUrl).then(onServiceWorkerValidationResponse)
+  fetch(swUrl).then(response => onServiceWorkerValidationResponse(response, swUrl))
   /*
    .catch(() => {
    console.log(
@@ -114,14 +114,15 @@ function checkValidServiceWorker(swUrl) {
    })*/
   ;
 }
+
 /*
 export function unregister() {
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.ready.then(
-      registration => {
-        registration.unregister();
-      }
-    );
-  }
+ if ('serviceWorker' in navigator) {
+ navigator.serviceWorker.ready.then(
+ registration => {
+ registration.unregister();
+ }
+ );
+ }
 }
 */

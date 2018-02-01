@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
     * Add router (History API) integration.
     * Add style loader.
 * [#2] Style Manager.
+* [#11] Language Manager
     
 ### Changed
 * [#1] Replace MDL with MDC.
@@ -35,3 +36,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [#4]: https://github.com/enbock/Time-Tracker/issues/4
 [#5]: https://github.com/enbock/Time-Tracker/issues/5
 [#6]: https://github.com/enbock/Time-Tracker/issues/6
+[#11]: https://github.com/enbock/Time-Tracker/issues/11

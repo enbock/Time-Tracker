@@ -17,6 +17,7 @@
             </div>
         </header>
         <this.components.MainMenu
+                lang={this.lang}
                 adapter={this.menuAdapter}
                 page={this.state.history.page}
                 onMenu={this.onMenuChange.bind(this)}

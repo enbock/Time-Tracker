@@ -4,7 +4,6 @@
             theme={this.state.theme}
             themes={{google:'Google.css', codefrog:'Codefrog.css', dark:'Dark.css'}}
     />
-    <this.components.LanguageManager language={this.state.language}/>
     <div class="content">
         <header class="mdc-toolbar mdc-elevation--z4">
             <div class="mdc-toolbar__row">
@@ -18,6 +17,7 @@
             </div>
         </header>
         <this.components.MainMenu
+                lang={this.lang}
                 adapter={this.menuAdapter}
                 page={this.state.history.page}
                 onMenu={this.onMenuChange.bind(this)}

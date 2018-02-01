@@ -34,7 +34,7 @@ describe('Language Translator', function testLanguageTranslator() {
     );
 
     const adapter  = {getDomain: () => 'Test', onChange: jest.fn()};
-    const instance = new Translator(adapter);
+    const instance = Translator.factory(adapter);
     instance.onChange('');
     expect(bound).toBe(null);
     instance.onChange('foo_BAR');

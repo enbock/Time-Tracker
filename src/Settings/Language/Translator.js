@@ -7,6 +7,18 @@ import YAML from 'yamljs';
 class Translator {
 
   /**
+   * Translator factory.
+   *
+   * @see Manager.defaultAdapter
+   * @param {Object} adapter Interaction adapter.
+   *
+   * @returns {Translator}
+   */
+  static factory(adapter) {
+    return new Translator(adapter);
+  }
+
+  /**
    * Injection constructor.
    *
    * @param {Object} adapter Interaction adapter.

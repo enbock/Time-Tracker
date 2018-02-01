@@ -35,9 +35,21 @@ describe('Language Translator', function testLanguageTranslator() {
 
 /**
  * Make axios mock.
- * @param promise
+ *
+ * @param thenCall
+ * @param catchCall
  */
-function mockAxios(promise) {
+function mockAxios(thenCall, catchCall) {
+  const promise = {
+    then:  function onThen(callback) {
+      thenCall(callback);
+      return promise;
+    },
+    catch: function onCatch(callback) {
+      catchCall(callback);
+      return promise;
+    }
+  };
   mockAxiosAction(
     'get',
     function onRequest(url) {
@@ -52,22 +64,10 @@ function mockAxios(promise) {
  * Test loading the language yaml.
  */
 function testFailedLoadingLanguageFile() {
-  // Backup for this test case
-  const orgConsole = global.console;
-  const logMock    = jest.fn();
+  const orgConsole = global.console, logMock = jest.fn();
   global.console   = {error: logMock};
   let bound        = null;
-  const promise    = {
-    then:  function onThen() {
-      return promise;
-    },
-    catch: function onCatch(callback) {
-      bound = callback;
-      return promise;
-    }
-  };
-
-  mockAxios(promise);
+  mockAxios(jest.fn(), (callback) => bound = callback);
 
   const adapter  = {getDomain: () => 'Test', onChange: jest.fn()};
   const instance = new Translator(adapter);
@@ -77,7 +77,6 @@ function testFailedLoadingLanguageFile() {
   expect(instance.translations).toEqual({});
   expect(adapter.onChange).not.toHaveBeenCalled();
   expect(logMock).toHaveBeenCalledWith('error');
-  // Restore
   global.console = orgConsole;
 }
 
@@ -85,17 +84,8 @@ function testFailedLoadingLanguageFile() {
  * Test failing of loading the language yaml.
  */
 function testLoadingLanguageFile() {
-  let bound     = null;
-  const promise = {
-    then:  function onThen(callback) {
-      bound = callback;
-      return promise;
-    },
-    catch: function onCatch() {
-      return promise;
-    }
-  };
-  mockAxios(promise);
+  let bound = null;
+  mockAxios((callback) => bound = callback, jest.fn());
 
   const adapter  = {getDomain: () => 'Test', onChange: jest.fn()};
   const instance = Translator.factory(adapter);
@@ -105,8 +95,5 @@ function testLoadingLanguageFile() {
   bound({data: YAML.stringify({test: {foo: 'bar'}, hello: 'world'})});
 
   expect(instance.translations['test.foo']).toBe('bar');
-  expect(instance.translations['hello']).toBe('world');
-  expect(adapter.onChange).toHaveBeenCalled();
   expect(adapter.onChange).toHaveBeenCalledWith('foo_BAR');
-  expect(adapter.onChange).toHaveBeenCalledTimes(1);
 }

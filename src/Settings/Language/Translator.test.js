@@ -12,6 +12,21 @@ jest.mock('react-dom');
  */
 describe('Language Translator', function testLanguageTranslator() {
   /**
+   * Make axios mock.
+   * @param promise
+   */
+  function mockAxios(promise) {
+    mockAxiosAction(
+      'get',
+      function onRequest(url) {
+        expect(url).toBe('/Lang/foo_BAR/Test.yaml');
+
+        return promise;
+      }
+    );
+  }
+
+  /**
    * Test loading the language yaml.
    */
   it('Loads the language file', function testLoadingLanguageFile() {
@@ -25,15 +40,7 @@ describe('Language Translator', function testLanguageTranslator() {
         return promise;
       }
     };
-
-    mockAxiosAction(
-      'get',
-      function onRequest(url) {
-        expect(url).toBe('/Lang/foo_BAR/Test.yaml');
-
-        return promise;
-      }
-    );
+    mockAxios(promise);
 
     const adapter  = {getDomain: () => 'Test', onChange: jest.fn()};
     const instance = Translator.factory(adapter);
@@ -55,9 +62,10 @@ describe('Language Translator', function testLanguageTranslator() {
   it('Failed to load the language file', function testFailedLoadingLanguageFile() {
     // Backup for this test case
     const orgConsole = global.console;
-
-    let bound     = null;
-    const promise = {
+    const logMock    = jest.fn();
+    global.console   = {error: logMock};
+    let bound        = null;
+    const promise    = {
       then:  function onThen() {
         return promise;
       },
@@ -67,20 +75,7 @@ describe('Language Translator', function testLanguageTranslator() {
       }
     };
 
-    mockAxiosAction(
-      'get',
-      function onRequest(url) {
-        expect(url).toBe('/Lang/foo_BAR/Test.yaml');
-
-        return promise;
-      }
-    );
-
-    const logMock = jest.fn();
-
-    global.console = {
-      error: logMock
-    };
+    mockAxios(promise);
 
     const adapter  = {getDomain: () => 'Test', onChange: jest.fn()};
     const instance = new Translator(adapter);
@@ -100,7 +95,6 @@ describe('Language Translator', function testLanguageTranslator() {
   it('Translate a key', function testTranslation() {
     const instance        = new Translator({});
     instance.translations = {foo: 'bar'};
-
     expect(instance.translate('foo')).toBe('bar');
   });
 
@@ -109,7 +103,6 @@ describe('Language Translator', function testLanguageTranslator() {
    */
   it('Translate wrong key to empty string', function testFallbackTranslation() {
     const instance = new Translator({});
-
     expect(instance.translate('foo')).toBe('');
   });
 });

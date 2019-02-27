@@ -8,7 +8,7 @@
       <option name="HTML_NEWLINE_BEFORE_FIRST_ATTRIBUTE" value="When multiline" />
       <option name="HTML_NEWLINE_AFTER_LAST_ATTRIBUTE" value="When multiline" />
     </HTMLCodeStyleSettings>
-    <JSCodeStyleSettings>
+    <JSCodeStyleSettings version="1">
       <option name="FORCE_SEMICOLON_STYLE" value="true" />
       <option name="ALIGN_OBJECT_PROPERTIES" value="1" />
       <option name="ALIGN_VAR_STATEMENTS" value="2" />
@@ -16,8 +16,12 @@
       <option name="USE_DOUBLE_QUOTES" value="false" />
       <option name="FORCE_QUOTE_STYlE" value="true" />
       <option name="ENFORCE_TRAILING_COMMA" value="Remove" />
+      <option name="IMPORT_SORT_MODULE_NAME" value="true" />
       <option name="IMPORT_PREFER_ABSOLUTE_PATH" value="TRUE" />
     </JSCodeStyleSettings>
+    <MarkdownNavigatorCodeStyleSettings>
+      <option name="RIGHT_MARGIN" value="72" />
+    </MarkdownNavigatorCodeStyleSettings>
     <XML>
       <option name="XML_ATTRIBUTE_WRAP" value="4" />
       <option name="XML_SPACE_INSIDE_EMPTY_TAG" value="true" />
@@ -29,12 +33,20 @@
       </indentOptions>
     </codeStyleSettings>
     <codeStyleSettings language="JavaScript">
+      <option name="ALIGN_MULTILINE_CHAINED_METHODS" value="true" />
+      <option name="ALIGN_MULTILINE_PARAMETERS_IN_CALLS" value="true" />
       <option name="ALIGN_MULTILINE_BINARY_OPERATION" value="true" />
       <option name="ALIGN_MULTILINE_TERNARY_OPERATION" value="true" />
       <option name="ALIGN_MULTILINE_ARRAY_INITIALIZER_EXPRESSION" value="true" />
+      <option name="CALL_PARAMETERS_WRAP" value="5" />
+      <option name="CALL_PARAMETERS_LPAREN_ON_NEXT_LINE" value="true" />
+      <option name="CALL_PARAMETERS_RPAREN_ON_NEXT_LINE" value="true" />
       <option name="METHOD_PARAMETERS_WRAP" value="5" />
+      <option name="METHOD_PARAMETERS_LPAREN_ON_NEXT_LINE" value="true" />
+      <option name="METHOD_PARAMETERS_RPAREN_ON_NEXT_LINE" value="true" />
       <option name="EXTENDS_LIST_WRAP" value="5" />
       <option name="EXTENDS_KEYWORD_WRAP" value="1" />
+      <option name="METHOD_CALL_CHAIN_WRAP" value="2" />
       <option name="PARENTHESES_EXPRESSION_LPAREN_WRAP" value="true" />
       <option name="PARENTHESES_EXPRESSION_RPAREN_WRAP" value="true" />
       <option name="BINARY_OPERATION_WRAP" value="5" />
@@ -43,6 +55,8 @@
       <option name="TERNARY_OPERATION_SIGNS_ON_NEXT_LINE" value="true" />
       <option name="KEEP_SIMPLE_BLOCKS_IN_ONE_LINE" value="true" />
       <option name="FOR_STATEMENT_WRAP" value="5" />
+      <option name="FOR_STATEMENT_LPAREN_ON_NEXT_LINE" value="true" />
+      <option name="FOR_STATEMENT_RPAREN_ON_NEXT_LINE" value="true" />
       <option name="ARRAY_INITIALIZER_WRAP" value="5" />
       <option name="ARRAY_INITIALIZER_LBRACE_ON_NEXT_LINE" value="true" />
       <option name="ARRAY_INITIALIZER_RBRACE_ON_NEXT_LINE" value="true" />
@@ -56,6 +70,22 @@
         <option name="CONTINUATION_INDENT_SIZE" value="2" />
         <option name="TAB_SIZE" value="2" />
       </indentOptions>
+      <arrangement>
+        <groups>
+          <group>
+            <type>GROUP_PROPERTY_FIELD_WITH_GETTER_SETTER</type>
+            <order>KEEP</order>
+          </group>
+          <group>
+            <type>TREAT_LAMBDA_INITIALIZED_FIELDS_AS_METHODS</type>
+            <order>KEEP</order>
+          </group>
+          <group>
+            <type>OVERRIDDEN_METHODS</type>
+            <order>KEEP</order>
+          </group>
+        </groups>
+      </arrangement>
     </codeStyleSettings>
     <codeStyleSettings language="Twig">
       <indentOptions>

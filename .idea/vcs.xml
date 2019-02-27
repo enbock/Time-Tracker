@@ -4,7 +4,7 @@
     <option name="links">
       <list>
         <IssueNavigationLink>
-          <option name="issueRegexp" value="^#(\d)" />
+          <option name="issueRegexp" value="^#([\d]{1,})" />
           <option name="linkRegexp" value="https://github.com/enbock/Time-Tracker/issues/$1" />
         </IssueNavigationLink>
       </list>

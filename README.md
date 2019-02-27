@@ -1,10 +1,9 @@
 # Time Tracker
 
-[![CicleCI](./doc/assets/circle-logo-horizontal-black-66x18.svg) ![CircleCI](https://circleci.com/gh/enbock/Time-Tracker/tree/feature%2F18-interactors.svg?style=svg)](https://circleci.com/gh/enbock/Time-Tracker/tree/feature%2F18-interactors)
+[![CircleCI](./doc/assets/circle-logo-horizontal-black-66x18.svg)![CircleCI](https://circleci.com/gh/enbock/Time-Tracker.svg?style=svg)](https://circleci.com/gh/enbock/Time-Tracker)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/enbock/Time-Tracker/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/enbock/Time-Tracker/)
 [![Code Coverage](https://scrutinizer-ci.com/g/enbock/Time-Tracker/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/enbock/Time-Tracker/)
 [![Build Status](https://scrutinizer-ci.com/g/enbock/Time-Tracker/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/enbock/Time-Tracker/build-status/)
-[![Floobits Status](https://floobits.com/enbock/Time-Tracker.svg)](https://floobits.com/enbock/Time-Tracker/redirect)
 
 A progressive web app to track working time.
 
@@ -19,7 +18,7 @@ A progressive web app to track working time.
 
 ## Library Overview
 Follow libraries are in use:
-* React v16
+* React v18
 * Babel browser for real-time templates
 * Material Design Light (MDL v1.3)
 

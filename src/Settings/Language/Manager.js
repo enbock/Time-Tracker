@@ -50,6 +50,7 @@ class Manager extends React.Component {
    * @param {Object} nextProps
    */
   componentWillUpdate(nextProps) {
+    // TODO move this to interactor
     if (this.props.language !== nextProps.language) {
       this.updateDomains(nextProps.language);
     }

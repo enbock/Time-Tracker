@@ -1,6 +1,6 @@
 # Time Tracker
-![CircleCI](./doc/assets/circle-logo-horizontal-black-66x18.svg)
-[![CircleCI](https://circleci.com/gh/enbock/Time-Tracker.svg?style=svg)](https://circleci.com/gh/enbock/Time-Tracker)
+
+[![CicleCI](./doc/assets/circle-logo-horizontal-black-66x18.svg) ![CircleCI](https://circleci.com/gh/enbock/Time-Tracker/tree/feature%2F18-interactors.svg?style=svg)](https://circleci.com/gh/enbock/Time-Tracker/tree/feature%2F18-interactors)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/enbock/Time-Tracker/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/enbock/Time-Tracker/)
 [![Code Coverage](https://scrutinizer-ci.com/g/enbock/Time-Tracker/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/enbock/Time-Tracker/)
 [![Build Status](https://scrutinizer-ci.com/g/enbock/Time-Tracker/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/enbock/Time-Tracker/build-status/)

@@ -1,15 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-/**
- * The History API connection.
- * That router is more an adapter between React and the HTML5 History API.
- * What to do, if a route is change isn't responsibility of this router.
- */
 class Router extends React.Component {
   /**
-   * Constructor.
-   *
    * @param {Object} props
    * @param {Object} context
    * @param {Object} updater
@@ -24,8 +17,6 @@ class Router extends React.Component {
   }
 
   /**
-   * Define properties.
-   *
    * @returns {Object}
    */
   static get propTypes() {
@@ -36,27 +27,18 @@ class Router extends React.Component {
     };
   }
 
-  /**
-   * Connect to browser API.
-   */
   componentDidMount() {
     this.history = global.history;
     global.addEventListener('popstate', this.boundPopState);
     this.popStateChanged(global.location.pathname, this.history.state);
   }
 
-  /**
-   * Remove connection to browser API.
-   */
   componentWillUnmount() {
     global.removeEventListener('popstate', this.boundPopState);
     this.history = null;
   }
 
   /**
-   * Push or replace new state if needed.
-   * The history url will be replaced, when the state are equal.
-   *
    * @param nextProps
    */
   componentWillUpdate(nextProps) {
@@ -65,17 +47,8 @@ class Router extends React.Component {
     let allEquals = true;
 
     if (this.history.state && nextProps.state) {
-      for (let key in nextProps.state) {
-        if (
-          !this.history.state.hasOwnProperty(key)
-          || this.history.state[key] !== nextProps.state[key]
-        ) {
-          allEquals = false;
-        }
-        if (allEquals === true) {
-          command = 'replaceState';
-        }
-      }
+      command = this.decideCommand(nextProps.state);
+      allEquals = command === 'replaceState';
     }
     if (allEquals && pathname === this.pathname) {
       // do nothing when nothing changed.
@@ -86,8 +59,24 @@ class Router extends React.Component {
     this.popStateChanged(pathname, nextProps.state);
   }
 
+  decideCommand(state) {
+    let command = 'pushState';
+    let allEquals = true;
+    for (let key in state) {
+      if (
+        !this.history.state.hasOwnProperty(key)
+        || this.history.state[key] !== state[key]
+      ) {
+        allEquals = false;
+      }
+      if (allEquals === true) {
+        command = 'replaceState';
+      }
+    }
+    return command;
+  }
+
   /**
-   * Browser API handler to proxy change events.
    * @param {PopStateEvent} event
    */
   onPopState(event) {
@@ -95,8 +84,6 @@ class Router extends React.Component {
   }
 
   /**
-   * Propagate new state and update cached data.
-   *
    * @param {string} pathname
    * @param {Object} state
    */
@@ -106,7 +93,6 @@ class Router extends React.Component {
   }
 
   /**
-   * Component does not have visual output.
    * @returns {null}
    */
   render() {

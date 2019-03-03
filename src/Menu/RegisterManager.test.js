@@ -1,3 +1,5 @@
+/** global: jest */
+
 import RegisterManager from './RegisterManager';
 
 describe('Menu Register Manager', function testRegisterManager() {

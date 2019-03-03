@@ -1,3 +1,5 @@
+/** global: jest */
+
 import Manager from './Manager';
 import Translator from './Translator';
 

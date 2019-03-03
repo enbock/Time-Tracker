@@ -14,7 +14,9 @@
                             <i class="material-icons" aria-hidden="true">language</i>
                             {this.lang.translate('settingBox.selection.lang.title')}
                         </div>
-                        <div class="mdc-select__selected-text">TODO remove after MDC update</div>
+                        <div class="mdc-select__selected-text">
+                            {this.lang.translate('settingBox.selection.lang.' + this.state.language)}
+                        </div>
                         <div class="mdc-select__bottom-line"></div>
                     </div>
                     <div class="mdc-simple-menu mdc-select__menu">
@@ -49,7 +51,9 @@
                             <i class="material-icons" aria-hidden="true">palette</i>
                             {this.lang.translate('settingBox.selection.color.title')}
                         </div>
-                        <div class="mdc-select__selected-text">TODO remove after MDC update</div>
+                        <div class="mdc-select__selected-text">
+                            {this.lang.translate('settingBox.selection.color.' + this.props.themesManager.activeTheme)}
+                        </div>
                         <div class="mdc-select__bottom-line"></div>
                     </div>
                     <div class="mdc-simple-menu mdc-select__menu">

@@ -61,7 +61,7 @@
     "build": "node scripts/build.js",
     "test": "jest --env=jsdom --coverage --verbose",
     "test_alternate": "node scripts/test.js --env=jsdom --coverage",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -m 'auto commit [ci skip]' -d build"
   },
   "jest": {
     "collectCoverageFrom": [

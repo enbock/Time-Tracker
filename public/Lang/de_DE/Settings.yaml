@@ -4,7 +4,9 @@ settingBox:
     lang:
       title: Sprache wählen
       german: Deutsch
+      de_DE: Deutsch
       english: Englisch
+      en_US: Englisch
     color:
       title: Farbschema
       google: Google

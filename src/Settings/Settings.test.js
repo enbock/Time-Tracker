@@ -1,26 +1,19 @@
 /** global: jest */
 
 import {mockAxiosAction} from 'axios';
-import React from 'react';
 import {shallow} from 'enzyme';
+import React from 'react';
 import Settings from './Settings';
 
 jest.mock('react-dom');
 
-
-/**
- * Test Settings Container.
- */
 describe('Settings Page', function testSettings() {
   let bound, promise;
 
-  /**
-   * Test setup.
-   */
   beforeEach(function setup() {
-    bound   = null;
+    bound = null;
     promise = {
-      then:  function onThen(callback) {
+      then: function onThen(callback) {
         bound = callback;
         return promise;
       },
@@ -32,35 +25,29 @@ describe('Settings Page', function testSettings() {
     mockAxiosAction(
       'get',
       function onRequest(url) {
-        expect(url).toBe('/Template/Settings.html.tpl');
+        expect(url)
+          .toBe('/Template/Settings.html.tpl');
 
         return promise;
       }
     );
   });
 
-  /**
-   * Test change language.
-   */
   it('Change language', function () {
-    let language = '';
-
-    /**
-     * Checker for change.
-     */
-    function changeHelper(lang) {
-      language = lang;
-    }
-
     const lang = {
       setup: function (adapter) {
         adapter.onChange('test');
         expect(adapter.getDomain()).toBe('Settings');
-      }
+      },
+      change: jest.fn()
     };
 
-    const wrapper = shallow(<Settings lang={lang} onThemesChange={jest.fn()} onLanguageChange={changeHelper}/>);
-    let instance  = wrapper.instance();
+    const themesManager = {
+      changeTheme: jest.fn()
+    };
+
+    const wrapper = shallow(<Settings lang={lang} themesManager={themesManager} />);
+    let instance = wrapper.instance();
     bound({data: 'TEMPLATE'});
     wrapper.setProps({});
 
@@ -71,50 +58,44 @@ describe('Settings Page', function testSettings() {
     );
     instance.onSelectionChange(
       {
-        name:            'language',
+        name: 'language',
         selectedOptions: ['german'],
-        selectedIndex:   1,
-        value:           'german'
+        selectedIndex: 1,
+        value: 'german'
       }
     );
-    expect(instance.state.language).toBe('test');
-    expect(language).toBe('german');
+    expect(lang.change).toHaveBeenCalledTimes(1);
+    expect(lang.change).toHaveBeenCalledWith('german');
 
     wrapper.unmount();
   });
 
-  /**
-   * Test change color.
-   */
-  it('Change theme', function () {
-    let theme = '';
+  it('Change activeTheme', function () {
 
-    /**
-     * Checker for change.
-     */
-    function changeHelper(value) {
-      theme = value;
-    }
+    const themesManager = {
+      changeTheme: jest.fn()
+    };
 
     const wrapper = shallow(<Settings
       lang={{setup: jest.fn()}}
-      onThemesChange={changeHelper}
-      onLanguageChange={jest.fn()}
+      themesManager={themesManager}
     />);
-    let instance  = wrapper.instance();
+
+    let instance = wrapper.instance();
     bound({data: 'TEMPLATE'});
     wrapper.setProps({});
 
     instance.onSelectionChange(
       {
-        name:            'color',
+        name: 'color',
         selectedOptions: ['google'],
-        selectedIndex:   1,
-        value:           'google'
+        selectedIndex: 1,
+        value: 'google'
       }
     );
 
-    expect(theme).toBe('google');
+    expect(themesManager.changeTheme).toHaveBeenCalledTimes(1);
+    expect(themesManager.changeTheme).toHaveBeenCalledWith('google');
 
   });
 });

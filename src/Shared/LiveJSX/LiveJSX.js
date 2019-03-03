@@ -1,17 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import Axios from 'axios';
+import React from 'react';
 
 // Bridge to templates
 global.React = React;
 
-/**
- * JSX loader base class.
- */
 class LiveJSX extends React.Component {
   /**
-   * Constructor.
-   *
    * @param {Object} props
    * @param {Object} context
    * @param {Object} updater
@@ -20,7 +14,7 @@ class LiveJSX extends React.Component {
     super(props, context, updater);
 
     this.state = {
-      view:      function () {
+      view: function () {
         return <div className="mdl-progress mdl-js-progress mdl-progress__indeterminate"/>;
       },
       publicUrl: process.env.PUBLIC_URL || ''
@@ -28,21 +22,19 @@ class LiveJSX extends React.Component {
 
     // remember loaded template
     this.loadedTemplateUrl = '';
-    this.firstShow         = false;
+    this.firstShow = false;
   }
 
   /**
-   * Generate JSX live code.
-   *
    * @param {string} data
    * @returns {*}
    */
   static generate(data) {
     let template = data.trim();
-    template     = template.replace(/class=/g, 'className=');
+    template = template.replace(/class=/g, 'className=');
 
     let code = global.Babel.transform(template, {presets: ['react']}).code;
-    code     = code.replace(/React.createElement\(/, 'return React.createElement(');
+    code = code.replace(/React.createElement\(/, 'return React.createElement(');
 
     //console.log(template);
     //console.log(code);
@@ -52,15 +44,11 @@ class LiveJSX extends React.Component {
     return new Function(code);
   }
 
-  /**
-   * Start loading on mount.
-   */
   componentWillMount() {
     this.loadTemplate(this.props, this.state);
   }
 
   /**
-   * Start loading if template changed.
    * @param nextProps
    * @param nextState
    */
@@ -69,7 +57,6 @@ class LiveJSX extends React.Component {
   }
 
   /**
-   * Load template.
    * @param {Object} props
    * @param {Object} state
    */
@@ -89,32 +76,23 @@ class LiveJSX extends React.Component {
 
     /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
     Axios.get(url)
-      .then(response => this.onTemplate(response))
-      .catch(error => console.error(error));
+         .then(response => this.onTemplate(response))
+         .catch(error => console.error(error));
   }
 
   /**
-   * Template loaded.
-   *
    * @param {Object} response
    */
   onTemplate(response) {
-    const jsx      = LiveJSX.generate(response.data);
+    const jsx = LiveJSX.generate(response.data);
     this.firstShow = true;
     this.setState({view: jsx});
   }
 
-  /**
-   * Abstract function for JSX mount info.
-   *
-   * @param {HTMLElement} domNode
-   */
-  onTemplateMounted(domNode) {
+  onTemplateMounted() {
   }
 
   /**
-   * Call template mounted on first view.
-   *
    * @param prevProps
    * @param prevState
    * @param prevContext
@@ -122,13 +100,11 @@ class LiveJSX extends React.Component {
   componentDidUpdate(prevProps, prevState, prevContext) {
     if (this.firstShow) {
       this.firstShow = false;
-      this.onTemplateMounted(ReactDOM.findDOMNode(this));
+      this.onTemplateMounted();
     }
   }
 
   /**
-   * Actualize view.
-   *
    * @returns {*}
    */
   render() {

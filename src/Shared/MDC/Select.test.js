@@ -1,26 +1,25 @@
-import React from 'react';
-import {shallow} from 'enzyme';
-import Select from './Select';
-import ReactDOM from 'react-dom';
 import * as MDC from '@material/select';
-
+import {shallow} from 'enzyme';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Select from './Select';
 
 jest.mock('@material/select', () => {
   const mockInstance = {
-    destroy:         jest.fn(),
-    listen:          jest.fn(),
-    unlisten:        jest.fn(),
+    destroy: jest.fn(),
+    listen: jest.fn(),
+    unlisten: jest.fn(),
     selectedOptions: ['option1'],
-    selectedIndex:   1,
-    value:           'option'
+    selectedIndex: 1,
+    value: 'option'
   };
-  const mock         = jest.fn().mockImplementation(
+  const mock = jest.fn().mockImplementation(
     function onCreate() {
       return mockInstance;
     }
   );
   return {
-    mock:      mockInstance,
+    mock: mockInstance,
     MDCSelect: mock
   };
 });
@@ -31,16 +30,13 @@ jest.mock('react-dom', () => {
   };
   return {
     findDOMNode: mock.findDOMNode,
-    getMock:     function () {
+    getMock: function () {
       return mock;
     }
   };
 });
 
 
-/**
- * Test select interaction.
- */
 describe('MDC: Select', function testMDCDrawer() {
   it('Emit event on change', function () {
     const domNode = {
@@ -54,14 +50,13 @@ describe('MDC: Select', function testMDCDrawer() {
     MDC.mock.destroy.mockClear();
 
     /**
-     * Callback helper.
      * @param {Object} event
      */
     function checkEvent(event) {
     }
 
     let wrapper = shallow(
-      <Select id="selectMenu" onChange={checkEvent}/>
+      <Select id="selectMenu" onChange={checkEvent} />
     );
     expect(MDC.mock.listen).toHaveBeenCalled();
     MDC.mock.listen.mock.calls[0][1](); // emulate emit

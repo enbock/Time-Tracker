@@ -1,21 +1,21 @@
-import React from 'react';
-import {shallow} from 'enzyme';
-import Drawer from './Drawer';
-import ReactDOM from 'react-dom';
 import * as MDC from '@material/drawer';
+import {shallow} from 'enzyme';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Drawer from './Drawer';
 
 jest.mock('@material/drawer', () => {
   const mockInstance = {
     destroy: jest.fn()
   };
-  const mock         = jest.fn().mockImplementation(
+  const mock = jest.fn().mockImplementation(
     function onCreate() {
       return mockInstance;
     }
   );
   return {
-    mock:                mockInstance,
-    MDCTemporaryDrawer:  mock,
+    mock: mockInstance,
+    MDCTemporaryDrawer: mock,
     MDCPersistentDrawer: mock
   };
 });
@@ -26,20 +26,14 @@ jest.mock('react-dom', () => {
   };
   return {
     findDOMNode: mock.findDOMNode,
-    getMock:     function () {
+    getMock: function () {
       return mock;
     }
   };
 });
 
-/**
- * Test drawer interaction.
- */
 describe('MDC: Drawer', function testMDCDrawer() {
 
-  /**
-   * Test temporary drawer.
-   */
   it('Connect temporary drawer', function testTemporaryDrawer() {
     let wasOpen = false, wasClose = false;
 
@@ -74,9 +68,6 @@ describe('MDC: Drawer', function testMDCDrawer() {
     expect(MDC.mock.destroy).toHaveBeenCalled();
   });
 
-  /**
-   * Test persistent drawer.
-   */
   it('Connect persistent drawer', function testTemporaryDrawer() {
     const domNode = {
       addEventListener: jest.fn()
@@ -89,7 +80,7 @@ describe('MDC: Drawer', function testMDCDrawer() {
     MDC.mock.destroy.mockClear();
 
     let wrapper = shallow(
-      <Drawer className="mdc-drawer--persistent"/>
+      <Drawer className="mdc-drawer--persistent" />
     );
     wrapper.setProps({open: true});
 
@@ -103,9 +94,7 @@ describe('MDC: Drawer', function testMDCDrawer() {
     wrapper.unmount();
     expect(MDC.mock.destroy).toHaveBeenCalled();
   });
-  /**
-   * Test persistent drawer.
-   */
+
   it('Do nothing on passive drawer', function testTemporaryDrawer() {
     const domNode = {
       addEventListener: jest.fn()
@@ -118,7 +107,7 @@ describe('MDC: Drawer', function testMDCDrawer() {
     MDC.mock.destroy.mockClear();
 
     let wrapper = shallow(
-      <Drawer className="mdc-drawer--permanent"/>
+      <Drawer className="mdc-drawer--permanent" />
     );
     // Cover else branch
     wrapper.setProps({open: true});

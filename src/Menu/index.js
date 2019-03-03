@@ -1,5 +1,7 @@
 import Main from './Main';
+import RegisterManager from './RegisterManager';
 
 export default {
-  Main: Main
+  Main: Main,
+  RegisterManager: RegisterManager
 };

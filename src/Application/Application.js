@@ -1,50 +1,10 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Component from '../Shared/LiveJSX';
-import Menu from '../Menu';
 import Router from '../Shared/Router';
-import Settings from '../Settings';
-import Style from '../Shared/Style';
 
-/**
- * Root Application.
- */
 class Application extends Component {
   /**
-   * Define template of component.
-   *
-   * @returns {string}
-   */
-  static get template() {
-    return '/Template/Application.html.tpl';
-  }
-
-  /**
-   * Setup routes of the application.
-   *
-   * @returns {Object}
-   */
-  static get routes() {
-    return {
-      index:    '/',
-      settings: '/settings/' // option page
-    };
-  }
-
-  /**
-   * Enable components for template.
-   *
-   * @returns {Object}
-   */
-  get components() {
-    return {
-      MainMenu:      Menu.Main,
-      ThemesManager: Settings.ThemesManager
-    };
-  }
-
-  /**
-   * Constructor.
-   *
    * @param {Object} props
    * @param {Object} context
    * @param {Object} updater
@@ -55,101 +15,79 @@ class Application extends Component {
     this.state = Object.assign(
       this.state,
       {
-        currentComponent: <div/>,
-        history:          {
+        currentComponent: <div />,
+        history: {
           page: 'none',
           root: process.env.PUBLIC_URL
         },
-        pathname:         '',
-        theme:            'google',
-        language:         'de_DE'
+        pathname: ''
       }
     );
 
-    this.menuAdapter = {
-      registerMenuToggleHandler:   this.registerMenuToggleHandler.bind(this),
-      deregisterMenuToggleHandler: this.deregisterMenuToggleHandler.bind(this)
-    };
-
-    this.registeredButtonHandler = [];
-
     this.boundPathChange = this.onPathChange.bind(this);
+    this.boundChangeMenu = this.onMenuChange.bind(this);
   }
 
   /**
-   * Menu button click handler.
+   * @returns {string}
    */
-  onMainButtonClick() {
-    this.registeredButtonHandler.forEach(handler => handler());
+  static get template() {
+    return '/Template/Application.html.tpl';
   }
 
   /**
-   * Set state to menu is closed.
+   * @returns {Object}
+   */
+  static get routes() {
+    return {
+      index: '/',
+      settings: '/settings/' // option page
+    };
+  }
+
+  /**
+   * @returns {Object}
+   */
+  static get propTypes() {
+    return {
+      /**
+       * @type {Object}
+       */
+      routeComponents: PropTypes.object.isRequired,
+      /**
+       * @type {Menu.RegisterManager}
+       */
+      mainMenuRegisterManager: PropTypes.object.isRequired
+    };
+  }
+
+  onMainButtonClick() {
+    this.props.mainMenuRegisterManager.toggle();
+  }
+
+  /**
+   * @param {string} menu
    */
   onMenuChange(menu) {
     // TODO: router stuff here?
     const history = this.state.history;
-    history.page  = menu;
+    history.page = menu;
     this.setState({history: history});
   }
 
   /**
-   * Received router change.
-   *
    * @param event
    */
   onPathChange(event) {
     this.setState(
       {
         pathname: event.pathname,
-        history:  event.state
+        history: event.state
       }
     );
   }
 
   /**
-   * Theme change handler.
-   *
-   * @param {string} name
-   */
-  onThemesChange(name) {
-    this.setState({theme: name});
-  }
-
-  /**
-   * Language change handler.
-   *
-   * @param {string} language
-   */
-  onLanguageChange(language) {
-    this.setState({language: language});
-  }
-
-  /**
-   * Register handle for the main button click.
-   *
-   * @param {[[Function]]} handler
-   */
-  registerMenuToggleHandler(handler) {
-    this.registeredButtonHandler.push(handler);
-  }
-
-  /**
-   * Remove handler for main button click.
-   *
-   * @param {[[Function]]} handler
-   */
-  deregisterMenuToggleHandler(handler) {
-    const index = this.registeredButtonHandler.indexOf(handler);
-    if (index === -1) {
-      return;
-    }
-    this.registeredButtonHandler.splice(index, 1);
-  }
-
-  /**
-   * Decide the page.
-   *
    * @param pathname
    */
   restorePageByPathName(pathname) {
@@ -183,9 +121,11 @@ class Application extends Component {
     return history;
   }
 
+  componentWillUnmount() {
+    this.props.mainMenuRegisterManager.deregisterMenuChangeHandler(this.boundChangeMenu);
+  }
+
   /**
-   * Decider routing
-   *
    * @param {Object} nextProps
    * @param {Object} nextState
    */
@@ -196,35 +136,21 @@ class Application extends Component {
     // Go to route
     nextState.pathname = nextState.history.root + Application.routes[nextState.history.page];
 
-    // Select component
-    switch (nextState.history.page) {
-      case 'settings':
-        nextState.currentComponent = (
-          <Settings
-            onThemesChange={this.onThemesChange.bind(this)}
-            onLanguageChange={this.onLanguageChange.bind(this)}
-            lang={this.lang}
-          />
-        );
-        break;
-      default:
-        nextState.currentComponent = <div>Index</div>;
-        break;
+    const nextPage = nextState.history.page;
+
+    if (this.props.routeComponents.hasOwnProperty(nextPage)) {
+      nextState.currentComponent = this.props.routeComponents[nextPage];
+    } else {
+      nextState.currentComponent = <div>Index</div>;
     }
   }
 
-  /**
-   * Stores the reference of the language manager instance.
-   *
-   * @param {Manager} lang
-   */
-  storeLanguageManager(lang) {
-    this.lang = lang;
+  componentWillMount() {
+    super.componentWillMount();
+    this.props.mainMenuRegisterManager.registerMenuChangeHandler(this.boundChangeMenu);
   }
 
   /**
-   * Adding singleton components to application.
-   *
    * @returns {XML}
    */
   render() {
@@ -235,13 +161,12 @@ class Application extends Component {
           state={this.state.history}
           pathname={this.state.pathname}
         />
-        <Style src="/Style/google.css"/>
-        <Style src="/Style/material-components-web.min.css"/>
-        <Settings.Language.Manager language={this.state.language} ref={this.storeLanguageManager.bind(this)}/>
         {super.render()}
       </div>
     );
   }
+
+
 }
 
 export default Application;

@@ -1,25 +1,18 @@
 /** global: jest */
 
 import {mockAxiosAction} from 'axios';
-import React from 'react';
 import {shallow} from 'enzyme';
+import React from 'react';
 import Main from './Main';
 
 jest.mock('react-dom');
 
-
-/**
- * Test Main Container.
- */
 describe('Main Menu', function testMain() {
 
-  /**
-   * Test if correct layout loaded.
-   */
   it('Loads layout and do interactions', function testLoadLayout() {
-    let bound     = null;
+    let bound = null;
     const promise = {
-      then:  function onThen(callback) {
+      then: function onThen(callback) {
         bound = callback;
         return promise;
       },
@@ -40,11 +33,9 @@ describe('Main Menu', function testMain() {
       }
     );
 
-    let wasMenu           = '';
-    let registeredHandler = false;
-
-    const adapter = {
-      registerMenuToggleHandler:   (handler) => registeredHandler = handler,
+    const mainMenuRegisterManager = {
+      change: jest.fn(),
+      registerMenuToggleHandler: jest.fn(),
       deregisterMenuToggleHandler: jest.fn()
     };
 
@@ -55,11 +46,11 @@ describe('Main Menu', function testMain() {
       }
     };
 
-    const wrapper = shallow(<Main lang={lang} adapter={adapter} className="test" onMenu={(menu) => wasMenu = menu}/>);
-    let instance  = wrapper.instance();
+    const wrapper = shallow(<Main lang={lang} mainMenuRegisterManager={mainMenuRegisterManager} />);
+    let instance = wrapper.instance();
     instance.refs = {
       settingsMenu: {
-        addEventListener:    jest.fn(),
+        addEventListener: jest.fn(),
         removeEventListener: jest.fn()
       }
     };
@@ -67,19 +58,16 @@ describe('Main Menu', function testMain() {
     wrapper.setProps({});
 
     expect(success).toBe(true);
-    expect(registeredHandler).not.toBe(false);
     expect(instance.state.language).toBe('test');
-    registeredHandler();
 
     instance.onMenuClick('one');
-    expect(wasMenu).toBe('one');
+    expect(mainMenuRegisterManager.registerMenuToggleHandler).toHaveBeenCalled();
+    expect(mainMenuRegisterManager.change).toHaveBeenCalledWith('one');
+    mainMenuRegisterManager.registerMenuToggleHandler.mock.calls[0][0]();
+    expect(wrapper.instance().state.open).toBe(true);
 
     wrapper.unmount();
+    expect(mainMenuRegisterManager.deregisterMenuToggleHandler).toHaveBeenCalled();
     expect(instance.refs.settingsMenu.removeEventListener).toHaveBeenCalled();
-
-    // cover else path
-    const wrapperCov = shallow(<Main lang={lang} className="test"/>);
-    instance         = wrapperCov.instance();
-    instance.onMenuClick('two');
   });
 });

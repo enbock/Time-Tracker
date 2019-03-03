@@ -1,5 +1,5 @@
-import React from 'react';
 import {shallow} from 'enzyme';
+import React from 'react';
 import Router from './Router';
 
 /**
@@ -26,7 +26,7 @@ describe('Shared: Router', function testRouter() {
    */
   beforeEach(() => {
     lastEvent = {};
-    wrapper   = shallow(<Router onChange={onChange} state={{}} pathname="/"/>);
+    wrapper = shallow(<Router onChange={onChange} state={{}} pathname="/" />);
     wrapper.setProps({});
   });
 

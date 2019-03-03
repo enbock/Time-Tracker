@@ -1,12 +1,11 @@
-import React from 'react';
 import {shallow} from 'enzyme';
+import React from 'react';
 import Style from './Style';
 
 /**
  * Test the style loader.
  */
 describe('Shared: Style', function testSharedStyle() {
-  'use strict';
 
   /**
    * Test that url passing correctly.

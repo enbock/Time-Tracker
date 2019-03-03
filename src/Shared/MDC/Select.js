@@ -1,7 +1,7 @@
+import {MDCSelect} from '@material/select';
+import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
-import {MDCSelect} from '@material/select';
 
 /**
  * MDC Select implementation.
@@ -14,7 +14,7 @@ class Select extends React.Component {
   static get propTypes() {
     return {
       onChange: PropTypes.func.isRequired,
-      id:       PropTypes.string.isRequired
+      id: PropTypes.string.isRequired
     };
   }
 
@@ -31,10 +31,10 @@ class Select extends React.Component {
     }
 
     const event = {
-      name:            this.props.id,
+      name: this.props.id,
       selectedOptions: selectedOptions,
-      selectedIndex:   this.select.selectedIndex,
-      value:           this.select.value
+      selectedIndex: this.select.selectedIndex,
+      value: this.select.value
     };
     this.props.onChange(event);
   }
@@ -43,9 +43,9 @@ class Select extends React.Component {
    * Connect MDC after mount.
    */
   componentDidMount() {
-    this.domNode     = ReactDOM.findDOMNode(this);
+    this.domNode = ReactDOM.findDOMNode(this);
     this.boundChange = this.onChange.bind(this);
-    this.select      = new MDCSelect(this.domNode);
+    this.select = new MDCSelect(this.domNode);
     this.select.listen('MDCSelect:change', this.boundChange);
   }
 

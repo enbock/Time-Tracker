@@ -1,13 +1,28 @@
 import PropTypes from 'prop-types';
 import Component from '../Shared/LiveJSX';
 
-/**
- * Option screen primary component.
- */
 class Settings extends Component {
+  /**
+   * @param {Object} props
+   * @param {Object} context
+   * @param {Object} updater
+   */
+  constructor(props, context, updater) {
+    super(props, context, updater);
+    Object.assign(
+      this.state,
+      {
+        language: props.lang.language
+      }
+    );
+    this.languageAdapter = {
+      onChange: this.onLanguageLoaded.bind(this),
+      getDomain: () => 'Settings'
+    };
+    this.lang = props.lang.setup(this.languageAdapter);
+  }
 
   /**
-   * Define template of this component.
    * @returns {string}
    */
   static get template() {
@@ -15,44 +30,22 @@ class Settings extends Component {
   }
 
   /**
-   * Constructor.
-   *
-   * @param {Object} props
-   * @param {Object} context
-   * @param {Object} updater
-   */
-  constructor(props, context, updater) {
-    super(props, context, updater);
-
-    this.languageAdapter = {
-      onChange:  this.onLanguageLoaded.bind(this),
-      getDomain: () => 'Settings'
-    };
-  }
-
-  /**
-   * Define properties.
    * @returns {Object}
    */
   static get propTypes() {
     return {
-      onThemesChange:   PropTypes.func.isRequired,
-      onLanguageChange: PropTypes.func.isRequired,
-      lang:             PropTypes.object.isRequired
+      /**
+       * @type {Themes.Manager}
+       */
+      themesManager: PropTypes.object.isRequired,
+      /**
+       * @type {Language.Manager}
+       */
+      lang: PropTypes.object.isRequired
     };
   }
 
   /**
-   * Setup language manager on mount.
-   */
-  componentWillMount() {
-    super.componentWillMount();
-    this.lang = this.props.lang.setup(this.languageAdapter);
-  }
-
-  /**
-   * Draw component after language loaded.
-   *
    * @param {string} language
    */
   onLanguageLoaded(language) {
@@ -60,8 +53,6 @@ class Settings extends Component {
   }
 
   /**
-   * On Selection change.
-   *
    * @param {Object} event
    *
    * @see ../Shared/Select.onChange
@@ -69,10 +60,10 @@ class Settings extends Component {
   onSelectionChange(event) {
     switch (event.name) {
       case 'color':
-        this.props.onThemesChange(event.value);
+        this.props.themesManager.changeTheme(event.value);
         break;
       case 'language':
-        this.props.onLanguageChange(event.value);
+        this.props.lang.change(event.value);
         break;
       default:
         break;

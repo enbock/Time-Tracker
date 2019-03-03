@@ -18,9 +18,9 @@ A progressive web app to track working time.
 
 ## Library Overview
 Follow libraries are in use:
-* React v18
+* React
 * Babel browser for real-time templates
-* Material Design Light (MDL v1.3)
+* Material Design Components
 
 
 #

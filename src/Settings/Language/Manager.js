@@ -1,95 +1,47 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import emptyFunction from 'fbjs/lib/emptyFunction';
 import Translator from './Translator';
 
-/**
- * Language manager.
- *
- * Handles set setup domains and switch setting centrally.
- */
-class Manager extends React.Component {
-  /**
-   * Constructor.
-   *
-   * @param {Object} props
-   * @param {Object} context
-   * @param {Object} updater
-   */
-  constructor(props, context, updater) {
-    super(props, context, updater);
-
+class Manager {
+  constructor(defaultLanguage) {
     this.domainList = {};
+    this.language = defaultLanguage;
   }
 
   /**
-   * Define properties.
-   *
-   * @returns {Object}
-   */
-  static get propTypes() {
-    return {
-      language: PropTypes.string.isRequired
-    };
-  }
-
-  /**
-   * Default adapter to interact with outer world.
-   *
    * @returns {Object}
    */
   static get defaultAdapter() {
     return {
       getDomain: emptyFunction,
-      onChange:  emptyFunction
+      onChange: emptyFunction
     };
   }
 
   /**
-   * Update handler.
-   * @param {Object} nextProps
-   */
-  componentWillUpdate(nextProps) {
-    // TODO move this to interactor
-    if (this.props.language !== nextProps.language) {
-      this.updateDomains(nextProps.language);
-    }
-  }
-
-  /**
-   * Create translator.
-   *
    * @param {Object} adapter Interaction adapter.
    *
-   * @return {Translator}
+   * @returns {Translator}
    */
   setup(adapter) {
     const domain = adapter.getDomain();
 
     this.domainList[domain] = Translator.factory(adapter);
-    this.domainList[domain].onChange(this.props.language);
+    this.domainList[domain].onChange(this.language);
 
     return this.domainList[domain];
   }
 
   /**
-   * Update translators.
-   *
    * @param language
    */
-  updateDomains(language) {
+  change(language) {
+    if (this.language === language) {
+      return;
+    }
+    this.language = language;
     for (let domain in this.domainList) {
       this.domainList[domain].onChange(language);
     }
-  }
-
-  /**
-   * No output of this component.
-   *
-   * @returns {null}
-   */
-  render() {
-    return null;
   }
 }
 

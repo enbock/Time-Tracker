@@ -1,26 +1,19 @@
+import * as MDC from '@material/drawer';
+import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
-import * as MDC from '@material/drawer';
 
-/**
- * MDC drawer implementation.
- */
 class Drawer extends React.Component {
-  /**
-   * Supported property types.
-   */
   static get propTypes() {
     return {
       className: PropTypes.string.isRequired,
-      onOpen:    PropTypes.func,
-      onClose:   PropTypes.func,
-      open:      PropTypes.bool
+      onOpen: PropTypes.func,
+      onClose: PropTypes.func,
+      open: PropTypes.bool
     };
   }
 
   /**
-   * Proxy open event, if bound.
    * @param event
    */
   onOpen(event) {
@@ -30,7 +23,6 @@ class Drawer extends React.Component {
   }
 
   /**
-   * Proxy close event, if bound.
    * @param event
    */
   onClose(event) {
@@ -39,9 +31,6 @@ class Drawer extends React.Component {
     }
   }
 
-  /**
-   * Connect MDC after mount.
-   */
   componentDidMount() {
     this.domNode = ReactDOM.findDOMNode(this);
     switch (this.props.className) {
@@ -55,7 +44,8 @@ class Drawer extends React.Component {
         this.domNode.addEventListener('MDCTemporaryDrawer:open', this.onOpen.bind(this));
         this.domNode.addEventListener('MDCTemporaryDrawer:close', this.onClose.bind(this));
         break;
-      default: break;
+      default:
+        break;
     }
 
     if (this.drawer) {
@@ -64,36 +54,25 @@ class Drawer extends React.Component {
        * Interaction with MDC could be via adapter...but currently I use the refs-List of React to take the click
        * events of the drawer elements.
        *
-      console.log("Adapter", this.drawer.foundation_.adapter_);
-      this.drawer.foundation_.adapter_.registerDrawerInteractionHandler('click', (event) => console.log('?!!>> ', event));
+       console.log("Adapter", this.drawer.foundation_.adapter_);
+       this.drawer.foundation_.adapter_.registerDrawerInteractionHandler('click', (event) => console.log('?!!>> ', event));
        */
     }
   }
 
-  /**
-   * Destroy drawer on unmount.
-   */
   componentWillUnmount() {
     if (this.drawer) {
       this.drawer.destroy();
     }
   }
 
-  /**
-   * Update props on drawer component if exists.
-   */
-  componentDidUpdate()
-  {
+  componentDidUpdate() {
     if (this.drawer) {
       this.drawer.open = this.props.open;
     }
   }
 
-  /**
-   * Generate the output.
-   */
   render() {
-    // No special adding into dom tree, passing children as own level.
     return this.props.children;
   }
 }

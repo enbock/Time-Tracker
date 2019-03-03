@@ -1,39 +1,35 @@
 /* global jest, Babel */
 
 import {mockAxiosAction} from 'axios';
-import React from 'react';
 import {shallow} from 'enzyme';
+import React from 'react';
 import Application from './Application';
 
 jest.mock('../Menu', () => 'Menu');
 jest.mock(
   '../Settings',
   function createSettingModuleMock() {
-    let mock           = jest.fn();
-    mock.ThemesManager = 'ThemesManager';
-    mock.Language      = {Manager: 'Manager'};
+    let mock = jest.fn();
+    mock.ThemesManager = 'Manager';
+    mock.Language = {Manager: 'Manager'};
 
     return mock;
   }
 );
 jest.mock('../Shared/Router', () => 'Router');
 
-/**
- * Test Application Container.
- */
 describe('Application', function testApplication() {
-  let bound   = null;
+  let bound = null;
   let success = false;
   let promise;
+  let mainMenuRegisterManager;
+  let routeComponents;
 
-  /**
-   * Reset global mocks.
-   */
   beforeEach(function beforeEach() {
     Babel.transform.mockClear();
 
     promise = {
-      then:  function onThen(callback) {
+      then: function onThen(callback) {
         bound = callback;
         return promise;
       },
@@ -56,52 +52,58 @@ describe('Application', function testApplication() {
         code: 'React.createElement(\'button\', { onClick: this.onMainButtonClick.bind(this) })'
       }
     );
+
+    routeComponents = {
+      settings: 'SettingsComponent'
+    };
+    mainMenuRegisterManager = {
+      toggle: jest.fn(),
+      registerMenuChangeHandler: jest.fn(),
+      deregisterMenuChangeHandler: jest.fn()
+    };
   });
 
-  /**
-   * Test if correct layout loaded.
-   */
   it('Loads the correct layout', function testLoadLayout() {
-    const wrapper  = shallow(<Application/>);
-    const instance = wrapper.instance();
+    const wrapper = shallow(<Application
+      routeComponents={routeComponents}
+      mainMenuRegisterManager={mainMenuRegisterManager}
+    />);
     bound({data: 'TEMPLATE'});
     wrapper.update();
-
-    expect(instance.components).toBeDefined();
 
     // Template loaded?
     expect(success).toBe(true);
   });
 
-  /**
-   * Test if menu interaction works.
-   */
   it('Test menu interaction', function testLMenuInteraction() {
-    const wrapper     = shallow(<Application/>);
-    const instance    = wrapper.instance();
-    const buttonClick = jest.fn();
+    const wrapper = shallow(<Application
+      routeComponents={routeComponents}
+      mainMenuRegisterManager={mainMenuRegisterManager}
+    />);
+    const instance = wrapper.instance();
 
-    instance.menuAdapter.registerMenuToggleHandler(buttonClick);
     bound({data: 'TEMPLATE'});
     wrapper.update();
 
+    expect(mainMenuRegisterManager.registerMenuChangeHandler).toHaveBeenCalledTimes(1);
+
     wrapper.find('button').simulate('click');
-    expect(buttonClick).toHaveBeenCalled();
+    expect(mainMenuRegisterManager.toggle).toHaveBeenCalledTimes(1);
 
     instance.onMenuChange('newMenu');
-    instance.menuAdapter.deregisterMenuToggleHandler(buttonClick);
-    instance.menuAdapter.deregisterMenuToggleHandler(buttonClick); // check that double remove don't break
+
+    wrapper.unmount();
+    expect(mainMenuRegisterManager.deregisterMenuChangeHandler).toHaveBeenCalled();
   });
 
-  /**
-   * Test kinds of redirection.
-   */
   it('Redirect from router to page', function testRouterRedirect() {
-    const wrapper  = shallow(<Application/>);
+    const wrapper = shallow(<Application
+      routeComponents={routeComponents}
+      mainMenuRegisterManager={mainMenuRegisterManager}
+    />);
     const instance = wrapper.instance();
     bound({data: 'TEMPLATE'});
     wrapper.update();
-
 
     global.process.env.PUBLIC_URL = '/MainPath';
 
@@ -109,7 +111,7 @@ describe('Application', function testApplication() {
     instance.onPathChange(
       {
         pathname: '/MainPath/settings/',
-        state:    null
+        state: null
       }
     );
     expect(instance.state.pathname).toBe('/MainPath/settings/');
@@ -120,7 +122,7 @@ describe('Application', function testApplication() {
     instance.onPathChange(
       {
         pathname: '/MainPath/',
-        state:    null
+        state: null
       }
     );
     expect(instance.state.pathname).toBe('/MainPath/');
@@ -131,7 +133,7 @@ describe('Application', function testApplication() {
     instance.onPathChange(
       {
         pathname: '/settings/', // <-- should be ignored if state present
-        state:    {page: 'index', root: '/MainPath'}
+        state: {page: 'index', root: '/MainPath'}
       }
     );
     expect(instance.state.pathname).toBe('/MainPath/');
@@ -144,41 +146,11 @@ describe('Application', function testApplication() {
     instance.onPathChange(
       {
         pathname: '/',
-        state:    null
+        state: null
       }
     );
     expect(instance.state.pathname).toBe('/');
     expect(instance.state.history.page).toBe('index');
     expect(instance.state.history.root).toBe('');
-  });
-
-  /**
-   * Test kinds of redirection.
-   */
-  it('Change the theme', function testChangeTheme() {
-    const wrapper  = shallow(<Application/>);
-    const instance = wrapper.instance();
-    bound({data: 'TEMPLATE'});
-    wrapper.update();
-
-    instance.onThemesChange('new');
-    expect(instance.state.theme).toBe('new');
-  });
-
-  /**
-   * Test kinds of redirection.
-   */
-  it('Store and change language', function testStoreAndChangeLanguage() {
-    const wrapper  = shallow(<Application/>);
-    const instance = wrapper.instance();
-    bound({data: 'TEMPLATE'});
-    wrapper.update();
-
-    instance.storeLanguageManager('manager');
-    expect(instance.lang).toBe('manager');
-
-
-    instance.onLanguageChange('new');
-    expect(instance.state.language).toBe('new');
   });
 });

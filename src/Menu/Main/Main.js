@@ -1,25 +1,8 @@
-import Component from '../../Shared/LiveJSX';
 import PropTypes from 'prop-types';
-import emptyFunction from 'fbjs/lib/emptyFunction';
+import Component from '../../Shared/LiveJSX';
 
-/**
- * The Main menu.
- *
- * This menu should show the menu button.
- * Also it contain the menu menu which appear on left side.
- */
 class Main extends Component {
   /**
-   * Place of main menu layout.
-   * @returns {string}
-   */
-  static get template() {
-    return '/Template/Menu/Main.html.tpl';
-  }
-
-  /**
-   * Constructor.
-   *
    * @param {Object} props
    * @param {Object} context
    * @param {Object} updater
@@ -30,67 +13,47 @@ class Main extends Component {
     Object.assign(
       this.state,
       {
-        open: false
+        open: false,
+        language: props.lang.language
       }
     );
 
-    /**
-     * @type {MainMenu.defaultAdapter}
-     */
-    this.adapter = Object.assign(
-      Main.defaultAdapter,
-      props.adapter
-    );
-
-    this.boundToggleMenu        = this.toggleMenu.bind(this);
+    this.boundToggleMenu = this.toggleMenu.bind(this);
     this.boundMenuSettingsClick = this.onMenuClick.bind(this, 'settings');
 
     this.languageAdapter = {
-      onChange:  this.onLanguageChange.bind(this),
+      onChange: this.onLanguageChange.bind(this),
       getDomain: () => 'Menu/Main'
     };
+    this.lang = props.lang.setup(this.languageAdapter);
   }
 
   /**
-   * Default adapter to interact with outer world.
-   *
-   * @returns {Object}
+   * @returns {string}
    */
-  static get defaultAdapter() {
-    return {
-      registerMenuToggleHandler:   emptyFunction,
-      deregisterMenuToggleHandler: emptyFunction
-    };
+  static get template() {
+    return '/Template/Menu/Main.html.tpl';
   }
 
-  /**
-   * Supported property types.
-   */
   static get propTypes() {
     return {
-      lang:    PropTypes.object.isRequired,
-      adapter: PropTypes.object,
-      onMenu:  PropTypes.func
+      lang: PropTypes.object.isRequired,
+      /**
+       * @type {Menu.RegisterManager}
+       */
+      mainMenuRegisterManager: PropTypes.object.isRequired
     };
   }
 
-  /**
-   * Menu state toggle.
-   */
   toggleMenu() {
     this.setState({open: !this.state.open});
   }
 
-  /**
-   * Close menu.
-   */
   closeMenu() {
     this.setState({open: false});
   }
 
   /**
-   * Draw component after language loaded.
-   *
    * @param {string} language
    */
   onLanguageChange(language) {
@@ -98,41 +61,21 @@ class Main extends Component {
   }
 
   /**
-   * Menu click proxy.
-   *
    * @param {string} menu
    */
   onMenuClick(menu) {
-    if (this.props.onMenu) {
-      this.props.onMenu(menu);
-    }
+    this.props.mainMenuRegisterManager.change(menu);
     this.closeMenu();
   }
 
-  /**
-   * Connect low level events and adapter interactions.
-   *
-   * *Notice:* MDC Drawer caches the event, so take them from low level.
-   */
   onTemplateMounted() {
     this.refs.settingsMenu.addEventListener('click', this.boundMenuSettingsClick);
-    this.adapter.registerMenuToggleHandler(this.boundToggleMenu);
+    this.props.mainMenuRegisterManager.registerMenuToggleHandler(this.boundToggleMenu);
   }
 
-  /**
-   * Setup language on mount.
-   */
-  componentWillMount() {
-    super.componentWillMount();
-    this.lang = this.props.lang.setup(this.languageAdapter);
-  }
-
-  /**
-   * Release interaction connections.
-   */
   componentWillUnmount() {
     this.refs.settingsMenu.removeEventListener('click', this.boundMenuSettingsClick);
-    this.adapter.deregisterMenuToggleHandler(this.boundToggleMenu);
+    this.props.mainMenuRegisterManager.deregisterMenuToggleHandler(this.boundToggleMenu);
   }
 }
 

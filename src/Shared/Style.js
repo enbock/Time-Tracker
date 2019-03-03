@@ -1,22 +1,10 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 /**
  * An CSS file loader and importer.
  */
 class Style extends React.Component {
-
-  /**
-   * Define properties.
-   *
-   * @returns {Object}
-   */
-  static get propTypes() {
-    return {
-      src:     PropTypes.string.isRequired,
-      enabled: PropTypes.bool
-    };
-  }
 
   /**
    * Constructor.
@@ -30,6 +18,18 @@ class Style extends React.Component {
 
     this.state = {
       publicUrl: process.env.PUBLIC_URL || ''
+    };
+  }
+
+  /**
+   * Define properties.
+   *
+   * @returns {Object}
+   */
+  static get propTypes() {
+    return {
+      src: PropTypes.string.isRequired,
+      enabled: PropTypes.bool
     };
   }
 

@@ -1,24 +1,31 @@
 <component name="ProjectCodeStyleConfiguration">
   <code_scheme name="Project" version="173">
+    <option name="AUTODETECT_INDENTS" value="false" />
     <option name="LINE_SEPARATOR" value="&#10;" />
     <HTMLCodeStyleSettings>
       <option name="HTML_ATTRIBUTE_WRAP" value="4" />
       <option name="HTML_ALIGN_TEXT" value="true" />
+      <option name="HTML_SPACE_INSIDE_EMPTY_TAG" value="true" />
       <option name="HTML_ENFORCE_QUOTES" value="true" />
       <option name="HTML_NEWLINE_BEFORE_FIRST_ATTRIBUTE" value="When multiline" />
       <option name="HTML_NEWLINE_AFTER_LAST_ATTRIBUTE" value="When multiline" />
     </HTMLCodeStyleSettings>
     <JSCodeStyleSettings version="1">
       <option name="FORCE_SEMICOLON_STYLE" value="true" />
-      <option name="ALIGN_OBJECT_PROPERTIES" value="1" />
-      <option name="ALIGN_VAR_STATEMENTS" value="2" />
+      <option name="ALIGN_VAR_STATEMENTS" value="1" />
       <option name="REFORMAT_C_STYLE_COMMENTS" value="true" />
       <option name="USE_DOUBLE_QUOTES" value="false" />
       <option name="FORCE_QUOTE_STYlE" value="true" />
       <option name="ENFORCE_TRAILING_COMMA" value="Remove" />
+      <option name="JSX_ATTRIBUTE_VALUE" value="Based on type" />
+      <option name="VAR_DECLARATION_WRAP" value="5" />
       <option name="IMPORT_SORT_MODULE_NAME" value="true" />
       <option name="IMPORT_PREFER_ABSOLUTE_PATH" value="TRUE" />
     </JSCodeStyleSettings>
+    <LessCodeStyleSettings>
+      <option name="HEX_COLOR_LOWER_CASE" value="true" />
+      <option name="HEX_COLOR_LONG_FORMAT" value="true" />
+    </LessCodeStyleSettings>
     <MarkdownNavigatorCodeStyleSettings>
       <option name="RIGHT_MARGIN" value="72" />
     </MarkdownNavigatorCodeStyleSettings>
@@ -29,7 +36,9 @@
     </XML>
     <codeStyleSettings language="HTML">
       <indentOptions>
-        <option name="CONTINUATION_INDENT_SIZE" value="4" />
+        <option name="INDENT_SIZE" value="2" />
+        <option name="CONTINUATION_INDENT_SIZE" value="2" />
+        <option name="TAB_SIZE" value="2" />
       </indentOptions>
     </codeStyleSettings>
     <codeStyleSettings language="JavaScript">
@@ -39,6 +48,7 @@
       <option name="ALIGN_MULTILINE_TERNARY_OPERATION" value="true" />
       <option name="ALIGN_MULTILINE_ARRAY_INITIALIZER_EXPRESSION" value="true" />
       <option name="CALL_PARAMETERS_WRAP" value="5" />
+      <option name="PREFER_PARAMETERS_WRAP" value="true" />
       <option name="CALL_PARAMETERS_LPAREN_ON_NEXT_LINE" value="true" />
       <option name="CALL_PARAMETERS_RPAREN_ON_NEXT_LINE" value="true" />
       <option name="METHOD_PARAMETERS_WRAP" value="5" />
@@ -46,7 +56,7 @@
       <option name="METHOD_PARAMETERS_RPAREN_ON_NEXT_LINE" value="true" />
       <option name="EXTENDS_LIST_WRAP" value="5" />
       <option name="EXTENDS_KEYWORD_WRAP" value="1" />
-      <option name="METHOD_CALL_CHAIN_WRAP" value="2" />
+      <option name="METHOD_CALL_CHAIN_WRAP" value="5" />
       <option name="PARENTHESES_EXPRESSION_LPAREN_WRAP" value="true" />
       <option name="PARENTHESES_EXPRESSION_RPAREN_WRAP" value="true" />
       <option name="BINARY_OPERATION_WRAP" value="5" />
@@ -86,6 +96,12 @@
           </group>
         </groups>
       </arrangement>
+    </codeStyleSettings>
+    <codeStyleSettings language="LESS">
+      <indentOptions>
+        <option name="CONTINUATION_INDENT_SIZE" value="2" />
+        <option name="TAB_SIZE" value="2" />
+      </indentOptions>
     </codeStyleSettings>
     <codeStyleSettings language="Twig">
       <indentOptions>

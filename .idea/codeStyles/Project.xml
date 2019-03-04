@@ -20,7 +20,7 @@
       <option name="JSX_ATTRIBUTE_VALUE" value="Based on type" />
       <option name="VAR_DECLARATION_WRAP" value="5" />
       <option name="IMPORT_SORT_MODULE_NAME" value="true" />
-      <option name="IMPORT_PREFER_ABSOLUTE_PATH" value="TRUE" />
+      <option name="IMPORT_USE_NODE_RESOLUTION" value="FALSE" />
     </JSCodeStyleSettings>
     <LessCodeStyleSettings>
       <option name="HEX_COLOR_LOWER_CASE" value="true" />

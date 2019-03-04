@@ -6,16 +6,6 @@ import React from 'react';
 import Application from './Application';
 
 jest.mock('../Menu', () => 'Menu');
-jest.mock(
-  '../Settings',
-  function createSettingModuleMock() {
-    let mock = jest.fn();
-    mock.ThemesManager = 'Manager';
-    mock.Language = {Manager: 'Manager'};
-
-    return mock;
-  }
-);
 jest.mock('../Shared/Router', () => 'Router');
 
 describe('Application', function testApplication() {

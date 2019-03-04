@@ -21,13 +21,13 @@ class Manager {
 
   setAdapter(adapter) {
     this.adapter = adapter;
-    adapter.onThemeChange(this.activeTheme, this.getThemeFile());
+    adapter.onThemeChange(this.activeTheme, this.themeFile);
   }
 
   /**
    * @returns {string}
    */
-  getThemeFile() {
+  get themeFile() {
     return this.themes[this.activeTheme];
   }
 
@@ -39,7 +39,6 @@ class Manager {
       return;
     }
     this.activeTheme = newTheme;
-    this.adapter.onThemeChange(this.activeTheme, this.getThemeFile());
   }
 }
 

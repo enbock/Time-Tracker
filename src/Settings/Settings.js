@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import Component from '../Shared/LiveJSX';
+import ThemeChangeRequest from './Themes/Interactor/Change/Request';
+import ThemeChangeResponse from './Themes/Interactor/Change/Response';
 
 class Settings extends Component {
   /**
@@ -35,13 +37,13 @@ class Settings extends Component {
   static get propTypes() {
     return {
       /**
-       * @type {Themes.Manager}
+       * @type {Manager}
        */
-      themesManager: PropTypes.object.isRequired,
+      lang: PropTypes.object.isRequired,
       /**
-       * @type {Language.Manager}
+       * @type {Change}
        */
-      lang: PropTypes.object.isRequired
+      themeChangeInteractor: PropTypes.object.isRequired
     };
   }
 
@@ -60,13 +62,28 @@ class Settings extends Component {
   onSelectionChange(event) {
     switch (event.name) {
       case 'color':
-        this.props.themesManager.changeTheme(event.value);
+        this.switchTheme(event.value);
         break;
       case 'language':
         this.props.lang.change(event.value);
         break;
       default:
         break;
+    }
+  }
+
+  /**
+   * @param {string} newTheme
+   */
+  switchTheme(newTheme) {
+    const request = new ThemeChangeRequest(newTheme);
+    const response = new ThemeChangeResponse();
+
+    this.props.themeChangeInteractor.interact(request, response);
+
+    if(response.isChanged) {
+      // TODO Temporally...will move away
+      this.props.themesManager.adapter.onThemeChange(response.theme, response.file);
     }
   }
 }

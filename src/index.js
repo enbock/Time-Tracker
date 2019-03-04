@@ -4,7 +4,11 @@ import Application from './Application';
 import './bootstrap';
 import Menu from './Menu';
 import registerServiceWorker from './registerServiceWorker';
-import Settings from './Settings';
+import Settings from './Settings/Settings';
+import ThemesManager from './Settings/Themes/Manager';
+import LanguageManager from './Settings/Language/Manager';
+import ThemeChangeInteractor from './Settings/Themes/Interactor/Change';
+import SettingsThemesStyle from './Settings/Themes/Style';
 import Style from './Shared/Style';
 
 registerServiceWorker();
@@ -24,16 +28,19 @@ fetch(process.env.PUBLIC_URL + '/lib/babel.min.js')
 
 function startApplication() {
   // Injections
-  const languageManager = new Settings.Language.Manager('de_DE');
-  const themesManager = new Settings.Themes.Manager({google: 'Google.css', codefrog: 'Codefrog.css'});
+  const languageManager = new LanguageManager('de_DE');
+  const themesManager = new ThemesManager({google: 'Google.css', codefrog: 'Codefrog.css'});
   const mainMenuRegisterManager = new Menu.RegisterManager();
   const mainMenu = <Menu.Main lang={languageManager} mainMenuRegisterManager={mainMenuRegisterManager} />;
+
+  const themeChangeInteractor = new ThemeChangeInteractor(themesManager);
 
   const routeComponents = {
     settings:
       <Settings
         lang={languageManager}
         themesManager={themesManager}
+        themeChangeInteractor={themeChangeInteractor}
       />
   };
 
@@ -41,7 +48,7 @@ function startApplication() {
     [
       <Style key="MDCStyle" src="/Style/google.css" />,
       <Style key="CoreStyle" src="/Style/material-components-web.min.css" />,
-      <Settings.Themes.Style key="ThemeStyle" themesManager={themesManager} />,
+      <SettingsThemesStyle key="ThemeStyle" themesManager={themesManager} />,
       <Application
         key="Application"
         routeComponents={routeComponents}

@@ -42,11 +42,7 @@ describe('Settings Page', function testSettings() {
       change: jest.fn()
     };
 
-    const themesManager = {
-      changeTheme: jest.fn()
-    };
-
-    const wrapper = shallow(<Settings lang={lang} themesManager={themesManager} />);
+    const wrapper = shallow(<Settings lang={lang} themesManager={{}} themeChangeInteractor={{}}/>);
     let instance = wrapper.instance();
     bound({data: 'TEMPLATE'});
     wrapper.setProps({});
@@ -70,15 +66,33 @@ describe('Settings Page', function testSettings() {
     wrapper.unmount();
   });
 
-  it('Change activeTheme', function () {
+  it('Change activeTheme', function (done) {
+    const themeChangeInteractor = {
+      interact: jest.fn(
+        /**
+         * @param {Request}request
+         * @param {Response} response
+         */
+        (request, response) => {
+          response.theme = 'theme';
+          response.file = 'file';
+          response.isChanged = true;
+        }
+      )
+    };
 
-    const themesManager = {
-      changeTheme: jest.fn()
+    const adapter = {
+      onThemeChange: function (name, file) {
+          expect(name).toBe('theme');
+          expect(file).toBe('file');
+          done();
+      }
     };
 
     const wrapper = shallow(<Settings
       lang={{setup: jest.fn()}}
-      themesManager={themesManager}
+      themesManager={{adapter: adapter}}
+      themeChangeInteractor={themeChangeInteractor}
     />);
 
     let instance = wrapper.instance();
@@ -94,8 +108,49 @@ describe('Settings Page', function testSettings() {
       }
     );
 
-    expect(themesManager.changeTheme).toHaveBeenCalledTimes(1);
-    expect(themesManager.changeTheme).toHaveBeenCalledWith('google');
+    expect(themeChangeInteractor.interact).toHaveBeenCalledTimes(1);
+    expect(themeChangeInteractor.interact.mock.calls[0][0].newTheme).toBe('google');
+  });
 
+  it('Done change already active theme', function () {
+    const themeChangeInteractor = {
+      interact: jest.fn(
+        /**
+         * @param {Request}request
+         * @param {Response} response
+         */
+        (request, response) => {
+          response.theme = 'theme';
+          response.file = 'file';
+          response.isChanged = false;
+        }
+      )
+    };
+
+    const adapter = {
+      onThemeChange: jest.fn()
+    };
+
+    const wrapper = shallow(<Settings
+      lang={{setup: jest.fn()}}
+      themesManager={{adapter: adapter}}
+      themeChangeInteractor={themeChangeInteractor}
+    />);
+
+    let instance = wrapper.instance();
+    bound({data: 'TEMPLATE'});
+    wrapper.setProps({});
+
+    instance.onSelectionChange(
+      {
+        name: 'color',
+        selectedOptions: ['google'],
+        selectedIndex: 1,
+        value: 'google'
+      }
+    );
+
+    expect(themeChangeInteractor.interact).toHaveBeenCalledTimes(1);
+    expect(adapter.onThemeChange).not.toHaveBeenCalled();
   });
 });

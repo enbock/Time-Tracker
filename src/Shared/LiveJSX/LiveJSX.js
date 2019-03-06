@@ -1,7 +1,6 @@
 import Axios from 'axios';
 import React from 'react';
 
-// Bridge to templates
 global.React = React;
 
 class LiveJSX extends React.Component {
@@ -14,7 +13,7 @@ class LiveJSX extends React.Component {
     super(props, context, updater);
 
     this.state = {
-      view: function () {
+      jsx: function () {
         return <div className="mdl-progress mdl-js-progress mdl-progress__indeterminate"/>;
       },
       publicUrl: process.env.PUBLIC_URL || ''
@@ -35,9 +34,6 @@ class LiveJSX extends React.Component {
 
     let code = global.Babel.transform(template, {presets: ['react']}).code;
     code = code.replace(/React.createElement\(/, 'return React.createElement(');
-
-    //console.log(template);
-    //console.log(code);
 
     // https://github.com/babel/babel/tree/master/packages/babel-standalone#usage
     // eslint-disable-next-line
@@ -86,7 +82,7 @@ class LiveJSX extends React.Component {
   onTemplate(response) {
     const jsx = LiveJSX.generate(response.data);
     this.firstShow = true;
-    this.setState({view: jsx});
+    this.setState({jsx: jsx});
   }
 
   onTemplateMounted() {
@@ -108,7 +104,7 @@ class LiveJSX extends React.Component {
    * @returns {*}
    */
   render() {
-    return this.state.view.apply(this);
+    return this.state.jsx.apply(this);
   }
 }
 

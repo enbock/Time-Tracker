@@ -4,6 +4,7 @@ import {mockAxiosAction} from 'axios';
 import {shallow} from 'enzyme';
 import React from 'react';
 import Settings from './Settings';
+import View from './View';
 
 jest.mock('react-dom');
 
@@ -41,8 +42,9 @@ describe('Settings Page', function testSettings() {
       },
       change: jest.fn()
     };
+    const settingsPresenter = {present: jest.fn().mockReturnValue(new View())};
 
-    const wrapper = shallow(<Settings lang={lang} themesManager={{}} themeChangeInteractor={{}}/>);
+    const wrapper = shallow(<Settings lang={lang} settingsPresenter={settingsPresenter} themeChangeInteractor={{}}/>);
     let instance = wrapper.instance();
     bound({data: 'TEMPLATE'});
     wrapper.setProps({});
@@ -88,9 +90,10 @@ describe('Settings Page', function testSettings() {
           done();
       }
     };
+    const settingsPresenter = {present: jest.fn().mockReturnValue(new View())};
 
     const wrapper = shallow(<Settings
-      lang={{setup: jest.fn()}}
+      settingsPresenter={settingsPresenter}
       themesManager={{adapter: adapter}}
       themeChangeInteractor={themeChangeInteractor}
     />);
@@ -110,6 +113,8 @@ describe('Settings Page', function testSettings() {
 
     expect(themeChangeInteractor.interact).toHaveBeenCalledTimes(1);
     expect(themeChangeInteractor.interact.mock.calls[0][0].newTheme).toBe('google');
+    expect(settingsPresenter.present).toHaveBeenCalledTimes(1);
+    expect(settingsPresenter.present.mock.calls[0][0].theme).toBe('theme');
   });
 
   it('Done change already active theme', function () {
@@ -130,9 +135,10 @@ describe('Settings Page', function testSettings() {
     const adapter = {
       onThemeChange: jest.fn()
     };
+    const settingsPresenter = {present: jest.fn().mockReturnValue(new View())};
 
     const wrapper = shallow(<Settings
-      lang={{setup: jest.fn()}}
+      settingsPresenter={settingsPresenter}
       themesManager={{adapter: adapter}}
       themeChangeInteractor={themeChangeInteractor}
     />);
@@ -152,5 +158,6 @@ describe('Settings Page', function testSettings() {
 
     expect(themeChangeInteractor.interact).toHaveBeenCalledTimes(1);
     expect(adapter.onThemeChange).not.toHaveBeenCalled();
+    expect(settingsPresenter.present).not.toHaveBeenCalled();
   });
 });

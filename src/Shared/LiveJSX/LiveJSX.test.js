@@ -25,9 +25,7 @@ describe('LiveJSX', function testLiveJSX() {
     mockAxiosAction(
       'get',
       function onRequest(url) {
-        expect(url)
-          .toBe('the_template.url');
-
+        expect(url).toBe('the_template.url');
 
         return promise;
       }

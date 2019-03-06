@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import Component from '../Shared/LiveJSX';
 import ThemeChangeRequest from './Themes/Interactor/Change/Request';
 import ThemeChangeResponse from './Themes/Interactor/Change/Response';
+import View from './View';
 
 class Settings extends Component {
   /**
@@ -11,17 +12,7 @@ class Settings extends Component {
    */
   constructor(props, context, updater) {
     super(props, context, updater);
-    Object.assign(
-      this.state,
-      {
-        language: props.lang.language
-      }
-    );
-    this.languageAdapter = {
-      onChange: this.onLanguageLoaded.bind(this),
-      getDomain: () => 'Settings'
-    };
-    this.lang = props.lang.setup(this.languageAdapter);
+    this.view = new View();
   }
 
   /**
@@ -37,21 +28,14 @@ class Settings extends Component {
   static get propTypes() {
     return {
       /**
-       * @type {Manager}
-       */
-      lang: PropTypes.object.isRequired,
-      /**
        * @type {Change}
        */
-      themeChangeInteractor: PropTypes.object.isRequired
+      themeChangeInteractor: PropTypes.object.isRequired,
+      /**
+       * @type {Presenter}
+       */
+      settingsPresenter: PropTypes.object.isRequired
     };
-  }
-
-  /**
-   * @param {string} language
-   */
-  onLanguageLoaded(language) {
-    this.setState({language: language});
   }
 
   /**
@@ -81,7 +65,10 @@ class Settings extends Component {
 
     this.props.themeChangeInteractor.interact(request, response);
 
-    if(response.isChanged) {
+    if (response.isChanged) {
+      this.view = this.props.settingsPresenter.present(response, 'TODO');
+      this.setState({view: this.view});
+
       // TODO Temporally...will move away
       this.props.themesManager.adapter.onThemeChange(response.theme, response.file);
     }

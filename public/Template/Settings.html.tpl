@@ -2,7 +2,7 @@
     <Style src="/Style/Settings.css" />
     <div class="mdc-card__horizontal-block">
         <div class="mdc-card__actions mdc-typography--body2 hint">
-            {this.lang.translate('settingBox.title')}
+            {this.view.labels.settingsBoxTitle}
         </div>
     </div>
     <div class="mdc-card">
@@ -12,10 +12,10 @@
                     <div class="mdc-select__surface" tabIndex="0">
                         <div class="mdc-select__label mdc-select__label--float-above">
                             <i class="material-icons" aria-hidden="true">language</i>
-                            {this.lang.translate('settingBox.selection.lang.title')}
+                            {this.view.labels.languageSelectionTitle}
                         </div>
                         <div class="mdc-select__selected-text">
-                            {this.lang.translate('settingBox.selection.lang.' + this.state.language)}
+                            {this.view.labels[this.view.activeLanguage]}
                         </div>
                         <div class="mdc-select__bottom-line"></div>
                     </div>
@@ -28,7 +28,7 @@
                                     tabIndex="0"
                                     {...(this.state.language === 'de_DE' ? {'aria-selected':'true'} : {})}
                             >
-                                {this.lang.translate('settingBox.selection.lang.german')}
+                                {this.view.labels.german}
                             </li>
                             <li
                                     class="mdc-list-item"
@@ -36,7 +36,7 @@
                                     id="en_US"
                                     tabIndex="0" {...(this.state.language === 'en_US' ? {'aria-selected':'true'} : {})}
                             >
-                                {this.lang.translate('settingBox.selection.lang.english')}
+                                {this.view.labels.english}
                             </li>
                         </ul>
                     </div>
@@ -49,10 +49,10 @@
                     <div class="mdc-select__surface" tabIndex="0">
                         <div class="mdc-select__label mdc-select__label--float-above">
                             <i class="material-icons" aria-hidden="true">palette</i>
-                            {this.lang.translate('settingBox.selection.color.title')}
+                            {this.view.labels.colorSelectionTitle}
                         </div>
                         <div class="mdc-select__selected-text">
-                            {this.lang.translate('settingBox.selection.color.' + this.props.themesManager.activeTheme)}
+                            {this.view.labels[this.view.activeTheme]}
                         </div>
                         <div class="mdc-select__bottom-line"></div>
                     </div>
@@ -63,18 +63,18 @@
                                     role="option"
                                     id="google"
                                     tabIndex="0"
-                                    {...(this.props.themesManager.activeTheme === 'google' ? {'aria-selected':'true'} : {})}
+                                    {...(this.view.activeTheme === 'google' ? {'aria-selected':'true'} : {})}
                             >
-                                {this.lang.translate('settingBox.selection.color.google')}
+                                {this.view.labels.google}
                             </li>
                             <li
                                     class="mdc-list-item"
                                     role="option"
                                     id="codefrog"
                                     tabIndex="0"
-                                    {...(this.props.themesManager.activeTheme === 'codefrog' ? {'aria-selected':'true'} : {})}
+                                    {...(this.view.activeTheme === 'codefrog' ? {'aria-selected':'true'} : {})}
                             >
-                                {this.lang.translate('settingBox.selection.color.codefrog')}
+                                {this.view.labels.codefrog}
                             </li>
                         </ul>
                     </div>

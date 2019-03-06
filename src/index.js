@@ -4,10 +4,11 @@ import Application from './Application';
 import './bootstrap';
 import Menu from './Menu';
 import registerServiceWorker from './registerServiceWorker';
-import Settings from './Settings/Settings';
-import ThemesManager from './Settings/Themes/Manager';
 import LanguageManager from './Settings/Language/Manager';
+import SettingsPresenter from './Settings/Presenter';
+import Settings from './Settings/Settings';
 import ThemeChangeInteractor from './Settings/Themes/Interactor/Change';
+import ThemesManager from './Settings/Themes/Manager';
 import SettingsThemesStyle from './Settings/Themes/Style';
 import Style from './Shared/Style';
 
@@ -34,6 +35,14 @@ function startApplication() {
   const mainMenu = <Menu.Main lang={languageManager} mainMenuRegisterManager={mainMenuRegisterManager} />;
 
   const themeChangeInteractor = new ThemeChangeInteractor(themesManager);
+  const settingsTranslation = languageManager.setup(
+    {
+      getDomain: () => 'Settings',
+      onChange: function TODO() {
+      }
+    }
+  );
+  const settingsPresenter = new SettingsPresenter(settingsTranslation);
 
   const routeComponents = {
     settings:
@@ -41,6 +50,7 @@ function startApplication() {
         lang={languageManager}
         themesManager={themesManager}
         themeChangeInteractor={themeChangeInteractor}
+        settingsPresenter={settingsPresenter}
       />
   };
 

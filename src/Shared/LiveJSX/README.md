@@ -18,7 +18,7 @@ Usage of the LiveJSX loader an base class of the component is preferred.
 ```typescript jsx
 import Component from 'LiveJSX';
 
-class MyComponent extends LiveJSX {
+class MyComponent extends Component {
     static get template() {
         return '..../path/to/template.html.tpl';
     }

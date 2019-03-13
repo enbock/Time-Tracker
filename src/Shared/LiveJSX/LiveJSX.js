@@ -14,7 +14,7 @@ class LiveJSX extends React.Component {
 
     this.state = {
       jsx: function () {
-        return <div className="mdl-progress mdl-js-progress mdl-progress__indeterminate"/>;
+        return <div className="mdl-progress mdl-js-progress mdl-progress__indeterminate" />;
       },
       publicUrl: process.env.PUBLIC_URL || ''
     };

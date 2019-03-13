@@ -35,9 +35,6 @@ class Manager {
    * @param language
    */
   change(language) {
-    if (this.language === language) {
-      return;
-    }
     this.language = language;
     for (let domain in this.domainList) {
       this.domainList[domain].onChange(language);

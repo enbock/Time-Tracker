@@ -35,16 +35,29 @@ describe('Settings Page', function testSettings() {
   });
 
   it('Change language', function () {
-    const lang = {
-      setup: function (adapter) {
-        adapter.onChange('test');
-        expect(adapter.getDomain()).toBe('Settings');
-      },
-      change: jest.fn()
+    const themeChangeInteractor = {
+      interact: jest.fn()
     };
+    const languageChangeInteractor = {
+      interact: jest.fn(
+        /**
+         * @param {Request}request
+         * @param {Response} response
+         */
+        (request, response) => {
+          response.isChanged = true;
+        }
+      )
+    };
+
     const settingsPresenter = {present: jest.fn().mockReturnValue(new View())};
 
-    const wrapper = shallow(<Settings lang={lang} settingsPresenter={settingsPresenter} themeChangeInteractor={{}}/>);
+    const wrapper = shallow(<Settings
+      settingsPresenter={settingsPresenter}
+      themeChangeInteractor={themeChangeInteractor}
+      languageChangeInteractor={languageChangeInteractor}
+    />);
+
     let instance = wrapper.instance();
     bound({data: 'TEMPLATE'});
     wrapper.setProps({});
@@ -57,18 +70,17 @@ describe('Settings Page', function testSettings() {
     instance.onSelectionChange(
       {
         name: 'language',
-        selectedOptions: ['german'],
+        selectedOptions: ['de_DE'],
         selectedIndex: 1,
-        value: 'german'
+        value: 'de_DE'
       }
     );
-    expect(lang.change).toHaveBeenCalledTimes(1);
-    expect(lang.change).toHaveBeenCalledWith('german');
 
-    wrapper.unmount();
+    expect(languageChangeInteractor.interact).toHaveBeenCalledTimes(1);
+    expect(languageChangeInteractor.interact.mock.calls[0][0].newLanguage).toBe('de_DE');
   });
 
-  it('Change activeTheme', function (done) {
+  it('Change activeTheme', function () {
     const themeChangeInteractor = {
       interact: jest.fn(
         /**
@@ -82,26 +94,27 @@ describe('Settings Page', function testSettings() {
         }
       )
     };
-
-    const adapter = {
-      onThemeChange: function (name, file) {
-          expect(name).toBe('theme');
-          expect(file).toBe('file');
-          done();
-      }
+    const languageChangeInteractor = {
+      interact: jest.fn()
     };
+
     const settingsPresenter = {present: jest.fn().mockReturnValue(new View())};
 
     const wrapper = shallow(<Settings
       settingsPresenter={settingsPresenter}
-      themesManager={{adapter: adapter}}
       themeChangeInteractor={themeChangeInteractor}
+      languageChangeInteractor={languageChangeInteractor}
     />);
 
     let instance = wrapper.instance();
     bound({data: 'TEMPLATE'});
     wrapper.setProps({});
 
+    instance.onSelectionChange(
+      {
+        name: 'dummy'
+      }
+    );
     instance.onSelectionChange(
       {
         name: 'color',
@@ -113,51 +126,5 @@ describe('Settings Page', function testSettings() {
 
     expect(themeChangeInteractor.interact).toHaveBeenCalledTimes(1);
     expect(themeChangeInteractor.interact.mock.calls[0][0].newTheme).toBe('google');
-    expect(settingsPresenter.present).toHaveBeenCalledTimes(1);
-    expect(settingsPresenter.present.mock.calls[0][0].theme).toBe('theme');
-  });
-
-  it('Done change already active theme', function () {
-    const themeChangeInteractor = {
-      interact: jest.fn(
-        /**
-         * @param {Request}request
-         * @param {Response} response
-         */
-        (request, response) => {
-          response.theme = 'theme';
-          response.file = 'file';
-          response.isChanged = false;
-        }
-      )
-    };
-
-    const adapter = {
-      onThemeChange: jest.fn()
-    };
-    const settingsPresenter = {present: jest.fn().mockReturnValue(new View())};
-
-    const wrapper = shallow(<Settings
-      settingsPresenter={settingsPresenter}
-      themesManager={{adapter: adapter}}
-      themeChangeInteractor={themeChangeInteractor}
-    />);
-
-    let instance = wrapper.instance();
-    bound({data: 'TEMPLATE'});
-    wrapper.setProps({});
-
-    instance.onSelectionChange(
-      {
-        name: 'color',
-        selectedOptions: ['google'],
-        selectedIndex: 1,
-        value: 'google'
-      }
-    );
-
-    expect(themeChangeInteractor.interact).toHaveBeenCalledTimes(1);
-    expect(adapter.onThemeChange).not.toHaveBeenCalled();
-    expect(settingsPresenter.present).not.toHaveBeenCalled();
   });
 });

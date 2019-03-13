@@ -37,7 +37,7 @@ describe('LiveJSX', function testLiveJSX() {
       }
     );
 
-    const wrapper = shallow(<LiveJSX/>);
+    const wrapper = shallow(<LiveJSX />);
     wrapper.setProps({template: 'the_template.url'});
     bound({data: 'TEMPLATE'});
     wrapper.setProps({}); // update component again (wrapper.update() seems not executing the life cycle)
@@ -73,7 +73,7 @@ describe('LiveJSX', function testLiveJSX() {
       error: logMock
     };
 
-    const wrapper = shallow(<LiveJSX template="the_template.url"/>);
+    const wrapper = shallow(<LiveJSX template="the_template.url" />);
     bound('Error');
     wrapper.update();
     expect(logMock.mock.calls[0]).toEqual(['Error']);

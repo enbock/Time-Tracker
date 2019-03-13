@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import Component from '../Shared/LiveJSX';
+import LanguageChangeRequest from './Language/Interactor/Change/Request';
+import LanguageChangeResponse from './Language/Interactor/Change/Response';
 import ThemeChangeRequest from './Themes/Interactor/Change/Request';
 import ThemeChangeResponse from './Themes/Interactor/Change/Response';
 import View from './View';
@@ -32,6 +34,10 @@ class Settings extends Component {
        */
       themeChangeInteractor: PropTypes.object.isRequired,
       /**
+       * @type {Change}
+       */
+      languageChangeInteractor: PropTypes.object.isRequired,
+      /**
        * @type {Presenter}
        */
       settingsPresenter: PropTypes.object.isRequired
@@ -46,10 +52,10 @@ class Settings extends Component {
   onSelectionChange(event) {
     switch (event.name) {
       case 'color':
-        this.switchTheme(event.value);
+        this.changeTheme(event.value);
         break;
       case 'language':
-        this.props.lang.change(event.value);
+        this.changeLanguage(event.value);
         break;
       default:
         break;
@@ -59,19 +65,21 @@ class Settings extends Component {
   /**
    * @param {string} newTheme
    */
-  switchTheme(newTheme) {
+  changeTheme(newTheme) {
     const request = new ThemeChangeRequest(newTheme);
     const response = new ThemeChangeResponse();
 
     this.props.themeChangeInteractor.interact(request, response);
+  }
 
-    if (response.isChanged) {
-      this.view = this.props.settingsPresenter.present(response, 'TODO');
-      this.setState({view: this.view});
+  /**
+   * @param {string} newLanguage
+   */
+  changeLanguage(newLanguage) {
+    const request = new LanguageChangeRequest(newLanguage);
+    const response = new LanguageChangeResponse();
 
-      // TODO Temporally...will move away
-      this.props.themesManager.adapter.onThemeChange(response.theme, response.file);
-    }
+    this.props.languageChangeInteractor.interact(request, response);
   }
 }
 

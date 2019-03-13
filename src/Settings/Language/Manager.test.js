@@ -12,7 +12,6 @@ jest.mock(
 );
 
 describe('Language Manager', function testLanguageManager() {
-
   it('Register domain and change language', function testChangeLanguage() {
     const manager = new Manager('a');
     const translator = {onChange: jest.fn()};
@@ -29,7 +28,6 @@ describe('Language Manager', function testLanguageManager() {
     expect(translator.onChange).toHaveBeenCalledWith('a');
 
     manager.change('b');
-    manager.change('b'); // cover ignore already set value
     expect(translator.onChange).toHaveBeenCalledTimes(2);
     expect(translator.onChange).toHaveBeenCalledWith('b');
   });

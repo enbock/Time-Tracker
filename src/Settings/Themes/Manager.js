@@ -2,11 +2,11 @@ import emptyFunction from 'fbjs/lib/emptyFunction';
 
 class Manager {
   /**
-   * @param {Object}themes
+   * @param {Object} themes
    */
   constructor(themes) {
     this.themes = themes;
-    this.activeTheme = Object.keys(themes)[0];
+    this.activeTheme = Object.keys(this.themes)[0];
     this.adapter = Manager.defaultAdapter;
   }
 
@@ -19,16 +19,16 @@ class Manager {
     };
   }
 
-  setAdapter(adapter) {
-    this.adapter = adapter;
-    adapter.onThemeChange(this.activeTheme, this.themeFile);
-  }
-
   /**
    * @returns {string}
    */
   get themeFile() {
     return this.themes[this.activeTheme];
+  }
+
+  setAdapter(adapter) {
+    this.adapter = adapter;
+    adapter.onThemeChange(this.activeTheme, this.themeFile);
   }
 
   /**

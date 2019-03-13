@@ -34,7 +34,7 @@ class Style extends React.Component {
   }
 
   render() {
-    return <link rel="stylesheet" href={this.props.enabled === false ? '' : this.state.publicUrl + this.props.src}/>;
+    return <link rel="stylesheet" href={this.props.enabled === false ? '' : this.state.publicUrl + this.props.src} />;
   }
 }
 

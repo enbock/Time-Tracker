@@ -10,7 +10,7 @@ export default class Change {
    * @param {Request} request
    * @param {Response} response
    */
-  interact(request, response) {
+  async interact(request, response) {
     if (request.newLanguage === this.manager.language) {
       return;
     }

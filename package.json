@@ -43,7 +43,7 @@
     "object-assign": "^4.1.1",
     "prettier": "^1.8.2",
     "promise": "^8.0.2",
-    "prop-types": "latest",
+    "prop-types": "^15.7.2",
     "raf": "^3.4.1",
     "react": "^16.6.0",
     "react-app-polyfill": "~0.2.2",

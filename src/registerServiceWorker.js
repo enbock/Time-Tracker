@@ -76,8 +76,8 @@ function onUpdateFound(registration) {
 
 function registerValidSW(swUrl) {
   navigator.serviceWorker
-           .register(swUrl)
-           .then(onUpdateFound);
+    .register(swUrl)
+    .then(onUpdateFound);
   /*
    .catch(error => {
    console.error('Error during service worker registration:', error);

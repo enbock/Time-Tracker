@@ -1,9 +1,7 @@
-import Axios from 'axios';
+import PropTypes from 'prop-types';
 import React from 'react';
 
-global.React = React;
-
-class LiveJSX extends React.Component {
+export default class LiveJSX extends React.Component {
   /**
    * @param {Object} props
    * @param {Object} context
@@ -15,29 +13,25 @@ class LiveJSX extends React.Component {
     this.state = {
       jsx: function () {
         return <div className="mdl-progress mdl-js-progress mdl-progress__indeterminate" />;
-      },
-      publicUrl: process.env.PUBLIC_URL || ''
+      }
     };
 
     // remember loaded template
-    this.loadedTemplateUrl = '';
+    this.loadedTemplate = '';
     this.firstShow = false;
   }
 
   /**
-   * @param {string} data
-   * @returns {*}
+   * @returns {Object}
    */
-  static generate(data) {
-    let template = data.trim();
-    template = template.replace(/class=/g, 'className=');
-
-    let code = global.Babel.transform(template, {presets: ['react']}).code;
-    code = code.replace(/React.createElement\(/, 'return React.createElement(');
-
-    // https://github.com/babel/babel/tree/master/packages/babel-standalone#usage
-    // eslint-disable-next-line
-    return new Function(code);
+  static get propTypes() {
+    return {
+      /**
+       * @type {Ajax}
+       */
+      templateLoader: PropTypes.object.isRequired,
+      template: PropTypes.string
+    };
   }
 
   componentWillMount() {
@@ -60,27 +54,32 @@ class LiveJSX extends React.Component {
     let template = props.template || this.template || Object.getPrototypeOf(this).constructor.template;
 
     if (!template) return;
-
-    const url = state.publicUrl + template;
-
-    if (this.loadedTemplateUrl === url) {
+    if (this.loadedTemplate === template) {
       // already loaded
       return;
     }
 
-    this.loadedTemplateUrl = url;
+    this.loadedTemplate = template;
 
-    /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
-    Axios.get(url)
-         .then(response => this.onTemplate(response))
-         .catch(error => console.error(error));
+    this.props.templateLoader
+      .loadTemplate(template)
+      .then(jsx => this.onTemplate(jsx))
+      .catch(error => this.handleLoadingError(error))
+    ;
   }
 
   /**
-   * @param {Object} response
+   * @param {Object} error
    */
-  onTemplate(response) {
-    const jsx = LiveJSX.generate(response.data);
+  handleLoadingError(error) {
+    /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
+    console.error(error);
+  }
+
+  /**
+   * @param {Object} jsx
+   */
+  onTemplate(jsx) {
     this.firstShow = true;
     this.setState({jsx: jsx});
   }
@@ -107,5 +106,3 @@ class LiveJSX extends React.Component {
     return this.state.jsx.apply(this);
   }
 }
-
-export default LiveJSX;

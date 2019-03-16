@@ -1,95 +1,85 @@
 /** global: jest */
 
-import {mockAxiosAction} from 'axios';
 import React from 'react';
-import YAML from 'yamljs';
 import Translator from './Translator';
 
 jest.mock('react-dom');
 
 describe('Language Translator', function testLanguageTranslator() {
-  it('Loads the language file', testLoadingLanguageFile);
-  it('Failed to load the language file', testFailedLoadingLanguageFile);
+  let api, converter;
+
+  beforeEach(() => {
+    api = {loadLanguage: jest.fn()};
+    converter = {convert: jest.fn()};
+  });
+
+  it('Loads the language file', function testLoadingLanguageFile(done) {
+    api = {
+      loadLanguage: jest.fn().mockImplementation((
+        path => {
+          expect(path).toBe('/Lang/foo_BAR/Test.yaml');
+
+          return Promise.resolve('Yaml Text');
+        }
+      ))
+    };
+    converter = {
+      convert: jest.fn().mockImplementation((
+        text => {
+          expect(text).toBe('Yaml Text');
+
+          return Promise.resolve({test: {foo: 'bar'}, hello: 'world'});
+        }
+      ))
+    };
+    const adapter = {getDomain: () => 'Test', onChange: jest.fn()};
+    const instance = new Translator(adapter, api, converter);
+    instance.onChange('');
+    instance.onChange('foo_BAR');
+    setTimeout(
+      () => {
+
+        expect(instance.translations['test.foo']).toBe('bar');
+        expect(adapter.onChange).toHaveBeenCalledWith('foo_BAR');
+        done();
+      }
+    );
+  });
+
+  it('Failed to load the language file', function testFailedLoadingLanguageFile() {
+    api = {
+      loadLanguage: jest.fn().mockImplementation((
+        path => {
+          expect(path).toBe('/Lang/foo_BAR/Test.yaml');
+          return Promise.reject('error');
+        }
+      ))
+    };
+    const orgConsole = global.console, logMock = jest.fn();
+    global.console = {error: logMock};
+
+    const adapter = {getDomain: () => 'Test', onChange: jest.fn()};
+    const instance = new Translator(adapter, api, converter);
+    instance.onChange('foo_BAR');
+    setTimeout(
+      () => {
+        expect(instance.translations).toEqual({});
+        expect(adapter.onChange).not.toHaveBeenCalled();
+        expect(logMock).toHaveBeenCalledWith('error');
+        global.console = orgConsole;
+        done();
+      }
+    );
+  });
 
   it('Translate a key', function testTranslation() {
-    const instance = new Translator({});
+    const instance = new Translator({}, api, converter);
     instance.translations = {foo: 'bar'};
-    expect(instance.translate('foo'))
-      .toBe('bar');
+    expect(instance.translate('foo')).toBe('bar');
   });
 
   it('Translate wrong key to empty string', function testFallbackTranslation() {
-    const instance = new Translator({});
-    expect(instance.translate('foo'))
-      .toBe('');
+    const instance = new Translator({}, api, converter);
+    expect(instance.translate('foo')).toBe('');
   });
 });
-
-
-/**
- * @param thenCall
- * @param catchCall
- */
-function mockAxios(thenCall, catchCall) {
-  const promise = {
-    then: function onThen(callback) {
-      thenCall(callback);
-      return promise;
-    },
-    catch: function onCatch(callback) {
-      catchCall(callback);
-      return promise;
-    }
-  };
-  mockAxiosAction(
-    'get',
-    function onRequest(url) {
-      expect(url)
-        .toBe('/Lang/foo_BAR/Test.yaml');
-
-      return promise;
-    }
-  );
-}
-
-function testFailedLoadingLanguageFile() {
-  const orgConsole = global.console, logMock = jest.fn();
-  global.console = {error: logMock};
-  let bound = null;
-  mockAxios(jest.fn(), (callback) => bound = callback);
-
-  const adapter = {getDomain: () => 'Test', onChange: jest.fn()};
-  const instance = new Translator(adapter);
-  instance.onChange('foo_BAR');
-  bound('error');
-
-  expect(instance.translations)
-    .toEqual({});
-  expect(adapter.onChange)
-    .not
-    .toHaveBeenCalled();
-  expect(logMock)
-    .toHaveBeenCalledWith('error');
-  global.console = orgConsole;
-}
-
-/**
- * Test failing of loading the language yaml.
- */
-function testLoadingLanguageFile() {
-  let bound = null;
-  mockAxios((callback) => bound = callback, jest.fn());
-
-  const adapter = {getDomain: () => 'Test', onChange: jest.fn()};
-  const instance = Translator.factory(adapter);
-  instance.onChange('');
-  expect(bound)
-    .toBe(null);
-  instance.onChange('foo_BAR');
-  bound({data: YAML.stringify({test: {foo: 'bar'}, hello: 'world'})});
-
-  expect(instance.translations['test.foo'])
-    .toBe('bar');
-  expect(adapter.onChange)
-    .toHaveBeenCalledWith('foo_BAR');
-}

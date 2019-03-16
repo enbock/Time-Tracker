@@ -1,6 +1,5 @@
 /** global: jest */
 
-import {mockAxiosAction} from 'axios';
 import {shallow} from 'enzyme';
 import React from 'react';
 import Settings from './Settings';
@@ -9,29 +8,14 @@ import View from './View';
 jest.mock('react-dom');
 
 describe('Settings Page', function testSettings() {
-  let bound, promise;
+  let templateLoader;
 
   beforeEach(function setup() {
-    bound = null;
-    promise = {
-      then: function onThen(callback) {
-        bound = callback;
-        return promise;
-      },
-      catch: function onCatch() {
-        return promise;
-      }
+    templateLoader = {
+      loadTemplate: jest.fn().mockImplementation(template => {
+        return Promise.resolve(() => <div>JSX</div>);
+      })
     };
-
-    mockAxiosAction(
-      'get',
-      function onRequest(url) {
-        expect(url)
-          .toBe('/Template/Settings.html.tpl');
-
-        return promise;
-      }
-    );
   });
 
   it('Change language', function () {
@@ -53,14 +37,14 @@ describe('Settings Page', function testSettings() {
     const settingsPresenter = {present: jest.fn().mockReturnValue(new View())};
 
     const wrapper = shallow(<Settings
+      template="template"
+      templateLoader={templateLoader}
       settingsPresenter={settingsPresenter}
       themeChangeInteractor={themeChangeInteractor}
       languageChangeInteractor={languageChangeInteractor}
     />);
 
     let instance = wrapper.instance();
-    bound({data: 'TEMPLATE'});
-    wrapper.setProps({});
 
     instance.onSelectionChange(
       {
@@ -101,14 +85,14 @@ describe('Settings Page', function testSettings() {
     const settingsPresenter = {present: jest.fn().mockReturnValue(new View())};
 
     const wrapper = shallow(<Settings
+      template="template"
+      templateLoader={templateLoader}
       settingsPresenter={settingsPresenter}
       themeChangeInteractor={themeChangeInteractor}
       languageChangeInteractor={languageChangeInteractor}
     />);
 
     let instance = wrapper.instance();
-    bound({data: 'TEMPLATE'});
-    wrapper.setProps({});
 
     instance.onSelectionChange(
       {

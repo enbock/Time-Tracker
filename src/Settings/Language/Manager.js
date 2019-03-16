@@ -2,9 +2,14 @@ import emptyFunction from 'fbjs/lib/emptyFunction';
 import Translator from './Translator';
 
 class Manager {
-  constructor(defaultLanguage) {
+  /**
+   * @param {string} defaultLanguage
+   * @param {Factory} translatorFactory
+   */
+  constructor(defaultLanguage, translatorFactory) {
     this.domainList = {};
     this.language = defaultLanguage;
+    this.translatorFactory = translatorFactory;
   }
 
   /**
@@ -25,7 +30,7 @@ class Manager {
   setup(adapter) {
     const domain = adapter.getDomain();
 
-    this.domainList[domain] = Translator.factory(adapter);
+    this.domainList[domain] = this.translatorFactory.createTranslator(adapter);
     this.domainList[domain].onChange(this.language);
 
     return this.domainList[domain];

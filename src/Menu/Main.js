@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
-import Component from '../../Shared/LiveJSX';
+import Component from '../Shared/LiveJSX';
 
-class Main extends Component {
+export default class Main extends Component {
   /**
    * @param {Object} props
    * @param {Object} context
@@ -10,39 +10,24 @@ class Main extends Component {
   constructor(props, context, updater) {
     super(props, context, updater);
 
-    Object.assign(
-      this.state,
-      {
-        open: false,
-        language: props.lang.language
-      }
-    );
+    Object.assign(this.state, {open: false});
 
     this.boundToggleMenu = this.toggleMenu.bind(this);
     this.boundMenuSettingsClick = this.onMenuClick.bind(this, 'settings');
 
-    this.languageAdapter = {
-      onChange: this.onLanguageChange.bind(this),
-      getDomain: () => 'Menu/Main'
-    };
-    this.lang = props.lang.setup(this.languageAdapter);
-  }
-
-  /**
-   * @returns {string}
-   */
-  static get template() {
-    return '/Template/Menu/Main.html.tpl';
+    this.view = {labels:{}}; // TODO presenter
   }
 
   static get propTypes() {
-    return {
-      lang: PropTypes.object.isRequired,
-      /**
-       * @type {Menu.RegisterManager}
-       */
-      mainMenuRegisterManager: PropTypes.object.isRequired
-    };
+    return Object.assign(
+      super.propTypes,
+      {
+        /**
+         * @type {Menu.RegisterManager}
+         */
+        mainMenuRegisterManager: PropTypes.object.isRequired
+      }
+    );
   }
 
   toggleMenu() {
@@ -51,13 +36,6 @@ class Main extends Component {
 
   closeMenu() {
     this.setState({open: false});
-  }
-
-  /**
-   * @param {string} language
-   */
-  onLanguageChange(language) {
-    this.setState({language: language});
   }
 
   /**
@@ -78,5 +56,3 @@ class Main extends Component {
     this.props.mainMenuRegisterManager.deregisterMenuToggleHandler(this.boundToggleMenu);
   }
 }
-
-export default Main;

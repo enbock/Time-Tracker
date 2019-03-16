@@ -13,8 +13,8 @@ describe('Themes Change Interactor', function testChangeInteractor() {
       themeFile: 'file'
     };
 
-    const request  = new ChangeRequest('new'),
-          response = new ChangeResponse();
+    const request = new ChangeRequest('new'),
+      response = new ChangeResponse();
 
     const interactor = new ChangeInteractor(manager);
     interactor.interact(request, response);
@@ -32,8 +32,8 @@ describe('Themes Change Interactor', function testChangeInteractor() {
       themeFile: 'file'
     };
 
-    const request  = new ChangeRequest('new'),
-          response = new ChangeResponse();
+    const request = new ChangeRequest('new'),
+      response = new ChangeResponse();
 
     const interactor = new ChangeInteractor(manager);
     interactor.interact(request, response);

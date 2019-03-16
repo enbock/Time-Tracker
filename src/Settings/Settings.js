@@ -18,30 +18,26 @@ export default class Settings extends Component {
   }
 
   /**
-   * @returns {string}
-   */
-  static get template() {
-    return '/Template/Settings.html.tpl';
-  }
-
-  /**
    * @returns {Object}
    */
   static get propTypes() {
-    return {
-      /**
-       * @type {Change}
-       */
-      themeChangeInteractor: PropTypes.object.isRequired,
-      /**
-       * @type {Change}
-       */
-      languageChangeInteractor: PropTypes.object.isRequired,
-      /**
-       * @type {Presenter}
-       */
-      settingsPresenter: PropTypes.object.isRequired
-    };
+    return Object.assign(
+      super.propTypes,
+      {
+        /**
+         * @type {Change}
+         */
+        themeChangeInteractor: PropTypes.object.isRequired,
+        /**
+         * @type {Change}
+         */
+        languageChangeInteractor: PropTypes.object.isRequired,
+        /**
+         * @type {Presenter}
+         */
+        settingsPresenter: PropTypes.object.isRequired
+      }
+    );
   }
 
   /**

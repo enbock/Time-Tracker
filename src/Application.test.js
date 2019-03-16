@@ -1,48 +1,23 @@
 /* global jest, Babel */
 
-import {mockAxiosAction} from 'axios';
 import {shallow} from 'enzyme';
 import React from 'react';
 import Application from './Application';
 
-jest.mock('../Menu', () => 'Menu');
-jest.mock('../Shared/Router', () => 'Router');
+jest.mock('./Shared/Router', () => 'Router');
 
 describe('Application', function testApplication() {
   let bound = null;
-  let success = false;
-  let promise;
   let mainMenuRegisterManager;
   let routeComponents;
+  let templateLoader;
 
-  beforeEach(function beforeEach() {
-    Babel.transform.mockClear();
-
-    promise = {
-      then: function onThen(callback) {
-        bound = callback;
-        return promise;
-      },
-      catch: function onCatch() {
-        return promise;
-      }
+  beforeEach(function setup() {
+    templateLoader = {
+      loadTemplate: jest.fn().mockImplementation(template => {
+        return Promise.resolve(() => <div>JSX</div>);
+      })
     };
-
-    mockAxiosAction(
-      'get',
-      function onRequest(url) {
-        expect(url).toBe('/Template/Application.html.tpl');
-        success = true;
-
-        return promise;
-      }
-    );
-    Babel.transform.mockReturnValue(
-      {
-        code: 'React.createElement(\'button\', { onClick: this.onMainButtonClick.bind(this) })'
-      }
-    );
-
     routeComponents = {
       settings: 'SettingsComponent'
     };
@@ -53,46 +28,38 @@ describe('Application', function testApplication() {
     };
   });
 
-  it('Loads the correct layout', function testLoadLayout() {
+  it('Test menu interaction', function testLMenuInteraction(done) {
     const wrapper = shallow(<Application
-      routeComponents={routeComponents}
-      mainMenuRegisterManager={mainMenuRegisterManager}
-    />);
-    bound({data: 'TEMPLATE'});
-    wrapper.update();
-
-    // Template loaded?
-    expect(success).toBe(true);
-  });
-
-  it('Test menu interaction', function testLMenuInteraction() {
-    const wrapper = shallow(<Application
+      template="template"
+      templateLoader={templateLoader}
       routeComponents={routeComponents}
       mainMenuRegisterManager={mainMenuRegisterManager}
     />);
     const instance = wrapper.instance();
+    setTimeout(
+      () => {
+        expect(mainMenuRegisterManager.registerMenuChangeHandler).toHaveBeenCalledTimes(1);
 
-    bound({data: 'TEMPLATE'});
-    wrapper.update();
+        instance.onMainButtonClick();
+        expect(mainMenuRegisterManager.toggle).toHaveBeenCalledTimes(1);
 
-    expect(mainMenuRegisterManager.registerMenuChangeHandler).toHaveBeenCalledTimes(1);
-
-    wrapper.find('button').simulate('click');
-    expect(mainMenuRegisterManager.toggle).toHaveBeenCalledTimes(1);
-
-    instance.onMenuChange('newMenu');
-
-    wrapper.unmount();
-    expect(mainMenuRegisterManager.deregisterMenuChangeHandler).toHaveBeenCalled();
+        instance.onMenuChange('newMenu');
+        wrapper.unmount();
+        expect(mainMenuRegisterManager.deregisterMenuChangeHandler).toHaveBeenCalled();
+        done();
+      },
+      1
+    );
   });
 
   it('Redirect from router to page', function testRouterRedirect() {
     const wrapper = shallow(<Application
+      template="template"
+      templateLoader={templateLoader}
       routeComponents={routeComponents}
       mainMenuRegisterManager={mainMenuRegisterManager}
     />);
     const instance = wrapper.instance();
-    bound({data: 'TEMPLATE'});
     wrapper.update();
 
     global.process.env.PUBLIC_URL = '/MainPath';

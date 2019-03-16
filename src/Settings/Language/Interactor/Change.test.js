@@ -9,8 +9,8 @@ describe('Language Change Interactor', function testChangeInteractor() {
     const manager = new Manager('de_DE');
     manager.change = jest.fn();
 
-    const request  = new ChangeRequest('new'),
-          response = new ChangeResponse();
+    const request = new ChangeRequest('new'),
+      response = new ChangeResponse();
 
     const interactor = new ChangeInteractor(manager);
     interactor.interact(request, response);
@@ -23,8 +23,8 @@ describe('Language Change Interactor', function testChangeInteractor() {
     const manager = new Manager('new');
     manager.change = jest.fn();
 
-    const request  = new ChangeRequest('new'),
-          response = new ChangeResponse();
+    const request = new ChangeRequest('new'),
+      response = new ChangeResponse();
 
     const interactor = new ChangeInteractor(manager);
     interactor.interact(request, response);

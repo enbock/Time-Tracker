@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import Component from '../Shared/LiveJSX';
-import Router from '../Shared/Router';
+import Component from './Shared/LiveJSX';
+import Router from './Shared/Router';
 
-class Application extends Component {
+export default class Application extends Component {
   /**
    * @param {Object} props
    * @param {Object} context
@@ -15,7 +15,7 @@ class Application extends Component {
     this.state = Object.assign(
       this.state,
       {
-        currentComponent: <div />,
+        currentComponent: <div className="mdl-progress mdl-js-progress mdl-progress__indeterminate" />,
         history: {
           page: 'none',
           root: process.env.PUBLIC_URL
@@ -24,15 +24,10 @@ class Application extends Component {
       }
     );
 
+    this.view = {labels:{}}; // TODO presenter
+
     this.boundPathChange = this.onPathChange.bind(this);
     this.boundChangeMenu = this.onMenuChange.bind(this);
-  }
-
-  /**
-   * @returns {string}
-   */
-  static get template() {
-    return '/Template/Application.html.tpl';
   }
 
   /**
@@ -49,16 +44,19 @@ class Application extends Component {
    * @returns {Object}
    */
   static get propTypes() {
-    return {
-      /**
-       * @type {Object}
-       */
-      routeComponents: PropTypes.object.isRequired,
-      /**
-       * @type {Menu.RegisterManager}
-       */
-      mainMenuRegisterManager: PropTypes.object.isRequired
-    };
+    return Object.assign(
+      super.propTypes,
+      {
+        /**
+         * @type {Object}
+         */
+        routeComponents: PropTypes.object.isRequired,
+        /**
+         * @type {Menu.RegisterManager}
+         */
+        mainMenuRegisterManager: PropTypes.object.isRequired
+      }
+    );
   }
 
   onMainButtonClick() {
@@ -151,7 +149,7 @@ class Application extends Component {
   }
 
   /**
-   * @returns {XML}
+   * @returns {*}
    */
   render() {
     return (
@@ -165,8 +163,4 @@ class Application extends Component {
       </div>
     );
   }
-
-
 }
-
-export default Application;

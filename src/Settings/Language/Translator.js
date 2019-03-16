@@ -1,28 +1,18 @@
-import Axios from 'axios';
-import YAML from 'yamljs';
-
 class Translator {
 
   /**
    * @param {Object} adapter Interaction adapter.
+   * @param {Ajax} api
+   * @param {YamlConverter} converter
    *
    * @see Manager.defaultAdapter
    */
-  constructor(adapter) {
+  constructor(adapter, api, converter) {
     this.adapter = adapter;
+    this.api = api;
+    this.converter = converter;
     this.language = '';
-    this.publicUrl = process.env.PUBLIC_URL || '';
     this.translations = {};
-  }
-
-  /**
-   * @see Manager.defaultAdapter
-   * @param {Object} adapter Interaction adapter.
-   *
-   * @returns {Translator}
-   */
-  static factory(adapter) {
-    return new Translator(adapter);
   }
 
   /**
@@ -34,19 +24,17 @@ class Translator {
     }
     this.language = language;
 
-    const url = this.publicUrl + '/Lang/' + this.language + '/' + this.adapter.getDomain() + '.yaml';
-
     /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
-    Axios.get(url)
-         .then(response => this.onLanguageFile(response))
-         .catch(error => console.error(error));
+    this.api.loadLanguage('/Lang/' + this.language + '/' + this.adapter.getDomain() + '.yaml')
+      .then(text => this.converter.convert(text))
+      .then(data => this.onLanguageFile(data))
+      .catch(error => console.error(error));
   }
 
   /**
-   * @param response
+   * @param {Object} data
    */
-  onLanguageFile(response) {
-    const data = YAML.parse(response.data);
+  onLanguageFile(data) {
     this.translations = this.flatten(data);
     this.adapter.onChange(this.language);
   }

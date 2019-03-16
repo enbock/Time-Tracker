@@ -9,7 +9,7 @@
                         class={"mdc-list-item " + (this.props.page == 'settings' ? "mdc-list-item--activated mdc-list--theme-dark" : "")}
                 >
                     <i class="mdc-list-item__graphic material-icons" aria-hidden="true">settings</i>
-                    {this.lang.translate('settings')}
+                    {this.view.labels.settings}
                 </a>
             </nav>
         </nav>

@@ -6,7 +6,7 @@ import ThemeChangeRequest from './Themes/Interactor/Change/Request';
 import ThemeChangeResponse from './Themes/Interactor/Change/Response';
 import View from './View';
 
-class Settings extends Component {
+export default class Settings extends Component {
   /**
    * @param {Object} props
    * @param {Object} context
@@ -82,6 +82,3 @@ class Settings extends Component {
     this.props.languageChangeInteractor.interact(request, response);
   }
 }
-
-
-export default Settings;

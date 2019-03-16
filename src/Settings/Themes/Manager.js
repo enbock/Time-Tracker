@@ -39,6 +39,7 @@ class Manager {
       return;
     }
     this.activeTheme = newTheme;
+    this.adapter.onThemeChange(this.activeTheme, this.themeFile);
   }
 }
 

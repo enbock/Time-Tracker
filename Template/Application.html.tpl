@@ -8,7 +8,7 @@
                             class="material-icons mdc-toolbar__menu-icon"
                             onClick={this.onMainButtonClick.bind(this)}
                     >menu</a>
-                    <span class="mdc-toolbar__title catalog-title">Time Tracker</span>
+                    <span class="mdc-toolbar__title catalog-title">{this.view.labels.title}</span>
                 </section>
             </div>
         </header>

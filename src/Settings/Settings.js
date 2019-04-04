@@ -1,12 +1,15 @@
 import PropTypes from 'prop-types';
 import Component from '../Shared/LiveJSX';
+import ReactRedrawMixIn from '../Shared/ReactRedrawMixIn';
 import LanguageChangeRequest from './Language/Interactor/Change/Request';
 import LanguageChangeResponse from './Language/Interactor/Change/Response';
+import LanguageSetupResponse from './Language/Interactor/Setup/Response';
 import ThemeChangeRequest from './Themes/Interactor/Change/Request';
 import ThemeChangeResponse from './Themes/Interactor/Change/Response';
+import ThemeSetupResponse from './Themes/Interactor/Setup/Response';
 import View from './View';
 
-export default class Settings extends Component {
+export default class Settings extends ReactRedrawMixIn(Component) {
   /**
    * @param {Object} props
    * @param {Object} context
@@ -29,15 +32,63 @@ export default class Settings extends Component {
          */
         themeChangeInteractor: PropTypes.object.isRequired,
         /**
+         * @type {Setup}
+         */
+        themeSetupInteractor: PropTypes.object.isRequired,
+        /**
          * @type {Change}
          */
         languageChangeInteractor: PropTypes.object.isRequired,
+        /**
+         * @type {Setup}
+         */
+        languageSetupInteractor: PropTypes.object.isRequired,
         /**
          * @type {Presenter}
          */
         settingsPresenter: PropTypes.object.isRequired
       }
     );
+  }
+
+  onTemplateMounted() {
+    super.onTemplateMounted();
+    this.loadSetup();
+  }
+
+  onChange() {
+    super.onChange();
+    this.loadSetup();
+  }
+
+  loadSetup() {
+    const languageResponse = new LanguageSetupResponse();
+    const themeResponse = new ThemeSetupResponse();
+    let languageResult = false, themeResult = false;
+
+    function checkResults() {
+      if (languageResult && themeResult) this.runPresenter(themeResponse, languageResponse);
+    }
+
+    this.props.languageSetupInteractor
+      .interact(languageResponse)
+      .then(() => {
+        languageResult = true;
+        checkResults.apply(this);
+      })
+    ;
+    this.props.themeSetupInteractor
+      .interact(themeResponse)
+      .then(() => {
+        themeResult = true;
+        checkResults.apply(this);
+      })
+    ;
+  }
+
+  runPresenter(themeResponse, languageResponse) {
+    this.view = this.props.settingsPresenter.present(themeResponse, languageResponse);
+    this.setState({view: this.view});
   }
 
   /**
@@ -65,7 +116,7 @@ export default class Settings extends Component {
     const request = new ThemeChangeRequest(newTheme);
     const response = new ThemeChangeResponse();
 
-    this.props.themeChangeInteractor.interact(request, response);
+    this.props.themeChangeInteractor.interact(request, response).then();
   }
 
   /**
@@ -75,6 +126,6 @@ export default class Settings extends Component {
     const request = new LanguageChangeRequest(newLanguage);
     const response = new LanguageChangeResponse();
 
-    this.props.languageChangeInteractor.interact(request, response);
+    this.props.languageChangeInteractor.interact(request, response).then();
   }
 }

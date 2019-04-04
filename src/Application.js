@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import View from './Application/View';
 import Component from './Shared/LiveJSX';
+import ReactRedrawMixIn from './Shared/ReactRedrawMixIn';
 import Router from './Shared/Router';
 
-export default class Application extends Component {
+export default class Application extends ReactRedrawMixIn(Component) {
   /**
    * @param {Object} props
    * @param {Object} context
@@ -24,7 +26,7 @@ export default class Application extends Component {
       }
     );
 
-    this.view = {labels:{}}; // TODO presenter
+    this.view = new View();
 
     this.boundPathChange = this.onPathChange.bind(this);
     this.boundChangeMenu = this.onMenuChange.bind(this);
@@ -54,9 +56,28 @@ export default class Application extends Component {
         /**
          * @type {Menu.RegisterManager}
          */
-        mainMenuRegisterManager: PropTypes.object.isRequired
+        mainMenuRegisterManager: PropTypes.object.isRequired,
+        /**
+         * @type {Application.Presenter}
+         */
+        presenter: PropTypes.object.isRequired
       }
     );
+  }
+
+  onTemplateMounted() {
+    super.onTemplateMounted();
+    this.buildView();
+  }
+
+  onChange() {
+    super.onChange();
+    this.buildView();
+  }
+
+  buildView() {
+    this.view = this.props.presenter.present();
+    this.setState({view: this.view});
   }
 
   onMainButtonClick() {

@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
 import Component from '../Shared/LiveJSX';
+import ReactRedrawMixIn from '../Shared/ReactRedrawMixIn';
+import View from './Main/View';
 
-export default class Main extends Component {
+export default class Main extends ReactRedrawMixIn(Component) {
   /**
    * @param {Object} props
    * @param {Object} context
@@ -15,7 +17,7 @@ export default class Main extends Component {
     this.boundToggleMenu = this.toggleMenu.bind(this);
     this.boundMenuSettingsClick = this.onMenuClick.bind(this, 'settings');
 
-    this.view = {labels:{}}; // TODO presenter
+    this.view = new View();
   }
 
   static get propTypes() {
@@ -25,7 +27,11 @@ export default class Main extends Component {
         /**
          * @type {Menu.RegisterManager}
          */
-        mainMenuRegisterManager: PropTypes.object.isRequired
+        mainMenuRegisterManager: PropTypes.object.isRequired,
+        /**
+         * @type {Main.Presenter}
+         */
+        presenter: PropTypes.object.isRequired
       }
     );
   }
@@ -47,12 +53,24 @@ export default class Main extends Component {
   }
 
   onTemplateMounted() {
+    super.onTemplateMounted();
     this.refs.settingsMenu.addEventListener('click', this.boundMenuSettingsClick);
     this.props.mainMenuRegisterManager.registerMenuToggleHandler(this.boundToggleMenu);
+    this.buildView();
   }
 
   componentWillUnmount() {
     this.refs.settingsMenu.removeEventListener('click', this.boundMenuSettingsClick);
     this.props.mainMenuRegisterManager.deregisterMenuToggleHandler(this.boundToggleMenu);
+  }
+
+  onChange() {
+    super.onChange();
+    this.buildView();
+  }
+
+  buildView() {
+    this.view = this.props.presenter.present();
+    this.setState({view: this.view});
   }
 }

@@ -3,13 +3,13 @@ import Translator from './Translator';
 
 class Manager {
   /**
-   * @param {string} defaultLanguage
    * @param {Factory} translatorFactory
+   * @param {ValueChangeHandler} languageChangeHandler
    */
-  constructor(defaultLanguage, translatorFactory) {
+  constructor(translatorFactory, languageChangeHandler) {
     this.domainList = {};
-    this.language = defaultLanguage;
     this.translatorFactory = translatorFactory;
+    this.languageChangeHandler = languageChangeHandler;
   }
 
   /**
@@ -31,7 +31,6 @@ class Manager {
     const domain = adapter.getDomain();
 
     this.domainList[domain] = this.translatorFactory.createTranslator(adapter);
-    this.domainList[domain].onChange(this.language);
 
     return this.domainList[domain];
   }
@@ -40,10 +39,7 @@ class Manager {
    * @param language
    */
   change(language) {
-    this.language = language;
-    for (let domain in this.domainList) {
-      this.domainList[domain].onChange(language);
-    }
+    this.languageChangeHandler.setValue(language);
   }
 }
 

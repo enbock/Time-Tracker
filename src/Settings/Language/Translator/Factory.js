@@ -4,10 +4,12 @@ export default class Factory {
   /**
    * @param {Ajax} api
    * @param {YamlConverter} converter
+   * @param {ValueChangeHandler} languageChangeHandler
    */
-  constructor(api, converter) {
+  constructor(api, converter, languageChangeHandler) {
     this.api = api;
     this.converter = converter;
+    this.languageChangeHandler = languageChangeHandler;
   }
 
   /**
@@ -17,6 +19,6 @@ export default class Factory {
    * @returns {Translator}
    */
   createTranslator(adapter) {
-    return new Translator(adapter, this.api, this.converter);
+    return new Translator(adapter, this.api, this.converter, this.languageChangeHandler);
   }
 }

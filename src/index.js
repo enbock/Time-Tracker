@@ -32,6 +32,8 @@ function startApplication() {
     templateLoader={container.templateLoader}
     lang={container.languageManager}
     mainMenuRegisterManager={container.mainMenuRegisterManager}
+    presenter={container.mainMenuPresenter}
+    redrawAdapter={container.mainMenuTranslation.adapter}
   />;
 
   const routeComponents = {
@@ -39,9 +41,12 @@ function startApplication() {
       <Settings
         template="/Template/Settings.html.tpl"
         templateLoader={container.templateLoader}
-        themeChangeInteractor={container.themeChangeInteractor}
-        languageChangeInteractor={container.languageChangeInteractor}
-        settingsPresenter={container.settingsPresenter}
+        themeChangeInteractor={container.settings.themeChangeInteractor}
+        themeSetupInteractor={container.settings.themeSetupInteractor}
+        languageChangeInteractor={container.settings.languageChangeInteractor}
+        languageSetupInteractor={container.settings.languageSetupInteractor}
+        settingsPresenter={container.settings.presenter}
+        redrawAdapter={container.settings.translation.adapter}
       />
   };
 
@@ -57,6 +62,8 @@ function startApplication() {
         routeComponents={routeComponents}
         mainMenuRegisterManager={container.mainMenuRegisterManager}
         mainMenu={mainMenu}
+        presenter={container.applicationPresenter}
+        redrawAdapter={container.applicationTranslation.adapter}
       />
     ],
     document.getElementById('root')

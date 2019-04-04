@@ -10,13 +10,13 @@ export default class Presenter {
 
   /**
    * @param {Response} themeInteractorResponse
-   * @param {string} language
+   * @param {Response} languageInteractorResponse
    */
-  present(themeInteractorResponse, language) {
+  present(themeInteractorResponse, languageInteractorResponse) {
     const view = new View();
 
     view.activeTheme = themeInteractorResponse.theme;
-    view.activeLanguage = language;
+    view.activeLanguage = languageInteractorResponse.language;
     view.labels = {
       settingsBoxTitle: this.translator.translate('settingBox.title'),
       colorSelectionTitle: this.translator.translate('settingBox.selection.color.title'),

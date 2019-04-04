@@ -1,18 +1,21 @@
 class Translator {
-
   /**
    * @param {Object} adapter Interaction adapter.
    * @param {Ajax} api
    * @param {YamlConverter} converter
+   * @param {ValueChangeHandler} languageChangeHandler
    *
    * @see Manager.defaultAdapter
    */
-  constructor(adapter, api, converter) {
+  constructor(adapter, api, converter, languageChangeHandler) {
     this.adapter = adapter;
     this.api = api;
     this.converter = converter;
     this.language = '';
+    this.languageChangeHandler = languageChangeHandler;
     this.translations = {};
+
+    this.languageChangeHandler.registerReceiver({onChange: this.onChange.bind(this)});
   }
 
   /**

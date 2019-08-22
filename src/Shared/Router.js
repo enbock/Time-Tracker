@@ -62,7 +62,8 @@ class Router extends React.Component {
   decideCommand(state) {
     let command = 'pushState';
     let allEquals = true;
-    for (let key in state) {
+    let key;
+    for (key in state) {
       if (
         !this.history.state.hasOwnProperty(key)
         || this.history.state[key] !== state[key]

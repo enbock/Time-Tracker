@@ -47,6 +47,7 @@ export default class Application extends ReactRedrawMixIn(Component) {
    */
   static get propTypes() {
     return Object.assign(
+      // eslint-disable-next-line
       super.propTypes,
       {
         /**
@@ -65,13 +66,13 @@ export default class Application extends ReactRedrawMixIn(Component) {
     );
   }
 
-  onTemplateMounted() {
-    super.onTemplateMounted();
+  onChange() {
+    super.onChange();
     this.buildView();
   }
 
-  onChange() {
-    super.onChange();
+  onTemplateMounted() {
+    super.onTemplateMounted();
     this.buildView();
   }
 
@@ -111,6 +112,7 @@ export default class Application extends ReactRedrawMixIn(Component) {
    */
   restorePageByPathName(pathname) {
     const pages = Application.routes;
+    let page;
 
     // fallback
     let history = {
@@ -119,7 +121,7 @@ export default class Application extends ReactRedrawMixIn(Component) {
     };
 
     // create history by pathname detection.
-    for (let page in pages) {
+    for (page in pages) {
       let index = pathname.indexOf(pages[page]);
       /**
        * Check if in path and goes to end.

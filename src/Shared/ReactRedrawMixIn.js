@@ -18,12 +18,14 @@ export default Base => class ReactRedrawMixIn extends Base {
    */
   static get propTypes() {
     return Object.assign(
+      // eslint-disable-next-line
       super.propTypes,
       {
         redrawAdapter: PropTypes.object.isRequired
       }
     );
   }
+
   /**
    * @returns {Object}}
    */

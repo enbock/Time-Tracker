@@ -22,6 +22,7 @@ export default class Main extends ReactRedrawMixIn(Component) {
 
   static get propTypes() {
     return Object.assign(
+      // eslint-disable-next-line
       super.propTypes,
       {
         /**
@@ -34,6 +35,11 @@ export default class Main extends ReactRedrawMixIn(Component) {
         presenter: PropTypes.object.isRequired
       }
     );
+  }
+
+  onChange() {
+    super.onChange();
+    this.buildView();
   }
 
   toggleMenu() {
@@ -62,11 +68,6 @@ export default class Main extends ReactRedrawMixIn(Component) {
   componentWillUnmount() {
     this.refs.settingsMenu.removeEventListener('click', this.boundMenuSettingsClick);
     this.props.mainMenuRegisterManager.deregisterMenuToggleHandler(this.boundToggleMenu);
-  }
-
-  onChange() {
-    super.onChange();
-    this.buildView();
   }
 
   buildView() {

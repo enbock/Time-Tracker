@@ -24,7 +24,9 @@ export default class Settings extends ReactRedrawMixIn(Component) {
    * @returns {Object}
    */
   static get propTypes() {
+
     return Object.assign(
+      // eslint-disable-next-line
       super.propTypes,
       {
         /**
@@ -51,13 +53,13 @@ export default class Settings extends ReactRedrawMixIn(Component) {
     );
   }
 
-  onTemplateMounted() {
-    super.onTemplateMounted();
+  onChange() {
+    super.onChange();
     this.loadSetup();
   }
 
-  onChange() {
-    super.onChange();
+  onTemplateMounted() {
+    super.onTemplateMounted();
     this.loadSetup();
   }
 
@@ -67,7 +69,10 @@ export default class Settings extends ReactRedrawMixIn(Component) {
     let languageResult = false, themeResult = false;
 
     function checkResults() {
-      if (languageResult && themeResult) this.runPresenter(themeResponse, languageResponse);
+      if (languageResult && themeResult) {
+        // noinspection JSPotentiallyInvalidUsageOfClassThis
+        this.runPresenter(themeResponse, languageResponse);
+      }
     }
 
     this.props.languageSetupInteractor

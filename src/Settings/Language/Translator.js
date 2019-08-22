@@ -50,9 +50,9 @@ class Translator {
    */
   flatten(data, parentDomain = '') {
     const parent = parentDomain !== '' ? parentDomain + '.' : '';
-    let flat = {};
+    let flat = {}, key;
 
-    for (let key in data) {
+    for (key in data) {
       let value = data[key];
       let domain = parent + key;
       if (value instanceof Object) {

@@ -6,7 +6,6 @@ import ReactDOM from 'react-dom';
 class Drawer extends React.Component {
   static get propTypes() {
     return {
-      className: PropTypes.string.isRequired,
       onOpen: PropTypes.func,
       onClose: PropTypes.func,
       open: PropTypes.bool
@@ -33,20 +32,7 @@ class Drawer extends React.Component {
 
   componentDidMount() {
     this.domNode = ReactDOM.findDOMNode(this);
-    switch (this.props.className) {
-      case 'mdc-drawer--persistent':
-        this.drawer = new MDC.MDCPersistentDrawer(this.domNode);
-        this.domNode.addEventListener('MDCPersistentDrawer:open', this.onOpen.bind(this));
-        this.domNode.addEventListener('MDCPersistentDrawer:close', this.onClose.bind(this));
-        break;
-      case 'mdc-drawer--temporary':
-        this.drawer = new MDC.MDCTemporaryDrawer(this.domNode);
-        this.domNode.addEventListener('MDCTemporaryDrawer:open', this.onOpen.bind(this));
-        this.domNode.addEventListener('MDCTemporaryDrawer:close', this.onClose.bind(this));
-        break;
-      default:
-        break;
-    }
+    this.drawer = MDC.MDCDrawer.attachTo(this.domNode);
 
     if (this.drawer) {
       this.drawer.open = this.props.open;

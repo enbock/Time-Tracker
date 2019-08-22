@@ -1,5 +1,5 @@
-<MDC.Drawer class="mdc-drawer--temporary" open={this.state.open} onClose={this.closeMenu.bind(this)}>
-    <aside class="mdc-drawer mdc-drawer--temporary mdc-typography">
+<MDC.Drawer open={this.state.open} onClose={this.closeMenu.bind(this)}>
+    <aside class="mdc-drawer mdc-drawer--dismissible">
         <Style src="/Style/Menu/Main.css"/>
         <nav class="mdc-drawer__drawer">
             <div class="mdc-drawer__toolbar-spacer" style={{borderColor:'rgba(0,0,0,0)'}}></div>

@@ -1,5 +1,4 @@
 import emptyFunction from 'fbjs/lib/emptyFunction';
-import Translator from './Translator';
 
 class Manager {
   /**

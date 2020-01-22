@@ -4,6 +4,7 @@
   "homepage": "https://enbock.github.io/Time-Tracker/",
   "description": "Experimental Project: Tracking start and end of working time.",
   "dependencies": {
+    "gh-pages": "^2.2.0"
   },
   "scripts": {
     "start": "echo TODO",

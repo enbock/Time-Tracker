@@ -1,28 +1,14 @@
 {
   "name": "@enbock/time-tracker",
-  "version": "0.2.0-dev.8",
+  "version": "0.2.0-dev.9",
   "homepage": "https://enbock.github.io/Time-Tracker/",
-  "description": "Tracking start and end of working time.",
+  "description": "Experimental Project: Tracking start and end of working time.",
   "dependencies": {
-    "@babel/core": "^7.5.5",
-    "@material/drawer": "^3.1.1",
-    "@material/select": "^3.1.0",
-    "babel-runtime": "^6.26.0",
-    "enzyme": "^3.10.0",
-    "enzyme-adapter-react-16": "^1.14.0",
-    "fbjs": "^1.0.0",
-    "jest-enzyme": "^7.1.0",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-scripts": "3.1.1",
-    "yamljs": "^0.3.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "deploy": "gh-pages -m 'auto commit [ci skip]' -d build"
+    "start": "echo TODO",
+    "build": "echo TODO",
+    "deploy": "gh-pages -m 'auto commit [ci skip]' -d src"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -30,8 +16,7 @@
       "!src/bootstrap.js",
       "!src/index.js",
       "!src/setupTests.js",
-      "!src/**/index.js",
-      "!src/registerServiceWorker.js"
+      "!src/**/index.js"
     ],
     "setupFiles": [
       "react-app-polyfill/jsdom"
@@ -45,30 +30,26 @@
     "testEnvironment": "jsdom",
     "testURL": "http://localhost",
     "transform": {
-      "^.+\\.(js|jsx)$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+      "^(?!.*\\.(js|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
     "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$",
-      "^.+\\.module\\.(css|sass|scss)$",
+      "[/\\\\]node_modules[/\\\\].+\\.js$",
+      "^.+\\.module\\.css$",
       "packages\\babel"
     ],
     "moduleNameMapper": {
       "^react-native$": "react-native-web",
-      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
+      "^.+\\.module\\.css$": "identity-obj-proxy"
     },
     "moduleFileExtensions": [
-      "web.js",
       "js",
-      "json",
-      "web.jsx",
-      "jsx",
-      "node"
+      "json"
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 90
+        "branches": 95
       }
     }
   },

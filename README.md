@@ -18,10 +18,6 @@ A progressive web app to track working time.
 
 ## Library Overview
 Follow libraries are in use:
+* ES6 in Browser without precompile 
 * React
-* Babel browser for real-time templates
 * Material Design Components
-
-
-#
-This project was bootstrapped with [create-react-app](README.create-react-app.md).

@@ -8,6 +8,7 @@
   "scripts": {
     "start": "echo TODO",
     "build": "echo TODO",
+    "test": "echo TODO #jest --env=jsdom --coverage --verbose",
     "deploy": "gh-pages -m 'auto commit [ci skip]' -d src"
   },
   "jest": {

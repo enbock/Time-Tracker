@@ -1,0 +1,12 @@
+settingBox:
+  title: Spache und Farbe
+  selection:
+    lang:
+      title: Sprache wählen
+      german: Deutsch
+      english: Englisch
+    color:
+      title: Farbschema
+      google: Google
+      codefrog: CodeFrog
+      dark: Dunkel

@@ -1,0 +1,12 @@
+settingBox:
+  title: Language and Color
+  selection:
+    lang:
+      title: Select Language
+      german: German
+      english: English
+    color:
+      title: Color scheme
+      google: Google
+      codefrog: CodeFrog
+      dark: Dark

@@ -1,4 +1,8 @@
 
 
-import Hello from "./Hello.js";
-ReactDOM.render(React.createElement(Hello, { compiler: "TypeScript", framework: "React" }), document.getElementById('root'));
+import Application from "./Application/View/Application.js";
+import ApplicationView from "./Application/View/Model/ApplicationView.js";
+const view = new ApplicationView();
+view.compiler = 'TypeScript';
+view.framework = 'React and Uncle Bob';
+ReactDOM.render(React.createElement(Application, { view: view }), document.getElementById('root'));

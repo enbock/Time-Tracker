@@ -27,7 +27,7 @@
     "build": "mkdir build ; cp -rv public/* build/; npx tsc --build tsconfig.json -v && sh ./scripts/correctImports.sh",
     "devServer": "powershell.exe -Command cd build; npx http-server",
     "test": "echo TODO #jest --coverage --verbose",
-    "deploy": "gh-pages -m 'auto commit [ci skip]' -d src"
+    "deploy": "gh-pages -m 'auto commit [ci skip]' -d build"
   },
   "jest": {
     "collectCoverageFrom": [

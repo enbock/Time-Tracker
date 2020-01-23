@@ -1,44 +1,27 @@
 {
   "compilerOptions": {
     "outDir": "build",
-    "target": "ES6",
-    // Specify ECMAScript target version
-    "strict": true,
-    // Enable all strict type checking options
-    "forceConsistentCasingInFileNames": true,
-    // Disallow inconsistently-cased references to the same file.
-    "module": "ES6",
-    // Specify module code generation
-    "moduleResolution": "Node",
-    // Resolve modules using Node.js style
+    "module": "ESNext",
     "jsx": "react",
-    // Support JSX in .tsx files
+    "target": "ES2020",
+    "strict": true,
+    "moduleResolution": "Node",
     "baseUrl": "src",
-    // This must be specified if "paths" is.
-    "paths": {
-      "react": [
-        "../node_modules/react"
-      ],
-      "react-dom": [
-        "../node_modules/react-dom"
-      ]
-    },
     "lib": [
       "DOM",
       "DOM.Iterable",
-      "ES6"
+      "ES6",
+      "ES2020"
     ],
     "rootDir": "src",
-    "traceResolution": false,
     "listEmittedFiles": true,
-    "allowSyntheticDefaultImports": true,
-    "preserveSymlinks": true
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "src/**/*"
   ],
   "exclude": [
     "node_modules",
-    "**/*.test.ts"
+    "**/*.test.*"
   ]
 }

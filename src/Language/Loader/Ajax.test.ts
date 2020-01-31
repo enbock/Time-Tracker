@@ -10,7 +10,7 @@ describe('Language.Loader.Ajax', () => {
     const loader = new Ajax();
     const loaded = await loader.loadLanguage('de-de');
 
-    expect(fetchSpy).toHaveBeenCalledWith('../I18n/de-de.json');
+    expect(fetchSpy).toHaveBeenCalledWith('./I18n/de-de.json');
     expect(loaded).toBe(data);
 
     delete (window.fetch);

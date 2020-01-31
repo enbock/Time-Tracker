@@ -1,12 +1,9 @@
 import ModelFactory from "./Model/ModelFactory.js";
+import ApplicationPresenter from "./Presenter/ApplicationPresenter.js";
 class Container {
     constructor() {
-        this.container = {
-            ModelFactory: new ModelFactory()
-        };
-    }
-    get ModelFactory() {
-        return this.container.ModelFactory;
+        this.modelFactory = new ModelFactory();
+        this.applicationPresenter = new ApplicationPresenter(this.modelFactory);
     }
 }
 export default new Container();

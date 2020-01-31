@@ -1,6 +1,6 @@
-import ApplicationModel from './ApplicationModel';
+import ApplicationModel from '../ApplicationModel';
 
-export default class ModelFactory {
+export default class Factory {
   public createApplicationModel(): ApplicationModel {
     return new ApplicationModel();
   }

@@ -1,28 +1,32 @@
+import Translator from '../../Language/Translator';
 import ApplicationModel from '../Model/ApplicationModel';
-import ModelFactory from '../Model/ModelFactory';
+import Factory from '../Model/Factory/Factory';
 import ApplicationPresenter from './ApplicationPresenter';
 
 describe('Application.Presenter.ApplicationPresenter', () => {
-  let modelFactory: ModelFactory,
-    createApplicationModel: jest.MockedFunction<typeof modelFactory.createApplicationModel>;
+  let modelFactory: Factory, createApplicationModel: jest.Mock;
 
   beforeEach(() => {
-    modelFactory = new ModelFactory();
-    modelFactory.createApplicationModel = jest.fn();
-    createApplicationModel =
-      modelFactory.createApplicationModel as jest.MockedFunction<typeof modelFactory.createApplicationModel>;
+    modelFactory = new Factory();
+    createApplicationModel = modelFactory.createApplicationModel = jest.fn();
   });
 
   it('Present application data', () => {
-    const presenter = new ApplicationPresenter(modelFactory);
+    const translator: Translator = new Translator({});
+    const presenter: ApplicationPresenter = new ApplicationPresenter(modelFactory,
+      {value: {translator: translator, languageCode: ''}}
+    );
+    const translateSpy: jest.Mock = translator.translate = jest.fn();
     const viewModel = new ApplicationModel();
 
     createApplicationModel.mockReturnValueOnce(viewModel);
+    translateSpy.mockReturnValueOnce('translated text');
 
     const expectedModel = new ApplicationModel();
-    expectedModel.text = 'test, which has a presenter and need language manager';
+    expectedModel.text = 'test translated text';
 
-    const result = presenter.present('test');
+    const result = presenter.present('test ');
+    expect(translateSpy).toHaveBeenCalledWith('Application.Test');
     expect(result).toBe(viewModel);
     expect(result).toEqual(expectedModel);
   });

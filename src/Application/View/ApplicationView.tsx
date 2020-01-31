@@ -9,7 +9,7 @@ interface IState {
 }
 
 export default class ApplicationView extends React.Component<IProperties, IState> {
-  render(): JSX.Element {
+  render(): React.ReactNode {
     const {model} = this.props;
     return (<h1>
       A new decade ... a new start ... 😉<br /><br />

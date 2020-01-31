@@ -1,15 +1,20 @@
-import ModelFactory from '../Model/ModelFactory';
+import {ILanguageSetup} from '../../Language/ChangeLanguageSetup';
+import {IObserver} from '../../Observer/Observer';
+import Factory from '../Model/Factory/Factory';
 
 export default class ApplicationPresenter {
-  modelFactory: ModelFactory;
+  protected modelFactory: Factory;
+  protected languageSetupObserver: IObserver<ILanguageSetup>;
 
-  constructor(modelFactory: ModelFactory) {
+  constructor(modelFactory: Factory, languageSetupObserver: IObserver<ILanguageSetup>) {
     this.modelFactory = modelFactory;
+    this.languageSetupObserver = languageSetupObserver;
   }
 
   present(data: string) {
     const viewModel = this.modelFactory.createApplicationModel();
-    viewModel.text = data + ', which has a presenter and need language manager';
+    const translator = this.languageSetupObserver.value.translator;
+    viewModel.text = data + translator.translate('Application.Test');
 
     return viewModel;
   }

@@ -1,10 +1,10 @@
+import LanguageContainer from '../Language/Container';
 import Container from './Container';
-import ModelFactory from './Model/ModelFactory';
 import ApplicationPresenter from './Presenter/ApplicationPresenter';
 
 describe('Application.Container', () => {
   it('Get shared objects', () => {
-    expect(Container.modelFactory).toBeInstanceOf(ModelFactory);
+    expect(Container.language).toEqual(LanguageContainer);
     expect(Container.applicationPresenter).toBeInstanceOf(ApplicationPresenter);
   })
 });

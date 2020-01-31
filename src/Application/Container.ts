@@ -1,20 +1,13 @@
 import ModelFactory from './Model/ModelFactory';
-
-export interface IContainer {
-  ModelFactory: ModelFactory
-}
+import ApplicationPresenter from './Presenter/ApplicationPresenter';
 
 class Container {
-  public container: IContainer;
+  modelFactory: ModelFactory;
+  applicationPresenter: ApplicationPresenter;
 
   constructor() {
-    this.container = {
-      ModelFactory: new ModelFactory()
-    };
-  }
-
-  get ModelFactory(): ModelFactory {
-    return this.container.ModelFactory;
+    this.modelFactory = new ModelFactory();
+    this.applicationPresenter = new ApplicationPresenter(this.modelFactory);
   }
 }
 

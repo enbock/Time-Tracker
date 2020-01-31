@@ -10,10 +10,8 @@ interface IState {
 }
 
 export default class Application extends React.Component<IProperties, IState> {
-
   public render() {
-    const model: ApplicationModel = Container.ModelFactory.createApplicationModel();
-    model.text = 'Application, which wait for a presenter';
+    const model: ApplicationModel = Container.applicationPresenter.present('Application');
 
     return <ApplicationView model={model} />
   }

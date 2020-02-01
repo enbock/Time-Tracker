@@ -1,12 +1,12 @@
-import {ILanguageSetup} from '../../Language/ChangeLanguageSetup';
-import {IObserver} from '../../Observer/Observer';
-import Factory from '../Model/Factory/Factory';
+import {ILanguageSetup} from '../../../Language/ChangeLanguageSetup';
+import {IObserver} from '../../../Observer/Observer';
+import ModelFactory from '../ModelFactory';
 
 export default class ApplicationPresenter {
-  protected modelFactory: Factory;
+  protected modelFactory: ModelFactory;
   protected languageSetupObserver: IObserver<ILanguageSetup>;
 
-  constructor(modelFactory: Factory, languageSetupObserver: IObserver<ILanguageSetup>) {
+  constructor(modelFactory: ModelFactory, languageSetupObserver: IObserver<ILanguageSetup>) {
     this.modelFactory = modelFactory;
     this.languageSetupObserver = languageSetupObserver;
   }

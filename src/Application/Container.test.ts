@@ -1,6 +1,6 @@
 import LanguageContainer from '../Language/Container';
 import Container from './Container';
-import ApplicationPresenter from './Presenter/ApplicationPresenter';
+import ApplicationPresenter from './View/Application/ApplicationPresenter';
 
 describe('Application.Container', () => {
   it('Get shared objects', () => {

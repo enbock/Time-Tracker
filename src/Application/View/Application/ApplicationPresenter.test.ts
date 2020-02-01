@@ -1,13 +1,13 @@
-import Translator from '../../Language/Translator';
-import ApplicationModel from '../Model/ApplicationModel';
-import Factory from '../Model/Factory/Factory';
+import Translator from '../../../Language/Translator';
+import ModelFactory from '../ModelFactory';
+import ApplicationModel from './ApplicationModel';
 import ApplicationPresenter from './ApplicationPresenter';
 
 describe('Application.Presenter.ApplicationPresenter', () => {
-  let modelFactory: Factory, createApplicationModel: jest.Mock;
+  let modelFactory: ModelFactory, createApplicationModel: jest.Mock;
 
   beforeEach(() => {
-    modelFactory = new Factory();
+    modelFactory = new ModelFactory();
     createApplicationModel = modelFactory.createApplicationModel = jest.fn();
   });
 

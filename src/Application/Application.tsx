@@ -1,8 +1,8 @@
 import React from 'react';
 import {ILanguageSetup} from '../Language/ChangeLanguageSetup';
 import Container from './Container';
-import ApplicationModel from './Model/ApplicationModel';
-import ApplicationView from './View/ApplicationView';
+import ApplicationView from './View/Application';
+import ApplicationModel from './View/Application/ApplicationModel';
 
 interface IProperties {
 }

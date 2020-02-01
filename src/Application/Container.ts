@@ -1,6 +1,6 @@
 import LanguageContainer from '../Language/Container';
-import ModelFactory from './Model/Factory/Factory';
-import ApplicationPresenter from './Presenter/ApplicationPresenter';
+import ApplicationPresenter from './View/Application/ApplicationPresenter';
+import ModelFactory from './View/ModelFactory';
 
 class Container {
   modelFactory: ModelFactory;

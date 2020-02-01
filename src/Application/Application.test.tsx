@@ -2,13 +2,13 @@ import {render, RenderResult} from '@testing-library/react'
 import React from 'react';
 import Application from './Application';
 import Container from './Container';
-import ApplicationModel from './Model/ApplicationModel';
+import ApplicationModel from './View/Application/ApplicationModel';
 
 jest.mock('./Container', () => ({
   applicationPresenter: {present: jest.fn()},
   language: {setupAdapter: {addListener: jest.fn()}, changeLanguageSetup: {interact: jest.fn()}}
 }));
-jest.mock('./View/ApplicationView', () => (props: any) => <div data-testid="output">{props.model.text}</div>);
+jest.mock('./View/Application', () => (props: any) => <div data-testid="output">{props.model.text}</div>);
 
 describe('Application.Application', () => {
   let presentSpy: jest.Mock, addListenerSpy: jest.Mock, interactorSpy: jest.Mock;

@@ -40,6 +40,7 @@
       <option name="VAR_DECLARATION_WRAP" value="5" />
       <option name="IMPORTS_WRAP" value="0" />
       <option name="IMPORT_SORT_MODULE_NAME" value="true" />
+      <option name="USE_PATH_MAPPING" value="DIFFERENT_PATHS" />
     </TypeScriptCodeStyleSettings>
     <XML>
       <option name="XML_ATTRIBUTE_WRAP" value="4" />

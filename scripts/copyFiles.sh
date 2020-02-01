@@ -23,4 +23,9 @@ cp -v "node_modules/react/umd/$reactFile" build/Libraries/react.min.js
 cp -v "node_modules/react-dom/umd/$reactDomFile" build/Libraries/react-dom.min.js
 cp -v "node_modules/material-components-web/dist/$mdcJs" build/Libraries/material-components-web.min.js
 cp -v "node_modules/material-components-web/dist/$mdcCss" build/Style/material-components-web.min.css
-cp -v node_modules/material-design-icons/iconfont/MaterialIcons-Regular.{woff2,woff,ttf} build/Font
+cp -v node_modules/material-design-icons/iconfont/MaterialIcons-Regular.t* build/Font
+cp -v node_modules/material-design-icons/iconfont/MaterialIcons-Regular.w* build/Font
+
+# Hello Goole Dev Team?!
+cat node_modules/@material/auto-init/index.d.ts | uniq >node_modules/@material/auto-init/index.d.ts.patch
+mv node_modules/@material/auto-init/index.d.ts.patch node_modules/@material/auto-init/index.d.ts

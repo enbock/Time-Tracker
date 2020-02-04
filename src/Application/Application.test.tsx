@@ -2,13 +2,18 @@ import {render, RenderResult} from '@testing-library/react'
 import React from 'react';
 import Application from './Application';
 import Container from './Container';
+import {IProperties} from './View/Application';
 import Model from './View/Application/Model';
 
 jest.mock('./Container', () => ({
   applicationPresenter: {present: jest.fn()},
-  language: {setupAdapter: {addListener: jest.fn()}, changeLanguageSetup: {interact: jest.fn()}}
+  language: {setupAdapter: {addListener: jest.fn()}, changeLanguageSetup: {interact: jest.fn()}},
+  applicationAction: {adapter: 'adapter-actions'}
 }));
-jest.mock('./View/Application', () => (props: any) => <div data-testid="output">{props.model.text}</div>);
+jest.mock(
+  './View/Application',
+  () => (props: IProperties) => <div data-testid="output">{props.model.text}{props.adapter}</div>
+);
 
 describe('Application.Application', () => {
   let presentSpy: jest.Mock, addListenerSpy: jest.Mock, interactorSpy: jest.Mock;
@@ -31,7 +36,8 @@ describe('Application.Application', () => {
     const instance: RenderResult = render(<Application />);
 
     const element: HTMLElement = await instance.findByTestId('output');
-    expect(element.textContent).toBe(model.text);
+    expect(element.textContent).toContain(model.text);
+    expect(element.textContent).toContain('adapter-actions');
     expect(container.callback).toBeInstanceOf(Function);
     expect(interactorSpy).toHaveBeenCalledWith({languageCode: 'de-de'}, {});
     expect(presentSpy).toHaveBeenCalledTimes(1);

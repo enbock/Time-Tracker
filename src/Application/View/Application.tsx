@@ -1,10 +1,15 @@
 import React from 'react';
 import Style from '../../Style/Style';
 import Model from './Application/Model';
-import TopBar from './TopBar';
+import TopBar, {IAdapter as ITopBarAdapter} from './TopBar';
 
-interface IProperties {
+export interface IAdapter extends ITopBarAdapter {
+
+}
+
+export interface IProperties {
   model: Model
+  adapter: IAdapter
 }
 
 interface IState {
@@ -12,18 +17,17 @@ interface IState {
 
 export default class Application extends React.Component<IProperties, IState> {
   render(): React.ReactNode {
-    const {model} = this.props;
-    return <React.Fragment>
-      <div className="mdc-typography">
-        <Style source="Application" />
-        <div className="content">
-          <TopBar model={model.topAppBar} />
-          <h3>
-            A new decade ... a new start ... 😉<br /><br />
-            Hello from {model.text}!
-          </h3>
-        </div>
+    const {model, adapter} = this.props;
+
+    return (<div className="mdc-typography">
+      <Style source="Application" />
+      <div className="content">
+        <TopBar model={model.topAppBar} adapter={adapter} />
+        <h3>
+          A new decade ... a new start ... 😉<br /><br />
+          Hello from {model.text}!
+        </h3>
       </div>
-    </React.Fragment>;
+    </div>);
   }
 }

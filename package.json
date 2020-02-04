@@ -28,8 +28,8 @@
   },
   "scripts": {
     "devServer": "powershell.exe -Command cd build; npx http-server",
-    "devStart": "powershell.exe -Command bash ./scripts/copyFiles.sh develop; npx nodemon -w src -e ts,tsx",
-    "start": "powershell.exe -Command npx tsc --build tsconfig.json -v; bash ./scripts/correctImports.sh",
+    "start": "powershell.exe -Command bash ./scripts/copyFiles.sh develop; npx tsc --build tsconfig.json -w",
+    "watch": "bash -c 'while sleep 1; do bash ./scripts/correctImports.sh; done'",
     "test": "jest --coverage --verbose",
     "build": "sh scripts/build.sh",
     "deploy": "npx gh-pages -m 'auto commit [ci skip]' -d build"

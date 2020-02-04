@@ -1,7 +1,7 @@
 import React from 'react';
 import {ILanguageSetup} from '../Language/ChangeLanguageSetup';
 import Container from './Container';
-import ApplicationView from './View/Application';
+import ApplicationView, {IAdapter} from './View/Application';
 import Model from './View/Application/Model';
 
 interface IProperties {
@@ -12,6 +12,8 @@ interface IState {
 }
 
 export default class Application extends React.Component<IProperties, IState> {
+  adapter: IAdapter;
+
   constructor(props: IProperties) {
     super(props);
 
@@ -20,6 +22,7 @@ export default class Application extends React.Component<IProperties, IState> {
     };
 
     Container.language.setupAdapter.addListener(this.onLanguageLoaded.bind(this));
+    this.adapter = Container.applicationAction.adapter;
   }
 
   componentDidMount(): void {
@@ -33,6 +36,6 @@ export default class Application extends React.Component<IProperties, IState> {
   render(): React.ReactNode {
     const model: Model = Container.applicationPresenter.present('Application');
 
-    return <ApplicationView model={model} />
+    return <ApplicationView model={model} adapter={this.adapter} />
   }
 }

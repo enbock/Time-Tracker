@@ -1,13 +1,13 @@
 import {render, RenderResult} from '@testing-library/react'
 import React from 'react'
 import Application from './Application';
-import ApplicationModel from './Application/ApplicationModel';
+import Model from './Application/Model';
 
-jest.mock('./TopAppBar', () => (props: any) => <div data-testid="topAppBar">{props.model.title}</div>);
+jest.mock('./TopBar', () => (props: any) => <div data-testid="topAppBar">{props.model.title}</div>);
 
 describe('Application.View.Application', () => {
   it('Show', async () => {
-    const model: ApplicationModel = new ApplicationModel();
+    const model: Model = new Model();
     model.text = 'a text';
     model.topAppBar.title = 'test';
 

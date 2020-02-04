@@ -2,7 +2,7 @@ import React from 'react';
 import {ILanguageSetup} from '../Language/ChangeLanguageSetup';
 import Container from './Container';
 import ApplicationView from './View/Application';
-import ApplicationModel from './View/Application/ApplicationModel';
+import Model from './View/Application/Model';
 
 interface IProperties {
 }
@@ -31,7 +31,7 @@ export default class Application extends React.Component<IProperties, IState> {
   }
 
   render(): React.ReactNode {
-    const model: ApplicationModel = Container.applicationPresenter.present('Application');
+    const model: Model = Container.applicationPresenter.present('Application');
 
     return <ApplicationView model={model} />
   }

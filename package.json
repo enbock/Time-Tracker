@@ -4,14 +4,12 @@
   "homepage": "https://enbock.github.io/Time-Tracker/",
   "description": "Experimental Project: Tracking start and end of working time.",
   "dependencies": {
-    "babel-jest": "^25.1.0",
-    "gh-pages": "^2.2.0",
     "jest": "^25.1.0",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "typescript": "^3.7.5",
-    "material-components-web": "^4.0.0",
-    "material-design-icons": "^3.0.1"
+    "react": "latest",
+    "react-dom": "latest",
+    "typescript": "latest",
+    "material-components-web": "latest",
+    "material-design-icons": "latest"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -23,14 +21,18 @@
     "@testing-library/react": "^9.4.0",
     "@types/jest": "^25.1.1",
     "@types/react": "^16.9.19",
-    "@types/react-dom": "^16.9.5"
+    "@types/react-dom": "^16.9.5",
+    "canvas": "^2.6.1",
+    "bufferutil": "^4.0.1",
+    "utf-8-validate": "^5.0.2"
   },
   "scripts": {
     "devServer": "powershell.exe -Command cd build; npx http-server",
-    "start": "powershell.exe -Command bash scripts/copyFiles.sh develop; npx tsc --build tsconfig.json -v --watch",
+    "devStart": "powershell.exe -Command bash ./scripts/copyFiles.sh develop; npx nodemon -w src -e ts,tsx",
+    "start": "powershell.exe -Command npx tsc --build tsconfig.json -v; bash ./scripts/correctImports.sh",
     "test": "jest --coverage --verbose",
     "build": "sh scripts/build.sh",
-    "deploy": "gh-pages -m 'auto commit [ci skip]' -d build"
+    "deploy": "npx gh-pages -m 'auto commit [ci skip]' -d build"
   },
   "jest": {
     "roots": [

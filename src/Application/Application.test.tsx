@@ -2,7 +2,7 @@ import {render, RenderResult} from '@testing-library/react'
 import React from 'react';
 import Application from './Application';
 import Container from './Container';
-import ApplicationModel from './View/Application/ApplicationModel';
+import Model from './View/Application/Model';
 
 jest.mock('./Container', () => ({
   applicationPresenter: {present: jest.fn()},
@@ -20,7 +20,7 @@ describe('Application.Application', () => {
   });
 
   it('Can start', async () => {
-    const model: ApplicationModel = new ApplicationModel();
+    const model: Model = new Model();
     model.text = 'labelText';
     presentSpy.mockReturnValue(model);
     const container: { callback: null | Function } = {
@@ -38,7 +38,7 @@ describe('Application.Application', () => {
   });
 
   it('Rerender on loaded language', async () => {
-    const model: ApplicationModel = new ApplicationModel();
+    const model: Model = new Model();
     model.text = 'labelText';
     presentSpy.mockReturnValue(model);
     const container: { callback: null | Function } = {

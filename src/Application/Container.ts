@@ -1,16 +1,16 @@
 import LanguageContainer from '../Language/Container';
-import ApplicationPresenter from './View/Application/ApplicationPresenter';
-import ModelFactory from './View/ModelFactory';
+import ApplicationPresenter from './View/Application/Presenter';
+import TopBarPresenter from './View/TopBar/Presenter';
 
 class Container {
-  modelFactory: ModelFactory;
   applicationPresenter: ApplicationPresenter;
   language: typeof LanguageContainer;
+  topAppBarPresenter: TopBarPresenter;
 
   constructor() {
     this.language = LanguageContainer;
-    this.modelFactory = new ModelFactory();
-    this.applicationPresenter = new ApplicationPresenter(this.modelFactory, this.language.setupObserver);
+    this.topAppBarPresenter = new TopBarPresenter(this.language.setupObserver);
+    this.applicationPresenter = new ApplicationPresenter(this.language.setupObserver, this.topAppBarPresenter);
   }
 }
 

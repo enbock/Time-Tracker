@@ -1,16 +1,16 @@
 import * as mdc from 'material-components-web';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TopAppBarModel from './TopAppBar/TopAppBarModel'
+import Model from './TopBar/Model'
 
 interface IProperties {
-  model: TopAppBarModel
+  model: Model
 }
 
 interface IState {
 }
 
-export default class TopAppBar extends React.Component<IProperties, IState> {
+export default class TopBar extends React.Component<IProperties, IState> {
   topAppBar: mdc.topAppBar.MDCTopAppBar | undefined;
 
   constructor(props: IProperties) {
@@ -24,7 +24,7 @@ export default class TopAppBar extends React.Component<IProperties, IState> {
   }
 
   render(): React.ReactElement {
-    const model: TopAppBarModel = this.props.model;
+    const model: Model = this.props.model;
     return <React.Fragment>
       <header className="mdc-top-app-bar mdc-top-app-bar--fixed">
         <div className="mdc-top-app-bar__row">

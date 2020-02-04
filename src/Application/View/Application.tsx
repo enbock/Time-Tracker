@@ -1,10 +1,10 @@
 import React from 'react';
 import Style from '../../Style/Style';
-import ApplicationModel from './Application/ApplicationModel';
-import TopAppBar from './TopAppBar';
+import Model from './Application/Model';
+import TopBar from './TopBar';
 
 interface IProperties {
-  model: ApplicationModel
+  model: Model
 }
 
 interface IState {
@@ -17,7 +17,7 @@ export default class Application extends React.Component<IProperties, IState> {
       <div className="mdc-typography">
         <Style source="Application" />
         <div className="content">
-          <TopAppBar model={model.topAppBar} />
+          <TopBar model={model.topAppBar} />
           <h3>
             A new decade ... a new start ... 😉<br /><br />
             Hello from {model.text}!

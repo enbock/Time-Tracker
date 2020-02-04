@@ -8,6 +8,7 @@ export default class Application extends React.Component {
             loadedLanguage: ''
         };
         Container.language.setupAdapter.addListener(this.onLanguageLoaded.bind(this));
+        this.adapter = Container.applicationAction.adapter;
     }
     componentDidMount() {
         Container.language.changeLanguageSetup.interact({ languageCode: 'de-de' }, {}).then();
@@ -17,6 +18,6 @@ export default class Application extends React.Component {
     }
     render() {
         const model = Container.applicationPresenter.present('Application');
-        return React.createElement(ApplicationView, { model: model });
+        return React.createElement(ApplicationView, { model: model, adapter: this.adapter });
     }
 }

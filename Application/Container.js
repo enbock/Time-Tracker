@@ -1,11 +1,11 @@
 import LanguageContainer from "../Language/Container.js";
-import ApplicationPresenter from "./View/Application/ApplicationPresenter.js";
-import ModelFactory from "./View/ModelFactory.js";
+import ApplicationPresenter from "./View/Application/Presenter.js";
+import TopBarPresenter from "./View/TopBar/Presenter.js";
 class Container {
     constructor() {
         this.language = LanguageContainer;
-        this.modelFactory = new ModelFactory();
-        this.applicationPresenter = new ApplicationPresenter(this.modelFactory, this.language.setupObserver);
+        this.topAppBarPresenter = new TopBarPresenter(this.language.setupObserver);
+        this.applicationPresenter = new ApplicationPresenter(this.language.setupObserver, this.topAppBarPresenter);
     }
 }
 export default new Container();

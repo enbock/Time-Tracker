@@ -1,4 +1,4 @@
-export default class TopAppBarModel {
+export default class Model {
     constructor() {
         this.title = 'TODO@Language';
     }

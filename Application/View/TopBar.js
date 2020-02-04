@@ -1,7 +1,7 @@
 
 
 
-export default class TopAppBar extends React.Component {
+export default class TopBar extends React.Component {
     constructor(props) {
         super(props);
     }

@@ -1,6 +1,6 @@
 
 import Style from "../../Style/Style.js";
-import TopAppBar from "./TopAppBar.js";
+import TopBar from "./TopBar.js";
 export default class Application extends React.Component {
     render() {
         const { model } = this.props;
@@ -8,7 +8,7 @@ export default class Application extends React.Component {
             React.createElement("div", { className: "mdc-typography" },
                 React.createElement(Style, { source: "Application" }),
                 React.createElement("div", { className: "content" },
-                    React.createElement(TopAppBar, { model: model.topAppBar }),
+                    React.createElement(TopBar, { model: model.topAppBar }),
                     React.createElement("h3", null,
                         "A new decade ... a new start ... \uD83D\uDE09",
                         React.createElement("br", null),

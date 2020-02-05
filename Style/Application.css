@@ -31,7 +31,7 @@ body {
 
 /**
  * Put drawer under the toolbar.
- * /
-.mdc-toolbar {
-    z-index: 60;
+ */
+.mdc-top-app-bar {
+  z-index: 7;
 }

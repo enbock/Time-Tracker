@@ -11,7 +11,8 @@ class Container {
         this.manager = new Manager(this.loader, this.translatorFactory);
         this.setupAdapter = new ListenerAdapter();
         const languageSetup = {
-            languageCode: '', translator: this.translatorFactory.createTranslator({})
+            languageCode: '',
+            translator: this.translatorFactory.createTranslator({})
         };
         this.setupObserver = new Observer(languageSetup, this.setupAdapter);
         this.changeLanguageSetup = new ChangeLanguageSetup(this.setupObserver, this.manager);

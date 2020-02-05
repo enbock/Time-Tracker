@@ -6,6 +6,9 @@ export default class ChangeLanguageSetup {
     async interact(request, response) {
         const languageCode = request.languageCode;
         const translator = await this.manager.getTranslator(languageCode);
-        this.setupObserver.value = { languageCode: languageCode, translator: translator };
+        this.setupObserver.value = {
+            languageCode: languageCode,
+            translator: translator
+        };
     }
 }

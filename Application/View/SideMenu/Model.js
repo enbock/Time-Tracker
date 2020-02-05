@@ -1,5 +1,5 @@
 export default class Model {
     constructor() {
-        this.title = '';
+        this.isOpen = false;
     }
 }

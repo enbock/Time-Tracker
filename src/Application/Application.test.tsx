@@ -1,4 +1,4 @@
-import {render, RenderResult} from '@testing-library/react'
+import {render, RenderResult} from '@testing-library/react';
 import React from 'react';
 import Application from './Application';
 import Container from './Container';
@@ -7,7 +7,13 @@ import Model from './View/Application/Model';
 
 jest.mock('./Container', () => ({
   applicationPresenter: {present: jest.fn()},
-  language: {setupAdapter: {addListener: jest.fn()}, changeLanguageSetup: {interact: jest.fn()}},
+  language: {
+    setupObserver: {value: {languageCode: 'lang'}},
+    setupAdapter: {addListener: jest.fn()},
+    changeLanguageSetup: {interact: jest.fn()}
+  },
+  menuOpenState: {value: true},
+  menuOpenStateAdapter: {onChange: undefined},
   applicationAction: {adapter: 'adapter-actions'}
 }));
 jest.mock(
@@ -55,6 +61,15 @@ describe('Application.Application', () => {
     const instance: RenderResult = render(<Application />);
 
     container.callback && container.callback(undefined, {languageCode: 'de-de'});
+    expect(presentSpy).toHaveBeenCalledTimes(2);
+  });
+
+  it('Rerender on menu change', async () => {
+    presentSpy.mockReturnValue(new Model());
+    interactorSpy.mockResolvedValue(undefined);
+    const instance: RenderResult = render(<Application />);
+
+    Container.menuOpenStateAdapter.onChange(false, true);
     expect(presentSpy).toHaveBeenCalledTimes(2);
   });
 });

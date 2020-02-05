@@ -22,5 +22,5 @@ describe('Observer.ListenerAdapter', () => {
     adapter.removeListener(callback);
     adapter.onChange('not', 'counted');
     expect(callback).not.toHaveBeenCalled();
-  })
+  });
 });

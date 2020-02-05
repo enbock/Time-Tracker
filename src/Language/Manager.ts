@@ -14,7 +14,7 @@ export default class Manager {
   constructor(loader: ILoader, translatorFactory: TranslatorFactory) {
     this.loader = loader;
     this.translatorFactory = translatorFactory;
-    this.translators = {}
+    this.translators = {};
   }
 
   public async getTranslator(languageCode: string) {

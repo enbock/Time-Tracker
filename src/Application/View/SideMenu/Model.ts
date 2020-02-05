@@ -1,7 +1,7 @@
 export default class Model {
-  title: string;
+  isOpen: boolean;
 
   constructor() {
-    this.title = '';
+    this.isOpen = false;
   }
 }

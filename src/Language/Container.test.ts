@@ -8,5 +8,5 @@ describe('Language.Container', () => {
     expect(Container.manager).toBeInstanceOf(Manager);
     expect(Container.setupObserver).toBeInstanceOf(Observer);
     expect(Container.changeLanguageSetup).toBeInstanceOf(ChangeLanguageSetup);
-  })
+  });
 });

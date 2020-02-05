@@ -8,7 +8,8 @@ interface IProperties {
 }
 
 interface IState {
-  loadedLanguage: string
+  loadedLanguage: string,
+  menuOpen: boolean
 }
 
 export default class Application extends React.Component<IProperties, IState> {
@@ -18,10 +19,12 @@ export default class Application extends React.Component<IProperties, IState> {
     super(props);
 
     this.state = {
-      loadedLanguage: ''
+      loadedLanguage: Container.language.setupObserver.value.languageCode,
+      menuOpen: Container.menuOpenState.value
     };
 
     Container.language.setupAdapter.addListener(this.onLanguageLoaded.bind(this));
+    Container.menuOpenStateAdapter.onChange = this.onMenuOpenStateChange.bind(this);
     this.adapter = Container.applicationAction.adapter;
   }
 
@@ -30,12 +33,16 @@ export default class Application extends React.Component<IProperties, IState> {
   }
 
   onLanguageLoaded(oldValue: ILanguageSetup, newValue: ILanguageSetup) {
-    this.setState({loadedLanguage: newValue.languageCode})
+    this.setState({loadedLanguage: newValue.languageCode});
+  }
+
+  onMenuOpenStateChange(oldValue: boolean, newValue: boolean) {
+    this.setState({menuOpen: newValue});
   }
 
   render(): React.ReactNode {
     const model: Model = Container.applicationPresenter.present('Application');
 
-    return <ApplicationView model={model} adapter={this.adapter} />
+    return <ApplicationView model={model} adapter={this.adapter} />;
   }
 }

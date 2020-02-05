@@ -27,6 +27,9 @@ export default class ChangeLanguageSetup {
     const languageCode: string = request.languageCode;
     const translator: Translator = await this.manager.getTranslator(languageCode);
 
-    this.setupObserver.value = {languageCode: languageCode, translator: translator};
+    this.setupObserver.value = {
+      languageCode: languageCode,
+      translator: translator
+    };
   }
 }

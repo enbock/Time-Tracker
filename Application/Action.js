@@ -1,11 +1,12 @@
-export default class ApplicationAction {
+export default class Action {
     constructor(menuOpenState) {
         this.menuOpenState = menuOpenState;
     }
     get adapter() {
         return {
             onGithubClick: this.openGithubWindow.bind(this),
-            onMenuClick: this.switchMenuState.bind(this)
+            onMenuClick: this.switchMenuState.bind(this),
+            onClose: this.closeMenu.bind(this)
         };
     }
     openGithubWindow() {
@@ -13,5 +14,8 @@ export default class ApplicationAction {
     }
     switchMenuState() {
         this.menuOpenState.value = !this.menuOpenState.value;
+    }
+    closeMenu() {
+        this.menuOpenState.value = false;
     }
 }

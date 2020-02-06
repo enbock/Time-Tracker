@@ -10,20 +10,25 @@
   <link href="favicon-128.png" rel="icon" sizes="128x128">
   <link href="favicon-128.png" rel="apple-touch-icon" sizes="128x128">
   <link href="favicon-128.png" rel="apple-touch-icon-precomposed" sizes="128x128">
-  <link as="style" href="./Style/material-components-web.min.css" onload="this.rel='stylesheet'" rel="preload">
-  <link as="style" href="./Style/material-components-web.icons.css" onload="this.rel='stylesheet'" rel="preload">
   <title>Experiment Project: Time Tracker</title>
   <script src="./Libraries/react.min.js"></script>
   <script src="./Libraries/react-dom.min.js"></script>
   <script src="./Libraries/material-components-web.min.js"></script>
-  <script src="./index.js" type="module"></script>
 </head>
 <body>
+<noscript>
+  You need to enable JavaScript to run this app.
+</noscript>
 <div id="root">
   A new decade ... a new start ... 😉
-  <noscript>
-    You need to enable JavaScript to run this app.
-  </noscript>
+  <script>
+    window.addEventListener('load', () => {
+      const script = document.createElement('script');
+      script.setAttribute('type', 'module');
+      script.setAttribute('src', './index.js');
+      document.head.appendChild(script);
+    });
+  </script>
 </div>
 </body>
 </html>

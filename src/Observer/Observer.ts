@@ -8,11 +8,12 @@ export interface IObserverAdapter<T> {
 
 export interface IObserver<T> {
   value: T
+  adapter: IObserverAdapter<T>
 }
 
 export default class Observer<T> implements IObserver<T> {
+  adapter: IObserverAdapter<T>;
   protected current: T;
-  protected adapter: IObserverAdapter<T>;
 
   constructor(initialValue: T, adapter: IObserverAdapter<T>) {
     this.current = initialValue;

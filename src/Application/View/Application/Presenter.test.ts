@@ -1,4 +1,7 @@
 import Translator from '../../../Language/Translator';
+import Page from '../Page';
+import PageModel from '../Page/Model';
+import PagePresenter from '../Page/Presenter';
 import SideMenuModel from '../SideMenu/Model';
 import SideMenuPresenter from '../SideMenu/Presenter';
 import TopBarModel from '../TopBar/Model';
@@ -9,45 +12,62 @@ import Presenter from './Presenter';
 describe('Application.Presenter.ApplicationPresenter', () => {
   let topBarPresenter: TopBarPresenter, topBarPresentSpy: jest.Mock;
   let sideMenuPresenter: SideMenuPresenter, sideMenuPresentSpy: jest.Mock;
+  let pagePresenter: PagePresenter, pagePresentSpy: jest.Mock;
 
   beforeEach(() => {
     topBarPresenter = new TopBarPresenter({
       value: {
         translator: new Translator({}),
         languageCode: ''
-      }
+      },
+      adapter: {onChange: (oldValue, newValue) => {}}
     });
-    sideMenuPresenter = new SideMenuPresenter({value: true});
+    sideMenuPresenter = new SideMenuPresenter({
+      value: true,
+      adapter: {onChange: (oldValue, newValue) => {}}
+    });
+    pagePresenter = new PagePresenter({
+      value: null,
+      adapter: {onChange: (oldValue, newValue) => {}}
+    });
 
     topBarPresentSpy = topBarPresenter.present = jest.fn();
     sideMenuPresentSpy = sideMenuPresenter.present = jest.fn();
+    pagePresentSpy = pagePresenter.present = jest.fn();
   });
 
   it('Present application data', () => {
     const translator: Translator = new Translator({});
-    const presenter: Presenter = new Presenter({
-      value: {
-        translator: translator,
-        languageCode: ''
-      }
-    }, topBarPresenter, sideMenuPresenter);
+    const presenter: Presenter = new Presenter(
+      {
+        value: {
+          translator: translator,
+          languageCode: ''
+        },
+        adapter: {onChange: (oldValue, newValue) => {}}
+      },
+      topBarPresenter,
+      sideMenuPresenter,
+      pagePresenter
+    );
     const translateSpy: jest.Mock = translator.translate = jest.fn();
     const topBarModel: TopBarModel = new TopBarModel();
     topBarModel.title = 'top title';
     const sideMenuModel: SideMenuModel = new SideMenuModel();
     sideMenuModel.isOpen = true;
+    const pageModel: PageModel = new PageModel();
+    pageModel.module = Page;
 
-    translateSpy.mockReturnValueOnce('translated text');
     topBarPresentSpy.mockReturnValueOnce(topBarModel);
     sideMenuPresentSpy.mockReturnValueOnce(sideMenuModel);
+    pagePresentSpy.mockReturnValueOnce(pageModel);
 
     const expectedModel: Model = new Model();
-    expectedModel.text = 'test translated text';
     expectedModel.topAppBar = topBarModel;
     expectedModel.sideMenu = sideMenuModel;
+    expectedModel.page = pageModel;
 
-    const result = presenter.present('test ');
-    expect(translateSpy).toHaveBeenCalledWith('Application.Test');
+    const result = presenter.present();
     expect(result).toEqual(expectedModel);
   });
 });

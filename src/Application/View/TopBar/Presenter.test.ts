@@ -9,7 +9,8 @@ describe('Application.Presenter.ApplicationPresenter', () => {
       value: {
         translator: translator,
         languageCode: ''
-      }
+      },
+      adapter: {onChange: (oldValue, newValue) => {}}
     });
     const translateSpy: jest.Mock = translator.translate = jest.fn();
 

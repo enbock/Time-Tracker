@@ -11,7 +11,10 @@ describe('Language.ChangeLanguageSetup', () => {
       languageCode: '',
       translator: translator1
     };
-    const observer: IObserver<ILanguageSetup> = {value: initialValue};
+    const observer: IObserver<ILanguageSetup> = {
+      value: initialValue,
+      adapter: {onChange: (oldValue, newValue) => {}}
+    };
     const manager: Manager = new Manager({loadLanguage: jest.fn()}, {createTranslator: jest.fn()});
 
     const getTranslatorSpy: jest.Mock = manager.getTranslator = jest.fn();

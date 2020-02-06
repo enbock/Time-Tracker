@@ -17,12 +17,12 @@ describe('Application.View.Application', () => {
   it('Show', async () => {
 
     const model: Model = new Model();
-    model.text = 'a text';
     model.topAppBar.title = 'test';
     const onGithubClick = jest.fn();
     const adapter: IAdapter = {
       onGithubClick: onGithubClick,
-      onMenuClick: jest.fn()
+      onMenuClick: jest.fn(),
+      onClose: jest.fn()
     };
     adapter.toString = () => 'action-adapter';
 
@@ -32,7 +32,6 @@ describe('Application.View.Application', () => {
     expect(element.textContent).toBe('test');
     element = await instance.findByTestId('sideMenu');
     expect(element.textContent).toBe('menu');
-    expect(instance.container.textContent).toContain('a text');
     expect(onGithubClick).toHaveBeenCalled();
   });
 });

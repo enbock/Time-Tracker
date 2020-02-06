@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Source" pattern="file[Time-Tracker]:src/*||file[Time-Tracker]:src//*" />
+</component>

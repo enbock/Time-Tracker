@@ -1,14 +1,15 @@
+import PageModel from '../Page/Model';
 import SideMenuModel from '../SideMenu/Model';
 import TopBarModel from '../TopBar/Model';
 
 export default class Model {
-  text: string;
   topAppBar: TopBarModel;
   sideMenu: SideMenuModel;
+  page: PageModel;
 
   constructor() {
     this.topAppBar = new TopBarModel();
     this.sideMenu = new SideMenuModel();
-    this.text = '';
+    this.page = new PageModel();
   }
 }

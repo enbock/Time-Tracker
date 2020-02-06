@@ -1,7 +1,7 @@
 import {IObserver} from '../Observer/Observer';
 import {IAdapter} from './View/Application';
 
-export default class ApplicationAction {
+export default class Action {
   menuOpenState: IObserver<boolean>;
 
   constructor(menuOpenState: IObserver<boolean>) {
@@ -11,7 +11,8 @@ export default class ApplicationAction {
   get adapter(): IAdapter {
     return {
       onGithubClick: this.openGithubWindow.bind(this),
-      onMenuClick: this.switchMenuState.bind(this)
+      onMenuClick: this.switchMenuState.bind(this),
+      onClose: this.closeMenu.bind(this)
     };
   }
 
@@ -21,5 +22,9 @@ export default class ApplicationAction {
 
   protected switchMenuState(): void {
     this.menuOpenState.value = !this.menuOpenState.value;
+  }
+
+  protected closeMenu(): void {
+    this.menuOpenState.value = false;
   }
 }

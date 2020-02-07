@@ -23,6 +23,8 @@
   A new decade ... a new start ... 😉
   <script>
     window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./ServiceWorkerManager.js').then().catch();
+
       const script = document.createElement('script');
       script.setAttribute('type', 'module');
       script.setAttribute('src', './index.js');

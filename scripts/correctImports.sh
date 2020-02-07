@@ -11,7 +11,7 @@ find ./build -name '*.js' | while read file; do
   fi
 done
 
-if test "$(cat /tmp/changed)" = "1"
-then
-  $SHELL ./scripts/indexFilesForServiceWorker.sh
+if test "$(cat /tmp/changed)" = "1"; then
+  chmod +x ./scripts/indexFilesForServiceWorker.sh
+  ./scripts/indexFilesForServiceWorker.sh
 fi

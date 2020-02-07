@@ -5,25 +5,25 @@
   "description": "Experimental Project: Tracking start and end of working time.",
   "dependencies": {
     "jest": "^25.1.0",
+    "material-components-web": "latest",
+    "material-design-icons": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "typescript": "latest",
-    "material-components-web": "latest",
-    "material-design-icons": "latest"
+    "typescript": "latest"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
+    "@babel/plugin-transform-runtime": "^7.8.3",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-react": "^7.8.3",
     "@babel/preset-typescript": "^7.8.3",
-    "@babel/plugin-transform-runtime": "^7.8.3",
     "@testing-library/jest-dom": "^5.1.0",
     "@testing-library/react": "^9.4.0",
-    "@types/jest": "^25.1.1",
+    "@types/jest": "25.1.2",
     "@types/react": "^16.9.19",
     "@types/react-dom": "^16.9.5",
-    "canvas": "^2.6.1",
     "bufferutil": "^4.0.1",
+    "canvas": "^2.6.1",
     "utf-8-validate": "^5.0.2"
   },
   "scripts": {

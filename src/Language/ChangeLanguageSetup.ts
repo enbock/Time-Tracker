@@ -15,11 +15,11 @@ export interface ILanguageSetup {
 }
 
 export default class ChangeLanguageSetup {
-  protected setupObserver: IObserver<ILanguageSetup>;
+  protected observer: IObserver<ILanguageSetup>;
   protected manager: Manager;
 
-  constructor(setupObserver: IObserver<ILanguageSetup>, manager: Manager) {
-    this.setupObserver = setupObserver;
+  constructor(observer: IObserver<ILanguageSetup>, manager: Manager) {
+    this.observer = observer;
     this.manager = manager;
   }
 
@@ -27,7 +27,7 @@ export default class ChangeLanguageSetup {
     const languageCode: string = request.languageCode;
     const translator: Translator = await this.manager.getTranslator(languageCode);
 
-    this.setupObserver.value = {
+    this.observer.value = {
       languageCode: languageCode,
       translator: translator
     };

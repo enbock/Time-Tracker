@@ -9,8 +9,8 @@ class Container {
   translatorFactory: TranslatorFactory;
   loader: AjaxLoader;
   manager: Manager;
-  setupAdapter: ListenerAdapter<ILanguageSetup>;
-  setupObserver: Observer<ILanguageSetup>;
+  adapter: ListenerAdapter<ILanguageSetup>;
+  observer: Observer<ILanguageSetup>;
   changeLanguageSetup: ChangeLanguageSetup;
 
   constructor() {
@@ -18,13 +18,13 @@ class Container {
     this.loader = new AjaxLoader();
     this.manager = new Manager(this.loader, this.translatorFactory);
 
-    this.setupAdapter = new ListenerAdapter<ILanguageSetup>();
-    const languageSetup: ILanguageSetup = {
+    this.adapter = new ListenerAdapter<ILanguageSetup>();
+    const initialLanguageSetup: ILanguageSetup = {
       languageCode: '',
       translator: this.translatorFactory.createTranslator({})
     };
-    this.setupObserver = new Observer<ILanguageSetup>(languageSetup, this.setupAdapter);
-    this.changeLanguageSetup = new ChangeLanguageSetup(this.setupObserver, this.manager);
+    this.observer = new Observer<ILanguageSetup>(initialLanguageSetup, this.adapter);
+    this.changeLanguageSetup = new ChangeLanguageSetup(this.observer, this.manager);
   }
 }
 

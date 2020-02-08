@@ -1,4 +1,4 @@
-import ILoader from './ILoader';
+import Loader from './Loader';
 import Translator from './Translator';
 import TranslatorFactory from './Translator/Factory';
 
@@ -7,11 +7,11 @@ interface ITranslators {
 }
 
 export default class Manager {
-  protected loader: ILoader;
+  protected loader: Loader;
   protected translators: ITranslators;
   protected translatorFactory: TranslatorFactory;
 
-  constructor(loader: ILoader, translatorFactory: TranslatorFactory) {
+  constructor(loader: Loader, translatorFactory: TranslatorFactory) {
     this.loader = loader;
     this.translatorFactory = translatorFactory;
     this.translators = {};

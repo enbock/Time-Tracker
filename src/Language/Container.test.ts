@@ -6,7 +6,7 @@ import Manager from './Manager';
 describe('Language.Container', () => {
   it('Get shared objects', () => {
     expect(Container.manager).toBeInstanceOf(Manager);
-    expect(Container.setupObserver).toBeInstanceOf(Observer);
+    expect(Container.observer).toBeInstanceOf(Observer);
     expect(Container.changeLanguageSetup).toBeInstanceOf(ChangeLanguageSetup);
   });
 });

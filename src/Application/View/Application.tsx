@@ -22,6 +22,8 @@ export default class Application extends React.Component<IProperties, IState> {
     const {model, adapter} = this.props;
 
     return <div className="mdc-typography">
+      <Style source="material-components-web.min" />
+      <Style source="material-components-web.icons" />
       <Style source="Application" />
       <TopBar model={model.topAppBar} adapter={adapter} />
       <SideMenu model={model.sideMenu} adapter={adapter} />

@@ -1,30 +1,36 @@
 import {render, RenderResult} from '@testing-library/react';
 import React from 'react';
 import Application from './Application';
-import Container from './Application/Container';
-import {IProperties} from './Application/View/Application';
-import Model from './Application/View/Application/Model';
+import Container from './Container';
+import {IProperties} from './View/Application';
+import Model from './View/Application/Model';
 
 jest.mock(
-  './Application/Container',
+  './Container',
   () => (
     {
       applicationPresenter: {present: jest.fn()},
       language: {
-        setupObserver: {value: {languageCode: 'lang'}},
-        setupAdapter: {addListener: jest.fn()},
+        observer: {value: {languageCode: 'lang'}},
+        adapter: {addListener: jest.fn()},
         changeLanguageSetup: {interact: jest.fn()}
+      },
+      router: {
+        observer: {value: {name: 'home'}},
+        adapter: {addListener: jest.fn()},
+        registry: {registerPage: jest.fn()}
       },
       menuOpenState: {value: true},
       menuOpenStateAdapter: {onChange: undefined},
       applicationAction: {adapter: 'adapter-actions'},
       moduleStateAdapter: {addListener: jest.fn()},
-      moduleNameState: {value: ''}
+      moduleNameState: {value: ''},
+      moduleLoader: {loadModule: jest.fn()}
     }
   )
 );
 jest.mock(
-  './Application/View/Application',
+  './View/Application',
   () => (props: IProperties) => <div data-testid="output">{props.adapter}</div>
 );
 
@@ -33,10 +39,9 @@ describe('Application', () => {
 
   beforeEach(() => {
     presentSpy = Container.applicationPresenter.present = jest.fn();
-    languageListenerSpy = Container.language.setupAdapter.addListener = jest.fn();
+    languageListenerSpy = Container.language.adapter.addListener = jest.fn();
     moduleListenerSpy = Container.moduleStateAdapter.addListener = jest.fn();
     interactorSpy = Container.language.changeLanguageSetup.interact = jest.fn();
-    Container.moduleNameState.value = '';
   });
 
   it('Can start', async () => {
@@ -56,7 +61,6 @@ describe('Application', () => {
     expect(container.languageCallback).toBeInstanceOf(Function);
     expect(container.moduleCallback).toBeInstanceOf(Function);
     expect(interactorSpy).toHaveBeenCalledWith({languageCode: 'de-de'}, {});
-    expect(Container.moduleNameState.value).toBe('HelloWorld');
     expect(presentSpy).toHaveBeenCalledTimes(1);
   });
 
@@ -95,5 +99,22 @@ describe('Application', () => {
 
     Container.menuOpenStateAdapter.onChange(false, true);
     expect(presentSpy).toHaveBeenCalledTimes(2);
+  });
+
+  it('Load on changed page', async () => {
+    const model: Model = new Model();
+    const listenerSpy: jest.Mock = Container.router.adapter.addListener = jest.fn();
+    const loaderSpy: jest.Mock = Container.moduleLoader.loadModule = jest.fn();
+    presentSpy.mockReturnValue(model);
+    loaderSpy.mockResolvedValue(undefined);
+    const container: { callback: null | Function } = {
+      callback: null
+    };
+    listenerSpy.mockImplementation(callback => container.callback = callback);
+    interactorSpy.mockResolvedValue(undefined);
+    const instance: RenderResult = render(<Application />);
+
+    container.callback && container.callback('', {url: './new/module/'});
+    expect(loaderSpy).toHaveBeenCalledWith('./new/module/');
   });
 });

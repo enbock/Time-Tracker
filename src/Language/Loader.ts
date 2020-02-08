@@ -1,3 +1,3 @@
-export default interface ILoader {
+export default interface Loader {
   loadLanguage(languageCode: string): Promise<any>;
 }

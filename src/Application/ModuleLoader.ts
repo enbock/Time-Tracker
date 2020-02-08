@@ -7,34 +7,24 @@ interface ILoadedModuleDictionary {
 
 export default class ModuleLoader {
   moduleState: IObserver<typeof React.Component | null>;
-  moduleNameState: IObserver<string>;
   dictionary: ILoadedModuleDictionary;
   pathToRoot: string;
 
-  constructor(
-    pathToRoot: string,
-    moduleNameState: IObserver<string>,
-    moduleState: IObserver<typeof React.Component | null>
-  ) {
-    this.moduleNameState = moduleNameState;
+  constructor(pathToRoot: string, moduleState: IObserver<typeof React.Component | null>) {
     this.moduleState = moduleState;
     this.dictionary = {};
     this.pathToRoot = pathToRoot;
-
-    this.moduleNameState.adapter.onChange = this.loadModule.bind(this);
   }
 
-  async loadModule(oldValue: string, newValue: string) {
+  async loadModule(modulePath: string) {
     let module: typeof React.Component;
 
-    if (!this.dictionary.hasOwnProperty(newValue)) {
-      module =
-        (
-          await import(this.pathToRoot + newValue + '.js')
-        ).default as typeof React.Component;
-      this.dictionary[newValue] = module;
+    if (!this.dictionary.hasOwnProperty(modulePath)) {
+      const filePath = (this.pathToRoot + modulePath + '.js').replace('.././', '../');
+      module = (await import(filePath)).default as typeof React.Component;
+      this.dictionary[modulePath] = module;
     } else {
-      module = this.dictionary[newValue];
+      module = this.dictionary[modulePath];
     }
 
     this.moduleState.value = module;

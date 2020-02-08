@@ -5,43 +5,34 @@ import ModuleLoader from './ModuleLoader';
 
 describe('Application.ModuleLoader', () => {
   it('Load a module', async () => {
-    const moduleNameState: IObserver<string> = {
-        adapter: {onChange: (oldValue, newValue) => {}},
-        value: ''
-      },
-      moduleState: IObserver<typeof React.Component | null> = {
-        adapter: {onChange: (oldValue, newValue) => {}},
-        value: null
-      }
-    ;
+    const moduleState: IObserver<typeof React.Component | null> = {
+      adapter: {onChange: (oldValue, newValue) => {}},
+      value: null
+    };
 
-    const moduleLoader = new ModuleLoader('./', moduleNameState, moduleState);
-    await moduleNameState.adapter.onChange('', 'ModuleLoaderTest');
+    const moduleLoader: ModuleLoader = new ModuleLoader('./', moduleState);
 
     expect(moduleState.value).not.toBeUndefined();
+    await moduleLoader.loadModule('ModuleLoaderTest');
+
     // @ts-ignore
     const instance: RenderResult = render(<moduleState.value />);
     expect(instance.container.textContent).toBe('module example');
   });
 
   it('Reuse loaded module', async () => {
-    const moduleNameState: IObserver<string> = {
-        adapter: {onChange: (oldValue, newValue) => {}},
-        value: ''
-      },
-      moduleState: IObserver<typeof React.Component | null> = {
-        adapter: {onChange: (oldValue, newValue) => {}},
-        value: null
-      }
-    ;
+    const moduleState: IObserver<typeof React.Component | null> = {
+      adapter: {onChange: (oldValue, newValue) => {}},
+      value: null
+    };
 
-    const moduleLoader = new ModuleLoader('./', moduleNameState, moduleState);
-    await moduleNameState.adapter.onChange('', 'ModuleLoaderTest');
+    const moduleLoader: ModuleLoader = new ModuleLoader('./', moduleState);
 
     expect(moduleState.value).not.toBeUndefined();
+    await moduleLoader.loadModule('ModuleLoaderTest');
 
     const oldValue: typeof React.Component | null = moduleState.value;
-    await moduleNameState.adapter.onChange('', 'ModuleLoaderTest');
+    await moduleLoader.loadModule('ModuleLoaderTest');
     expect(moduleState.value).toBe(oldValue);
   });
 });

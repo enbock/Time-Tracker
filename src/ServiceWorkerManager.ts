@@ -2,6 +2,7 @@ export interface ServiceWorkerEventMap {
   'activate': ExtendableEvent;
   'fetch': FetchEvent;
   'install': InstallEvent;
+  'waiting': ExtendableEvent;
 }
 
 export interface ServiceWorkerGlobalScope {

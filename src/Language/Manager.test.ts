@@ -1,4 +1,4 @@
-import ILoader from './ILoader';
+import Loader from './Loader';
 import Manager from './Manager';
 import Translator, {ILanguageData} from './Translator';
 import Factory from './Translator/Factory';
@@ -6,7 +6,7 @@ import Factory from './Translator/Factory';
 describe('Language.Manager', () => {
   let loaderSpy: jest.MockedFunction<(languageCode: string) => Promise<any>>,
     createSpy: jest.MockedFunction<(languageData: ILanguageData) => Translator>,
-    loader: ILoader,
+    loader: Loader,
     factory: Factory;
 
   beforeEach(() => {

@@ -1,4 +1,6 @@
+import {ILanguageSetup} from '../../../Language/ChangeLanguageSetup';
 import Translator from '../../../Language/Translator';
+import {IObserver} from '../../../Observer/Observer';
 import Page from '../Page';
 import PageModel from '../Page/Model';
 import PagePresenter from '../Page/Presenter';
@@ -13,19 +15,24 @@ describe('Application.Presenter.ApplicationPresenter', () => {
   let topBarPresenter: TopBarPresenter, topBarPresentSpy: jest.Mock;
   let sideMenuPresenter: SideMenuPresenter, sideMenuPresentSpy: jest.Mock;
   let pagePresenter: PagePresenter, pagePresentSpy: jest.Mock;
+  let languageSetupObserver: IObserver<ILanguageSetup>;
 
   beforeEach(() => {
-    topBarPresenter = new TopBarPresenter({
+    languageSetupObserver = {
       value: {
         translator: new Translator({}),
         languageCode: ''
       },
       adapter: {onChange: (oldValue, newValue) => {}}
-    });
-    sideMenuPresenter = new SideMenuPresenter({
-      value: true,
-      adapter: {onChange: (oldValue, newValue) => {}}
-    });
+    };
+    topBarPresenter = new TopBarPresenter(languageSetupObserver);
+    sideMenuPresenter = new SideMenuPresenter(
+      {
+        value: true,
+        adapter: {onChange: (oldValue, newValue) => {}}
+      },
+      languageSetupObserver
+    );
     pagePresenter = new PagePresenter({
       value: null,
       adapter: {onChange: (oldValue, newValue) => {}}

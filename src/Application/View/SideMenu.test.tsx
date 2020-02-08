@@ -16,6 +16,10 @@ describe('Application.View.SideMenu', () => {
   it('Show', async () => {
     const model: Model = new Model();
     model.isOpen = true;
+    model.translation = {
+      home: 'Home menu',
+      settings: 'Settings menu'
+    };
     const adapter: IAdapter = {onClose: jest.fn()};
     const value: any = {
       open: false,
@@ -32,6 +36,8 @@ describe('Application.View.SideMenu', () => {
     const instance: RenderResult = render(<SideMenu model={model} adapter={adapter} />);
 
     expect(instance.container.innerHTML).toContain('mdc-drawer');
+    expect(instance.container.textContent).toContain('Home menu');
+    expect(instance.container.textContent).toContain('Settings menu');
   });
 
   it('Opens menu', async () => {
@@ -42,11 +48,7 @@ describe('Application.View.SideMenu', () => {
       open: false,
       listen: jest.fn()
     };
-    (
-      mdc.drawer.MDCDrawer as any
-    ).mockImplementation(function () {
-      return value;
-    });
+    (mdc.drawer.MDCDrawer as any).mockImplementation(() => value);
 
     const instance: RenderResult = render(<SideMenu model={model} adapter={adapter} />);
     instance.rerender(<SideMenu model={model} adapter={adapter} />);

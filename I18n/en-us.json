@@ -1,4 +1,5 @@
 {
   "Application.TopBar.Title": "Time Tracker",
-  "Application.Test": ", which takes label translations via presenter"
+  "Application.SideMenu.Home": "Home",
+  "Application.SideMenu.Settings": "Settings"
 }

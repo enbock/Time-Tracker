@@ -1,20 +1,18 @@
 export default class ModuleLoader {
-    constructor(pathToRoot, moduleNameState, moduleState) {
-        this.moduleNameState = moduleNameState;
+    constructor(pathToRoot, moduleState) {
         this.moduleState = moduleState;
         this.dictionary = {};
         this.pathToRoot = pathToRoot;
-        this.moduleNameState.adapter.onChange = this.loadModule.bind(this);
     }
-    async loadModule(oldValue, newValue) {
+    async loadModule(modulePath) {
         let module;
-        if (!this.dictionary.hasOwnProperty(newValue)) {
-            module =
-                (await import(this.pathToRoot + newValue + '.js')).default;
-            this.dictionary[newValue] = module;
+        if (!this.dictionary.hasOwnProperty(modulePath)) {
+            const filePath = (this.pathToRoot + modulePath + '.js').replace('.././', '../');
+            module = (await import(filePath)).default;
+            this.dictionary[modulePath] = module;
         }
         else {
-            module = this.dictionary[newValue];
+            module = this.dictionary[modulePath];
         }
         this.moduleState.value = module;
     }

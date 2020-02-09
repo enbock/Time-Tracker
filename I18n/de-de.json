@@ -1,4 +1,5 @@
 {
   "Application.TopBar.Title": "Time Tracker",
-  "Application.Test": ", welche die Beschriftungen über den Presenter bezieht"
+  "Application.SideMenu.Home": "Start",
+  "Application.SideMenu.Settings": "Einstellungen"
 }

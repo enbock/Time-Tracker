@@ -23,7 +23,20 @@
   A new decade ... a new start ... 😉
   <script>
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./ServiceWorkerManager.js').then().catch();
+      navigator.serviceWorker.register('./ServiceWorkerManager.js').then(
+        function (registration) {
+          if (!registration) return;
+          setInterval(
+            function () {
+              registration.update();
+            },
+            10000
+          );
+        }
+      );
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        window.location.reload();
+      });
 
       const script = document.createElement('script');
       script.setAttribute('type', 'module');

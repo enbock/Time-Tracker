@@ -1,12 +1,17 @@
 export default class Action {
-    constructor(menuOpenState) {
+    constructor(menuOpenState, router, routerRegistry, moduleLoader) {
         this.menuOpenState = menuOpenState;
+        this.router = router;
+        this.routerRegistry = routerRegistry;
+        this.moduleLoader = moduleLoader;
     }
     get adapter() {
         return {
+            onPageChanged: this.loadModule.bind(this),
             onGithubClick: this.openGithubWindow.bind(this),
             onMenuClick: this.switchMenuState.bind(this),
-            onClose: this.closeMenu.bind(this)
+            onClose: this.closeMenu.bind(this),
+            onMenu: this.switchPage.bind(this)
         };
     }
     openGithubWindow() {
@@ -17,5 +22,13 @@ export default class Action {
     }
     closeMenu() {
         this.menuOpenState.value = false;
+    }
+    switchPage(name) {
+        const page = this.routerRegistry.getPages()[name];
+        this.router.changePage(page);
+    }
+    async loadModule(oldValue, newValue) {
+        await this.moduleLoader.loadModule(newValue.module);
+        this.closeMenu();
     }
 }

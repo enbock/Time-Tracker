@@ -9,13 +9,13 @@ class Container {
         this.translatorFactory = new TranslatorFactory();
         this.loader = new AjaxLoader();
         this.manager = new Manager(this.loader, this.translatorFactory);
-        this.setupAdapter = new ListenerAdapter();
-        const languageSetup = {
+        this.adapter = new ListenerAdapter();
+        const initialLanguageSetup = {
             languageCode: '',
             translator: this.translatorFactory.createTranslator({})
         };
-        this.setupObserver = new Observer(languageSetup, this.setupAdapter);
-        this.changeLanguageSetup = new ChangeLanguageSetup(this.setupObserver, this.manager);
+        this.observer = new Observer(initialLanguageSetup, this.adapter);
+        this.changeLanguageSetup = new ChangeLanguageSetup(this.observer, this.manager);
     }
 }
 export default new Container();

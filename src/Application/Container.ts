@@ -27,14 +27,16 @@ class Container {
   constructor() {
     this.language = LanguageContainer;
     this.router = RouterContainer;
+
     this.menuOpenStateAdapter = {onChange: ((oldValue, newValue) => {})};
     this.menuOpenState = new Observer<boolean>(false, this.menuOpenStateAdapter);
-    this.applicationAction = new Action(this.menuOpenState);
 
     this.moduleStateAdapter = new ListenerAdapter<typeof React.Component | null>();
     this.moduleState = new Observer<typeof React.Component | null>(null, this.moduleStateAdapter);
     this.moduleLoader = new ModuleLoader('../', this.moduleState);
 
+    this.applicationAction =
+      new Action(this.menuOpenState, this.router.router, this.router.registry, this.moduleLoader);
     this.topAppBarPresenter = new TopBarPresenter(this.language.observer);
     this.sideMenuPresenter =
       new SideMenuPresenter(this.menuOpenState, this.language.observer, this.router.observer, this.router.registry);

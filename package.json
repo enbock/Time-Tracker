@@ -46,7 +46,7 @@
       "@testing-library/jest-dom/extend-expect"
     ],
     "testRegex": "(/__tests__/.*|(\\.|/)test)\\.tsx?$",
-    "testEnvironment": "jsdom",
+    "testEnvironment": "jest-environment-jsdom",
     "testURL": "http://localhost",
     "transformIgnorePatterns": [
       "^.+\\.module\\.css$"

@@ -22,7 +22,7 @@ jest.mock(
       },
       menuOpenState: {value: true},
       menuOpenStateAdapter: {onChange: undefined},
-      applicationAction: {adapter: 'adapter-actions'},
+      applicationAction: {adapter: {onPageChanged: jest.fn()}},
       moduleStateAdapter: {addListener: jest.fn()},
       moduleNameState: {value: ''},
       moduleLoader: {loadModule: jest.fn()}
@@ -31,7 +31,7 @@ jest.mock(
 );
 jest.mock(
   './View/Application',
-  () => (props: IProperties) => <div data-testid="output">{props.adapter}</div>
+  () => (props: IProperties) => <div data-testid="output" />
 );
 
 describe('Application', () => {
@@ -54,14 +54,16 @@ describe('Application', () => {
     languageListenerSpy.mockImplementation(callback => container.languageCallback = callback);
     moduleListenerSpy.mockImplementation(callback => container.moduleCallback = callback);
     interactorSpy.mockResolvedValue(undefined);
+    const routerListenerSpy: jest.Mock = Container.router.adapter.addListener = jest.fn();
     const instance: RenderResult = render(<Application />);
 
     const element: HTMLElement = await instance.findByTestId('output');
-    expect(element.textContent).toContain('adapter-actions');
     expect(container.languageCallback).toBeInstanceOf(Function);
     expect(container.moduleCallback).toBeInstanceOf(Function);
     expect(interactorSpy).toHaveBeenCalledWith({languageCode: 'de-de'}, {});
     expect(presentSpy).toHaveBeenCalledTimes(1);
+    expect(routerListenerSpy).toHaveBeenCalledTimes(1);
+    expect(routerListenerSpy).toHaveBeenCalledWith(Container.applicationAction.adapter.onPageChanged);
   });
 
   it('Rerender on loaded language', async () => {
@@ -99,22 +101,5 @@ describe('Application', () => {
 
     Container.menuOpenStateAdapter.onChange(false, true);
     expect(presentSpy).toHaveBeenCalledTimes(2);
-  });
-
-  it('Load on changed page', async () => {
-    const model: Model = new Model();
-    const listenerSpy: jest.Mock = Container.router.adapter.addListener = jest.fn();
-    const loaderSpy: jest.Mock = Container.moduleLoader.loadModule = jest.fn();
-    presentSpy.mockReturnValue(model);
-    loaderSpy.mockResolvedValue(undefined);
-    const container: { callback: null | Function } = {
-      callback: null
-    };
-    listenerSpy.mockImplementation(callback => container.callback = callback);
-    interactorSpy.mockResolvedValue(undefined);
-    const instance: RenderResult = render(<Application />);
-
-    container.callback && container.callback('', {url: './new/module/'});
-    expect(loaderSpy).toHaveBeenCalledWith('./new/module/');
   });
 });

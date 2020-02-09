@@ -35,8 +35,9 @@ export default class Presenter {
 
     const pages: IPageDictionary<IPageData> = this.pageRegistry.getPages();
     const activePage = this.routerObserver.value.name;
+    model.pageNames = Object.keys(pages);
 
-    Object.keys(pages).forEach(
+    model.pageNames.forEach(
       (name: string) => {
         const page: IPageData = pages[name];
         (model.isActive as any)[name] = (activePage == page.name);

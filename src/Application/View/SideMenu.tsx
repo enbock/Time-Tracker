@@ -5,6 +5,7 @@ import Model, {IPages} from './SideMenu/Model';
 
 export interface IAdapter {
   onClose(): void
+  onMenu(name: string): void
 }
 
 export interface IProperties {
@@ -16,41 +17,51 @@ interface IState {
 }
 
 export default class SideMenu extends React.Component<IProperties, IState> {
-  drawer: mdc.drawer.MDCDrawer | undefined;
+  drawer: mdc.drawer.MDCDrawer | any | undefined;
 
   componentDidMount(): void {
     // @ts-ignore
     this.drawer = new mdc.drawer.MDCDrawer(ReactDOM.findDOMNode(this));
-    // @ts-ignore
     this.drawer.listen('MDCDrawer:closed', this.props.adapter.onClose);
   }
 
+  onMenuClick(event: React.MouseEvent<HTMLAnchorElement>, name: string) {
+    event.stopPropagation();
+    event.preventDefault();
+    this.props.adapter.onMenu(name);
+  }
+
   render(): React.ReactElement {
-    const model = this.props.model;
+    const model: Model = this.props.model;
+    const adapter: IAdapter = this.props.adapter;
     this.drawer && (this.drawer.open = model.isOpen);
 
-    const translation: IPages<string> = model.translation;
+    const translation: IPages<string> | any = model.translation;
+    const isActive: IPages<boolean> | any = model.isActive;
+    const url: IPages<string> | any = model.url;
+
+    const menuEntries: React.ReactElement[] = model.pageNames.map(
+      (name: string): React.ReactElement => {
+        return <a
+          key={'menuEntry:' + name}
+          className={'mdc-list-item' + (isActive[name] ? ' mdc-list-item--activated' : '')}
+          href={url[name]}
+          aria-selected={isActive[name] ? 'true' : 'false'}
+          data-testid={name}
+
+          onClick={(event: React.MouseEvent<HTMLAnchorElement>) => this.onMenuClick(event, name)}
+        >
+          <i className="material-icons mdc-list-item__graphic" aria-hidden="true">{name}</i>
+          <span className="mdc-list-item__text">{translation[name]}</span>
+        </a>;
+      }
+    );
 
     return <React.Fragment>
       <aside className="mdc-drawer mdc-drawer--modal mdc-top-app-bar--fixed-adjust">
         <div className="mdc-drawer__content">
           <nav className="mdc-list">
-            <a
-              className="mdc-list-item mdc-list-item--activated"
-              href={model.url.home}
-              aria-selected={model.isActive.home ? 'true' : 'false'}
-            >
-              <i className="material-icons mdc-list-item__graphic" aria-hidden="true">home</i>
-              <span className="mdc-list-item__text">{translation.home}</span>
-            </a>
-            <a
-              className="mdc-list-item"
-              href={model.url.settings}
-              aria-selected={model.isActive.settings ? 'true' : 'false'}
-            >
-              <i className="material-icons mdc-list-item__graphic" aria-hidden="true">settings</i>
-              <span className="mdc-list-item__text">{translation.settings}</span>
-            </a>
+            {menuEntries}
           </nav>
         </div>
       </aside>

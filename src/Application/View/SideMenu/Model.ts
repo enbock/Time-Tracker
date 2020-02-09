@@ -8,6 +8,7 @@ export default class Model {
   translation: IPages<string>;
   isActive: IPages<boolean>;
   url: IPages<string>;
+  pageNames: string[];
 
   constructor() {
     this.isOpen = false;
@@ -23,5 +24,6 @@ export default class Model {
       home: '',
       settings: ''
     };
+    this.pageNames = [];
   }
 }

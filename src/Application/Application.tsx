@@ -3,7 +3,7 @@ import {ILanguageSetup} from '../Language/ChangeLanguageSetup';
 import {IPageData} from '../Router/Router';
 import Container from './Container';
 import ModuleLoader from './ModuleLoader';
-import ApplicationView, {IAdapter} from './View/Application';
+import ApplicationView, {IAdapter as IViewAdapter} from './View/Application';
 import Model from './View/Application/Model';
 
 interface IProperties {
@@ -14,6 +14,14 @@ interface IState {
   menuOpen: boolean,
   loadedPage: typeof React.Component | null,
   shownPage: string
+}
+
+export interface IModulePageData extends IPageData {
+  module: string
+}
+
+export interface IAdapter extends IViewAdapter {
+  onPageChanged(oldValue: IPageData, newValue: IPageData): void;
 }
 
 export default class Application extends React.Component<IProperties, IState> {
@@ -34,23 +42,26 @@ export default class Application extends React.Component<IProperties, IState> {
 
     Container.language.adapter.addListener(this.onLanguageLoaded.bind(this));
     Container.moduleStateAdapter.addListener(this.onModuleLoaded.bind(this));
-    Container.router.adapter.addListener(this.onPageChanged.bind(this));
+    Container.router.adapter.addListener(this.adapter.onPageChanged);
     Container.menuOpenStateAdapter.onChange = this.onMenuChange.bind(this);
   }
 
   componentDidMount(): void {
     Container.language.changeLanguageSetup.interact({languageCode: 'de-de'}, {}).then();
-    const homePage: IPageData = {
+    const homePage: IModulePageData = {
       depth: 0,
       name: 'home',
-      url: './HelloWorld'
+      url: './',
+      module: './HelloWorld'
     };
-    Container.router.registry.registerPage(homePage);
-    Container.router.registry.registerPage({
+    const settingsPage: IModulePageData = {
       depth: 1,
       name: 'settings',
-      url: './Settings'
-    });
+      url: './settings/',
+      module: './Settings/Settings'
+    };
+    Container.router.registry.registerPage(homePage);
+    Container.router.registry.registerPage(settingsPage);
     Container.router.observer.value = homePage;
   }
 
@@ -64,10 +75,6 @@ export default class Application extends React.Component<IProperties, IState> {
 
   onModuleLoaded(oldValue: typeof React.Component | null, newValue: typeof React.Component | null) {
     this.setState({loadedPage: newValue});
-  }
-
-  onPageChanged(oldValue: IPageData, newValue: IPageData) {
-    this.moduleLoader.loadModule(newValue.url).then();
   }
 
   render(): React.ReactNode {

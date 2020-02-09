@@ -50,6 +50,7 @@ describe('Application.View.SideMenu.Presenter', () => {
     const model: Model = presenter.present();
     const expectedModel = new Model();
     expectedModel.isOpen = true;
+    expectedModel.pageNames = ['home', 'settings'];
     expectedModel.translation = {
       home: 'home',
       settings: 'settings'

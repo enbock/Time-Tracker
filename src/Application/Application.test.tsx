@@ -22,7 +22,7 @@ jest.mock(
       },
       menuOpenState: {value: true},
       menuOpenStateAdapter: {onChange: undefined},
-      applicationAction: {adapter: {onPageChanged: jest.fn()}},
+      applicationActionAdapter: {onPageChanged: jest.fn()},
       moduleStateAdapter: {addListener: jest.fn()},
       moduleNameState: {value: ''},
       moduleLoader: {loadModule: jest.fn()}
@@ -35,13 +35,12 @@ jest.mock(
 );
 
 describe('Application', () => {
-  let presentSpy: jest.Mock, languageListenerSpy: jest.Mock, moduleListenerSpy: jest.Mock, interactorSpy: jest.Mock;
+  let presentSpy: jest.Mock, languageListenerSpy: jest.Mock, moduleListenerSpy: jest.Mock;
 
   beforeEach(() => {
     presentSpy = Container.applicationPresenter.present = jest.fn();
     languageListenerSpy = Container.language.adapter.addListener = jest.fn();
     moduleListenerSpy = Container.moduleStateAdapter.addListener = jest.fn();
-    interactorSpy = Container.language.changeLanguageSetup.interact = jest.fn();
   });
 
   it('Can start', async () => {
@@ -53,17 +52,12 @@ describe('Application', () => {
     };
     languageListenerSpy.mockImplementation(callback => container.languageCallback = callback);
     moduleListenerSpy.mockImplementation(callback => container.moduleCallback = callback);
-    interactorSpy.mockResolvedValue(undefined);
-    const routerListenerSpy: jest.Mock = Container.router.adapter.addListener = jest.fn();
     const instance: RenderResult = render(<Application />);
 
     const element: HTMLElement = await instance.findByTestId('output');
     expect(container.languageCallback).toBeInstanceOf(Function);
     expect(container.moduleCallback).toBeInstanceOf(Function);
-    expect(interactorSpy).toHaveBeenCalledWith({languageCode: 'de-de'}, {});
     expect(presentSpy).toHaveBeenCalledTimes(1);
-    expect(routerListenerSpy).toHaveBeenCalledTimes(1);
-    expect(routerListenerSpy).toHaveBeenCalledWith(Container.applicationAction.adapter.onPageChanged);
   });
 
   it('Rerender on loaded language', async () => {
@@ -73,7 +67,6 @@ describe('Application', () => {
       callback: null
     };
     languageListenerSpy.mockImplementation(callback => container.callback = callback);
-    interactorSpy.mockResolvedValue(undefined);
     const instance: RenderResult = render(<Application />);
 
     container.callback && container.callback(undefined, {languageCode: 'de-de'});
@@ -87,7 +80,6 @@ describe('Application', () => {
       callback: null
     };
     moduleListenerSpy.mockImplementation(callback => container.callback = callback);
-    interactorSpy.mockResolvedValue(undefined);
     const instance: RenderResult = render(<Application />);
 
     container.callback && container.callback(null, Application);
@@ -96,7 +88,6 @@ describe('Application', () => {
 
   it('Rerender on menu change', async () => {
     presentSpy.mockReturnValue(new Model());
-    interactorSpy.mockResolvedValue(undefined);
     const instance: RenderResult = render(<Application />);
 
     Container.menuOpenStateAdapter.onChange(false, true);

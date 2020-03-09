@@ -4,6 +4,7 @@ import ListenerAdapter from '../Observer/ListenerAdapter';
 import Observer, {IObserverAdapter} from '../Observer/Observer';
 import RouterContainer from '../Router/Container';
 import Action from './Action';
+import {IAdapter, IModulePageData} from './Application';
 import ModuleLoader from './ModuleLoader';
 import ApplicationPresenter from './View/Application/Presenter';
 import PagePresenter from './View/Page/Presenter';
@@ -23,6 +24,7 @@ class Container {
   moduleState: Observer<typeof React.Component | null>;
   moduleLoader: ModuleLoader;
   pagePresenter: PagePresenter;
+  applicationActionAdapter: IAdapter;
 
   constructor() {
     this.language = LanguageContainer;
@@ -37,6 +39,8 @@ class Container {
 
     this.applicationAction =
       new Action(this.menuOpenState, this.router.router, this.router.registry, this.moduleLoader);
+    this.applicationActionAdapter = this.applicationAction.adapter;
+
     this.topAppBarPresenter = new TopBarPresenter(this.language.observer);
     this.sideMenuPresenter =
       new SideMenuPresenter(this.menuOpenState, this.language.observer, this.router.observer, this.router.registry);
@@ -47,6 +51,29 @@ class Container {
       this.sideMenuPresenter,
       this.pagePresenter
     );
+
+    this.setupDefaults();
+  }
+
+  protected setupDefaults(): void {
+
+    this.router.adapter.addListener(this.applicationActionAdapter.onPageChanged);
+    this.language.changeLanguageSetup.interact({languageCode: 'de-de'}, {}).then();
+    const homePage: IModulePageData = {
+      depth: 0,
+      name: 'home',
+      url: './',
+      module: './HelloWorld'
+    };
+    const settingsPage: IModulePageData = {
+      depth: 1,
+      name: 'settings',
+      url: './settings/',
+      module: './Settings/Settings'
+    };
+    this.router.registry.registerPage(homePage);
+    this.router.registry.registerPage(settingsPage);
+    this.router.observer.value = homePage;
   }
 }
 

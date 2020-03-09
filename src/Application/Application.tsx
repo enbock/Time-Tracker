@@ -37,32 +37,15 @@ export default class Application extends React.Component<IProperties, IState> {
       loadedPage: null,
       shownPage: ''
     };
-    this.adapter = Container.applicationAction.adapter;
+    this.adapter = Container.applicationActionAdapter;
     this.moduleLoader = Container.moduleLoader;
 
     Container.language.adapter.addListener(this.onLanguageLoaded.bind(this));
     Container.moduleStateAdapter.addListener(this.onModuleLoaded.bind(this));
-    Container.router.adapter.addListener(this.adapter.onPageChanged);
     Container.menuOpenStateAdapter.onChange = this.onMenuChange.bind(this);
   }
 
   componentDidMount(): void {
-    Container.language.changeLanguageSetup.interact({languageCode: 'de-de'}, {}).then();
-    const homePage: IModulePageData = {
-      depth: 0,
-      name: 'home',
-      url: './',
-      module: './HelloWorld'
-    };
-    const settingsPage: IModulePageData = {
-      depth: 1,
-      name: 'settings',
-      url: './settings/',
-      module: './Settings/Settings'
-    };
-    Container.router.registry.registerPage(homePage);
-    Container.router.registry.registerPage(settingsPage);
-    Container.router.observer.value = homePage;
   }
 
   onLanguageLoaded(oldValue: ILanguageSetup, newValue: ILanguageSetup) {

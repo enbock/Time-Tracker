@@ -6,10 +6,7 @@ describe('Application.Presenter.ApplicationPresenter', () => {
   it('Present application data', () => {
     const translator: Translator = new Translator({});
     const presenter: Presenter = new Presenter({
-      value: {
-        translator: translator,
-        languageCode: ''
-      },
+      value: translator,
       adapter: {onChange: (oldValue, newValue) => {}}
     });
     const translateSpy: jest.Mock = translator.translate = jest.fn();

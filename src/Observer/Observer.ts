@@ -3,7 +3,7 @@ export interface IOnChangeCallback<T> {
 }
 
 export interface IObserverAdapter<T> {
-  onChange: IOnChangeCallback<T>
+  onChange(oldValue: T, newValue: T): void
 }
 
 export interface IObserver<T> {

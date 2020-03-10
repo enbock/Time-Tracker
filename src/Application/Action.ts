@@ -47,10 +47,10 @@ export default class Action {
   protected switchPage(name: string): void {
     const page: IPageData = this.routerRegistry.getPages()[name];
     this.router.changePage(page);
+    this.closeMenu();
   }
 
-  protected async loadModule(oldValue: IPageData, newValue: IPageData) {
+  protected async loadModule(oldValue: IPageData, newValue: IPageData): Promise<void> {
     await this.moduleLoader.loadModule((newValue as IModulePageData).module);
-    this.closeMenu();
   }
 }

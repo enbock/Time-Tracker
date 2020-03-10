@@ -17,13 +17,13 @@ export default class Manager {
     this.translators = {};
   }
 
-  public async getTranslator(languageCode: string) {
+  async getTranslator(languageCode: string): Promise<Translator> {
     if (this.translators.hasOwnProperty(languageCode)) {
       return this.translators[languageCode];
     }
 
     const languageData = await this.loader.loadLanguage(languageCode);
-    const translator = this.translatorFactory.createTranslator(languageData);
+    const translator: Translator = this.translatorFactory.createTranslator(languageData);
     this.translators[languageCode] = translator;
 
     return translator;

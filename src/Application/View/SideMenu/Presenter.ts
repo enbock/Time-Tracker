@@ -1,4 +1,3 @@
-import {ILanguageSetup} from '../../../Language/ChangeLanguageSetup';
 import Translator from '../../../Language/Translator';
 import {IObserver} from '../../../Observer/Observer';
 import PageRegistry, {IPageDictionary} from '../../../Router/Registry';
@@ -7,18 +6,18 @@ import Model from './Model';
 
 export default class Presenter {
   menuOpenState: IObserver<boolean>;
-  languageSetupObserver: IObserver<ILanguageSetup>;
   routerObserver: IObserver<IPageData>;
   pageRegistry: PageRegistry;
+  translator: IObserver<Translator>;
 
   constructor(
     menuOpenState: IObserver<boolean>,
-    languageSetupObserver: IObserver<ILanguageSetup>,
+    translator: IObserver<Translator>,
     routerObserver: IObserver<IPageData>,
     pageRegistry: PageRegistry
   ) {
+    this.translator = translator;
     this.menuOpenState = menuOpenState;
-    this.languageSetupObserver = languageSetupObserver;
     this.routerObserver = routerObserver;
     this.pageRegistry = pageRegistry;
   }
@@ -27,7 +26,7 @@ export default class Presenter {
     const model: Model = new Model();
     model.isOpen = this.menuOpenState.value;
 
-    const translator: Translator = this.languageSetupObserver.value.translator;
+    const translator: Translator = this.translator.value;
     model.translation = {
       home: translator.translate('Application.SideMenu.Home'),
       settings: translator.translate('Application.SideMenu.Settings')

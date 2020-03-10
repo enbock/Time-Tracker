@@ -20,6 +20,7 @@ describe('Application.View.Application', () => {
     model.topAppBar.title = 'test';
     const onGithubClick = jest.fn();
     const adapter: IAdapter = {
+      onMenu: jest.fn(),
       onGithubClick: onGithubClick,
       onMenuClick: jest.fn(),
       onClose: jest.fn()

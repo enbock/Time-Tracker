@@ -54,9 +54,11 @@ describe('Application.Action', () => {
     };
     routerRegistry.getPages = jest.fn().mockReturnValue({name: page});
     router.changePage = jest.fn();
+    menuOpenState.value = true;
 
     action.adapter.onMenu('name');
     expect(router.changePage).toHaveBeenCalledWith(page);
+    expect(menuOpenState.value).toBeFalsy();
   });
 
   it('Load module on page change', async () => {
@@ -67,11 +69,9 @@ describe('Application.Action', () => {
       name: 'name',
       url: 'url'
     };
-    menuOpenState.value = true;
     moduleLoader.loadModule = jest.fn().mockResolvedValue(undefined);
 
     await action.adapter.onPageChanged(page, page);
     expect(moduleLoader.loadModule).toHaveBeenCalledWith('./New/Module');
-    expect(menuOpenState.value).toBeFalsy();
   });
 });

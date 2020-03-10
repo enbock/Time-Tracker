@@ -1,4 +1,3 @@
-import {ILanguageSetup} from '../../../Language/ChangeLanguageSetup';
 import Translator from '../../../Language/Translator';
 import {IObserver} from '../../../Observer/Observer';
 import PagePresenter from '../Page/Presenter';
@@ -7,18 +6,18 @@ import TopBarPresenter from '../TopBar/Presenter';
 import Model from './Model';
 
 export default class Presenter {
-  languageSetupObserver: IObserver<ILanguageSetup>;
   topAppBarPresenter: TopBarPresenter;
+  translator: IObserver<Translator>;
   sideMenuPresenter: SideMenuPresenter;
   pagePresenter: PagePresenter;
 
   constructor(
-    languageSetupObserver: IObserver<ILanguageSetup>,
+    translator: IObserver<Translator>,
     topAppBarPresenter: TopBarPresenter,
     sideMenuPresenter: SideMenuPresenter,
     pagePresenter: PagePresenter
   ) {
-    this.languageSetupObserver = languageSetupObserver;
+    this.translator = translator;
     this.topAppBarPresenter = topAppBarPresenter;
     this.sideMenuPresenter = sideMenuPresenter;
     this.pagePresenter = pagePresenter;
@@ -26,7 +25,7 @@ export default class Presenter {
 
   present() {
     const viewModel: Model = new Model();
-    const translator: Translator = this.languageSetupObserver.value.translator;
+    const translator: Translator = this.translator.value;
 
     viewModel.topAppBar = this.topAppBarPresenter.present();
     viewModel.sideMenu = this.sideMenuPresenter.present();

@@ -1,4 +1,3 @@
-import {ILanguageSetup} from '../../../Language/ChangeLanguageSetup';
 import Translator from '../../../Language/Translator';
 import ListenerAdapter from '../../../Observer/ListenerAdapter';
 import {IObserver} from '../../../Observer/Observer';
@@ -14,11 +13,8 @@ describe('Application.View.SideMenu.Presenter', () => {
       value: true
     };
     const translator: Translator = new Translator({});
-    const languageSetupObserver: IObserver<ILanguageSetup> = {
-      value: {
-        translator: translator,
-        languageCode: ''
-      },
+    const activeTranslator: IObserver<Translator> = {
+      value: translator,
       adapter: {onChange: jest.fn()}
     };
     const homePage: IPageData = {
@@ -46,7 +42,7 @@ describe('Application.View.SideMenu.Presenter', () => {
       }
     );
 
-    const presenter = new Presenter(menuObserver, languageSetupObserver, routerObserver, pageRegistry);
+    const presenter = new Presenter(menuObserver, activeTranslator, routerObserver, pageRegistry);
     const model: Model = presenter.present();
     const expectedModel = new Model();
     expectedModel.isOpen = true;

@@ -1,5 +1,4 @@
 import React from 'react';
-import {ILanguageSetup} from '../Language/ChangeLanguageSetup';
 import {IPageData} from '../Router/Router';
 import Container from './Container';
 import ModuleLoader from './ModuleLoader';
@@ -32,7 +31,7 @@ export default class Application extends React.Component<IProperties, IState> {
     super(props);
 
     this.state = {
-      loadedLanguage: Container.language.observer.value.languageCode,
+      loadedLanguage: Container.language.observer.value,
       menuOpen: Container.menuOpenState.value,
       loadedPage: null,
       shownPage: ''
@@ -48,8 +47,8 @@ export default class Application extends React.Component<IProperties, IState> {
   componentDidMount(): void {
   }
 
-  onLanguageLoaded(oldValue: ILanguageSetup, newValue: ILanguageSetup) {
-    this.setState({loadedLanguage: newValue.languageCode});
+  onLanguageLoaded(oldValue: string, newValue: string) {
+    this.setState({loadedLanguage: newValue});
   }
 
   onMenuChange(oldValue: boolean, newValue: boolean) {

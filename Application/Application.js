@@ -5,7 +5,7 @@ export default class Application extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loadedLanguage: Container.language.observer.value.languageCode,
+            loadedLanguage: Container.language.observer.value,
             menuOpen: Container.menuOpenState.value,
             loadedPage: null,
             shownPage: ''
@@ -19,7 +19,7 @@ export default class Application extends React.Component {
     componentDidMount() {
     }
     onLanguageLoaded(oldValue, newValue) {
-        this.setState({ loadedLanguage: newValue.languageCode });
+        this.setState({ loadedLanguage: newValue });
     }
     onMenuChange(oldValue, newValue) {
         this.setState({ menuOpen: newValue });

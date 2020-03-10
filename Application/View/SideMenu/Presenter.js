@@ -1,15 +1,15 @@
 import Model from "./Model.js";
 export default class Presenter {
-    constructor(menuOpenState, languageSetupObserver, routerObserver, pageRegistry) {
+    constructor(menuOpenState, translator, routerObserver, pageRegistry) {
+        this.translator = translator;
         this.menuOpenState = menuOpenState;
-        this.languageSetupObserver = languageSetupObserver;
         this.routerObserver = routerObserver;
         this.pageRegistry = pageRegistry;
     }
     present() {
         const model = new Model();
         model.isOpen = this.menuOpenState.value;
-        const translator = this.languageSetupObserver.value.translator;
+        const translator = this.translator.value;
         model.translation = {
             home: translator.translate('Application.SideMenu.Home'),
             settings: translator.translate('Application.SideMenu.Settings')

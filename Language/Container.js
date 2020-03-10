@@ -1,21 +1,22 @@
 import ListenerAdapter from "../Observer/ListenerAdapter.js";
 import Observer from "../Observer/Observer.js";
-import ChangeLanguageSetup from "./ChangeLanguageSetup.js";
+import DataStorage from "../Storage/DataStorage.js";
 import AjaxLoader from "./Loader/Ajax.js";
 import Manager from "./Manager.js";
+import ActiveTranslatorAdapter from "./Manager/ActiveTranslatorAdapter.js";
+import Translator from "./Translator.js";
 import TranslatorFactory from "./Translator/Factory.js";
 class Container {
     constructor() {
+        this.storage = new DataStorage('language', window.localStorage);
         this.translatorFactory = new TranslatorFactory();
         this.loader = new AjaxLoader();
         this.manager = new Manager(this.loader, this.translatorFactory);
         this.adapter = new ListenerAdapter();
-        const initialLanguageSetup = {
-            languageCode: '',
-            translator: this.translatorFactory.createTranslator({})
-        };
-        this.observer = new Observer(initialLanguageSetup, this.adapter);
-        this.changeLanguageSetup = new ChangeLanguageSetup(this.observer, this.manager);
+        this.activeTranslator = new Observer(new Translator({}), { onChange: (oldValue, newValue) => { } });
+        this.activeTranslatorAdapter = new ActiveTranslatorAdapter(this.adapter, this.manager, this.activeTranslator);
+        this.observer =
+            new Observer('', this.storage.attach('languageSetup', this.activeTranslatorAdapter));
     }
 }
 export default new Container();

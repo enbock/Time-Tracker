@@ -1,11 +1,11 @@
 import Model from "./Model.js";
 export default class Presenter {
-    constructor(languageSetupObserver) {
-        this.languageSetupObserver = languageSetupObserver;
+    constructor(translator) {
+        this.translator = translator;
     }
     present() {
         const model = new Model();
-        const translator = this.languageSetupObserver.value.translator;
+        const translator = this.translator.value;
         model.title = translator.translate('Application.TopBar.Title');
         return model;
     }

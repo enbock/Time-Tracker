@@ -26,9 +26,9 @@ export default class Action {
     switchPage(name) {
         const page = this.routerRegistry.getPages()[name];
         this.router.changePage(page);
+        this.closeMenu();
     }
     async loadModule(oldValue, newValue) {
         await this.moduleLoader.loadModule(newValue.module);
-        this.closeMenu();
     }
 }

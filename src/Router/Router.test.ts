@@ -8,7 +8,11 @@ describe('Router', () => {
     // @ts-ignore
     window = {addEventListener: jest.fn()};
     // @ts-ignore
-    history = {pushState: jest.fn()};
+    history =
+      {
+        pushState: jest.fn(),
+        replaceState: jest.fn()
+      };
     pageObserver = {
       value: {
         depth: 1,
@@ -48,6 +52,19 @@ describe('Router', () => {
     const event: PopStateEvent = new PopStateEvent('popstate', {state: oldPage});
     eventHandler(event);
     expect(pageObserver.value).toBe(oldPage);
+  });
+
+  it('Initialize first page', () => {
+    const router: Router = new Router(pageObserver, history);
+    const firstPage: IPageData = {
+      depth: 0,
+      name: 'first',
+      url: './new/page.html'
+    };
+
+    router.initialize(firstPage);
+    expect(pageObserver.value).toBe(firstPage);
+    expect(history.replaceState).toBeCalledWith(firstPage, 'first', './new/page.html');
   });
 
   it('Change to a new page', () => {

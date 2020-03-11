@@ -1,0 +1,11 @@
+.mdc-top-app-bar {
+  color: var(--mdc-theme-on-primary);
+}
+
+.mdc-drawer .mdc-list-item--activated {
+  color: var(--mdc-theme-primary);
+}
+
+.mdc-list-item--activated > .mdc-list-item__graphic {
+  color: var(--mdc-theme-primary) !important;
+}

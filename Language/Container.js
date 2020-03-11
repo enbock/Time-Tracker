@@ -17,6 +17,10 @@ class Container {
         this.activeTranslatorAdapter = new ActiveTranslatorAdapter(this.adapter, this.manager, this.activeTranslator);
         this.observer =
             new Observer('', this.storage.attach('languageSetup', this.activeTranslatorAdapter));
+        this.setupDefaults();
+    }
+    setupDefaults() {
+        this.observer.value = this.storage.loadData('languageSetup', 'de-de');
     }
 }
 export default new Container();

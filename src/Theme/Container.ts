@@ -1,5 +1,6 @@
 import ListenerAdapter from '../Observer/ListenerAdapter';
 import Observer from '../Observer/Observer';
+import DataStorage from '../Storage/DataStorage';
 import ThemesManager from './ThemesManager';
 import ThemesRegistry, {Theme} from './ThemesRegistry';
 
@@ -8,11 +9,23 @@ class Container {
   currentThemeAdapter: ListenerAdapter<Theme>;
   currentTheme: Observer<Theme>;
   manager: ThemesManager;
+  storage: DataStorage;
 
   constructor() {
+    this.storage = new DataStorage('theme', window.localStorage);
     this.registry = new ThemesRegistry();
     this.currentThemeAdapter = new ListenerAdapter<Theme>();
-    this.currentTheme = new Observer<Theme>(this.registry.getTheme('unknown'), this.currentThemeAdapter);
+    this.currentTheme = new Observer<Theme>(
+      this.storage.loadData<Theme>(
+        'currentTheme',
+        {
+          isBuildIn: true,
+          name: 'Google',
+          url: 'Theme/Google'
+        }
+      ),
+      this.storage.attach<Theme>('currentTheme', this.currentThemeAdapter)
+    );
     this.manager = new ThemesManager(this.currentTheme, this.registry);
 
     this.setupDefaults();
@@ -29,7 +42,6 @@ class Container {
       name: 'Codefrog',
       url: 'Theme/Codefrog'
     });
-    this.manager.changeTheme('Google');
   }
 }
 

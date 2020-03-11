@@ -18,6 +18,12 @@ A progressive web app to track working time.
 
 ## Library Overview
 Follow libraries are in use:
-* ES6 in Browser without precompile 
-* React
-* Material Design Components
+* [ECMAScript® 2020] in Browser without precompile
+* [React] (exclusive for HTML-Encoding and Browser Handling)
+* [Material Design Components] (eehm, yes, we need a nice design for the UI)
+* [TypeScript] Uncle Bob: "The code is the documentation" ... with TS is it possible.
+
+[ECMAScript® 2020]:https://tc39.es/ecma262/
+[React]:https://reactjs.org/docs/getting-started.html
+[Material Design Components]:https://material.io/develop/web/
+[TypeScript]:https://www.typescriptlang.org/

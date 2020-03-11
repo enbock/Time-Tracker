@@ -4,16 +4,19 @@ import ListenerAdapter from '../Observer/ListenerAdapter';
 import Observer, {IObserverAdapter} from '../Observer/Observer';
 import RouterContainer from '../Router/Container';
 import DataStorage from '../Storage/DataStorage';
+import ThemeContainer from '../Theme/Container';
 import Action from './Action';
 import {IAdapter, IModulePageData} from './Application';
 import ModuleLoader from './ModuleLoader';
 import ApplicationPresenter from './View/Application/Presenter';
+import ThemePresenter from './View/Application/ThemePresenter';
 import PagePresenter from './View/Page/Presenter';
 import SideMenuPresenter from './View/SideMenu/Presenter';
 import TopBarPresenter from './View/TopBar/Presenter';
 
 class Container {
   language: typeof LanguageContainer;
+  theme: typeof ThemeContainer;
   applicationPresenter: ApplicationPresenter;
   topAppBarPresenter: TopBarPresenter;
   applicationAction: Action;
@@ -26,10 +29,12 @@ class Container {
   pagePresenter: PagePresenter;
   applicationActionAdapter: IAdapter;
   storage: DataStorage;
+  themePresenter: ThemePresenter;
 
   constructor() {
     this.storage = new DataStorage('application', window.localStorage);
     this.language = LanguageContainer;
+    this.theme = ThemeContainer;
 
     this.menuOpenStateAdapter = {onChange: ((oldValue, newValue) => {})};
     this.menuOpenState = new Observer<boolean>(
@@ -41,8 +46,12 @@ class Container {
     this.moduleState = new Observer<typeof React.Component | null>(null, this.moduleStateAdapter);
     this.moduleLoader = new ModuleLoader('../', this.moduleState);
 
-    this.applicationAction =
-      new Action(this.menuOpenState, RouterContainer.router, RouterContainer.registry, this.moduleLoader);
+    this.applicationAction = new Action(
+      this.menuOpenState,
+      RouterContainer.router,
+      RouterContainer.registry,
+      this.moduleLoader
+    );
     this.applicationActionAdapter = this.applicationAction.adapter;
 
     this.topAppBarPresenter = new TopBarPresenter(this.language.activeTranslator);
@@ -53,18 +62,19 @@ class Container {
       RouterContainer.registry
     );
     this.pagePresenter = new PagePresenter(this.moduleState);
+    this.themePresenter = new ThemePresenter(this.theme.currentTheme);
     this.applicationPresenter = new ApplicationPresenter(
       this.language.activeTranslator,
       this.topAppBarPresenter,
       this.sideMenuPresenter,
-      this.pagePresenter
+      this.pagePresenter,
+      this.themePresenter
     );
 
     this.setupDefaults();
   }
 
   protected setupDefaults(): void {
-    this.language.observer.value = this.language.storage.loadData<string>('languageSetup', 'de-de');
     const homePage: IModulePageData = {
       depth: 0,
       name: 'home',

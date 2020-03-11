@@ -4,19 +4,23 @@ import PagePresenter from '../Page/Presenter';
 import SideMenuPresenter from '../SideMenu/Presenter';
 import TopBarPresenter from '../TopBar/Presenter';
 import Model from './Model';
+import ThemePresenter from './ThemePresenter';
 
 export default class Presenter {
-  topAppBarPresenter: TopBarPresenter;
-  translator: IObserver<Translator>;
-  sideMenuPresenter: SideMenuPresenter;
-  pagePresenter: PagePresenter;
+  protected topAppBarPresenter: TopBarPresenter;
+  protected themePresenter: ThemePresenter;
+  protected translator: IObserver<Translator>;
+  protected sideMenuPresenter: SideMenuPresenter;
+  protected pagePresenter: PagePresenter;
 
   constructor(
     translator: IObserver<Translator>,
     topAppBarPresenter: TopBarPresenter,
     sideMenuPresenter: SideMenuPresenter,
-    pagePresenter: PagePresenter
+    pagePresenter: PagePresenter,
+    themePresenter: ThemePresenter
   ) {
+    this.themePresenter = themePresenter;
     this.translator = translator;
     this.topAppBarPresenter = topAppBarPresenter;
     this.sideMenuPresenter = sideMenuPresenter;
@@ -30,6 +34,7 @@ export default class Presenter {
     viewModel.topAppBar = this.topAppBarPresenter.present();
     viewModel.sideMenu = this.sideMenuPresenter.present();
     viewModel.page = this.pagePresenter.present();
+    viewModel.theme = this.themePresenter.present();
 
     return viewModel;
   }

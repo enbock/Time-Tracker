@@ -27,9 +27,10 @@
     "utf-8-validate": "^5.0.2"
   },
   "scripts": {
-    "devServer": "powershell.exe -Command bash ./scripts/copyFiles.sh develop; cd build; npx http-server",
-    "start": "npx tsc --build tsconfig.json -w",
-    "watch": "bash -c 'while sleep 10; do bash ./scripts/correctImports.sh; done'",
+    "winDevServer": "powershell.exe -Command bash ./scripts/copyFiles.sh develop; cd build; npx http-server",
+    "startCompiler": "npx tsc --build tsconfig.json -w",
+    "watchCompiledScripts": "bash -c 'while sleep 10; do bash ./scripts/correctImports.sh; done'",
+    "start": "sh scripts/start.sh",
     "test": "jest --coverage --verbose",
     "build": "sh scripts/build.sh",
     "deploy": "npx gh-pages -m 'auto commit [ci skip]' -d build"

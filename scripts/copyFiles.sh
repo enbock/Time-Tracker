@@ -26,6 +26,6 @@ cp -v "node_modules/material-components-web/dist/$mdcCss" build/Style/material-c
 cp -v node_modules/material-design-icons/iconfont/MaterialIcons-Regular.t* build/Font
 cp -v node_modules/material-design-icons/iconfont/MaterialIcons-Regular.w* build/Font
 
-# Hello Goole Dev Team?!
+# Hello Google Dev Team?!
 cat node_modules/@material/auto-init/index.d.ts | uniq >node_modules/@material/auto-init/index.d.ts.patch
 mv node_modules/@material/auto-init/index.d.ts.patch node_modules/@material/auto-init/index.d.ts

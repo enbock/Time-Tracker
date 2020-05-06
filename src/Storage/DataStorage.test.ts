@@ -20,9 +20,9 @@ describe('Storage.DataStorage', () => {
     const adapter: IObserverAdapter<string> = {onChange: jest.fn()};
     const storageAdapter: StorageAdapter<string> = dataStorage.attach<string>('value', adapter);
 
-    storageAdapter.onChange('old', 'new');
+    storageAdapter.onChange('new');
 
-    expect(adapter.onChange).toHaveBeenCalledWith('old', 'new');
+    expect(adapter.onChange).toHaveBeenCalledWith('new');
     expect(storage.setItem).toHaveBeenCalledWith('test::value', JSON.stringify('new'));
   });
 

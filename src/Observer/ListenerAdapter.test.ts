@@ -7,9 +7,9 @@ describe('Observer.ListenerAdapter', () => {
     const adapter: ListenerAdapter<string> = new ListenerAdapter<string>();
 
     adapter.addListener(callback);
-    adapter.onChange('old', 'new');
+    adapter.onChange('new');
     setTimeout(() => {
-      expect(callback).toHaveBeenCalledWith('old', 'new');
+      expect(callback).toHaveBeenCalledWith('new');
       done();
     }, 1);
   });
@@ -20,7 +20,7 @@ describe('Observer.ListenerAdapter', () => {
     adapter.addListener(callback);
 
     adapter.removeListener(callback);
-    adapter.onChange('not', 'counted');
+    adapter.onChange('counted');
     expect(callback).not.toHaveBeenCalled();
   });
 });

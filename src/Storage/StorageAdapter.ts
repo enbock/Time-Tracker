@@ -9,8 +9,8 @@ export default class StorageAdapter<T> implements IObserverAdapter<T> {
     this.onChangeCallback = onChangeCallback;
   }
 
-  onChange(oldValue: T, newValue: T): void {
-    this.onChangeCallback(oldValue, newValue);
-    this.baseAdapter.onChange(oldValue, newValue);
+  onChange(newValue: T): void {
+    this.onChangeCallback(newValue);
+    this.baseAdapter.onChange(newValue);
   }
 }

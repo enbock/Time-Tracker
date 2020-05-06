@@ -11,7 +11,7 @@ describe('Application.Action', () => {
   beforeEach(() => {
     menuOpenState = {
       value: false,
-      adapter: {onChange: (oldValue, newValue) => {}}
+      adapter: {onChange: (newValue) => {}}
     };
     router = jest.genMockFromModule<Router>('../Router/Router');
     routerRegistry = jest.genMockFromModule<RouterRegistry>('../Router/Registry');
@@ -71,7 +71,7 @@ describe('Application.Action', () => {
     };
     moduleLoader.loadModule = jest.fn().mockResolvedValue(undefined);
 
-    await action.adapter.onPageChanged(page, page);
+    await action.adapter.onPageChanged(page);
     expect(moduleLoader.loadModule).toHaveBeenCalledWith('./New/Module');
   });
 });

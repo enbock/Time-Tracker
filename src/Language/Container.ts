@@ -27,7 +27,7 @@ class Container {
     this.adapter = new ListenerAdapter<string>();
     this.activeTranslator = new Observer<Translator>(
       new Translator({}),
-      {onChange: (oldValue: Translator, newValue: Translator): void => {}}
+      {onChange: (newValue: Translator): void => {}}
     );
     this.activeTranslatorAdapter = new ActiveTranslatorAdapter(this.adapter, this.manager, this.activeTranslator);
     this.observer =

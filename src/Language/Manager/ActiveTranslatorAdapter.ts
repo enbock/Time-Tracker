@@ -13,11 +13,11 @@ export default class ActiveTranslatorAdapter implements IObserverAdapter<string>
     this.manager = manager;
   }
 
-  onChange(oldValue: string, newValue: string): void {
+  onChange(newValue: string): void {
     this.manager.getTranslator(newValue).then(
       (translator: Translator): void => {
         this.activeTranslator.value = translator;
-        this.baseAdapter.onChange(oldValue, newValue);
+        this.baseAdapter.onChange(newValue);
       }
     );
   }

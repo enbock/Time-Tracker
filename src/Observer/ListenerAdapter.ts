@@ -7,10 +7,10 @@ export default class ListenerAdapter<T> implements IObserverAdapter<T> {
     this.listeners = [];
   }
 
-  public onChange(oldValue: T, newValue: T) {
+  public onChange(newValue: T) {
     function callListener(listener: IOnChangeCallback<T>): void {
       setTimeout(function handler(): void {
-        listener(oldValue, newValue);
+        listener(newValue);
       }, 1);
     }
 

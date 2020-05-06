@@ -1,9 +1,9 @@
 export interface IOnChangeCallback<T> {
-  (oldValue: T, newValue: T): void;
+  (newValue: T): void;
 }
 
 export interface IObserverAdapter<T> {
-  onChange(oldValue: T, newValue: T): void
+  onChange(newValue: T): void
 }
 
 export interface IObserver<T> {
@@ -25,8 +25,7 @@ export default class Observer<T> implements IObserver<T> {
   }
 
   public set value(newValue: T) {
-    const oldValue: T = this.value;
     this.current = newValue;
-    this.adapter.onChange(oldValue, newValue);
+    this.adapter.onChange(newValue);
   }
 }

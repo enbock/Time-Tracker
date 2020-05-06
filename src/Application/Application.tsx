@@ -20,7 +20,7 @@ export interface IModulePageData extends IPageData {
 }
 
 export interface IAdapter extends IViewAdapter {
-  onPageChanged(oldValue: IPageData, newValue: IPageData): void;
+  onPageChanged(newValue: IPageData): void;
 }
 
 export default class Application extends React.Component<IProperties, IState> {
@@ -47,15 +47,15 @@ export default class Application extends React.Component<IProperties, IState> {
   componentDidMount(): void {
   }
 
-  onLanguageLoaded(oldValue: string, newValue: string) {
+  onLanguageLoaded(newValue: string) {
     this.setState({loadedLanguage: newValue});
   }
 
-  onMenuChange(oldValue: boolean, newValue: boolean) {
+  onMenuChange(newValue: boolean) {
     this.setState({menuOpen: newValue});
   }
 
-  onModuleLoaded(oldValue: typeof React.Component | null, newValue: typeof React.Component | null) {
+  onModuleLoaded(newValue: typeof React.Component | null) {
     this.setState({loadedPage: newValue});
   }
 

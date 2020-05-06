@@ -7,7 +7,7 @@ import Presenter from './Presenter';
 describe('Application.View.Page.Presenter', () => {
   it('Gives module', () => {
     const moduleState: IObserver<typeof React.Component | null> = {
-      adapter: {onChange: (oldValue, newValue) => {}},
+      adapter: {onChange: (newValue) => {}},
       value: Page
     };
     const expectedModel: Model = new Model();

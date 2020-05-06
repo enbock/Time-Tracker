@@ -7,9 +7,9 @@ describe('Storage.StorageAdapter', () => {
     const callback: IOnChangeCallback<string> = jest.fn();
 
     const adapter: StorageAdapter<string> = new StorageAdapter<string>(baseAdapter, callback);
-    adapter.onChange('old', 'new');
+    adapter.onChange('new');
 
-    expect(baseAdapter.onChange).toHaveBeenCalledWith('old', 'new');
-    expect(callback).toHaveBeenCalledWith('old', 'new');
+    expect(baseAdapter.onChange).toHaveBeenCalledWith('new');
+    expect(callback).toHaveBeenCalledWith('new');
   });
 });

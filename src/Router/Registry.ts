@@ -46,7 +46,7 @@ export default class Registry {
     this.dictionary[page.name] = registeredPage;
   }
 
-  protected updatePageData(oldValue: IPageData, newValue: IPageData): void {
+  protected updatePageData(newValue: IPageData): void {
     Object.keys(this.dictionary).forEach(
       (pageName: string) => {
         this.updatePageUrlByDepth(this.dictionary[pageName], newValue.depth, newValue.name == pageName);
@@ -55,7 +55,7 @@ export default class Registry {
   }
 
   protected updatePageUrlByDepth(registeredPage: IRegistryPageData, depth: number, removeDirectory: boolean): void {
-    let relativeBack: string = '', index: number = 0, newUrl: string = '';
+    let relativeBack: string = '', index: number = 0, newUrl: string;
 
     if (removeDirectory) {
       newUrl = registeredPage.sourceUrl.replace(/.*\//, './');

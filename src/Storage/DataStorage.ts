@@ -17,7 +17,7 @@ export default class DataStorage {
   }
 
   attach<T>(key: string, adapter: IObserverAdapter<T>): StorageAdapter<T> {
-    const callback: IOnChangeCallback<T> = (oldValue: T, newValue: T) => this.updateStorage(key, newValue);
+    const callback: IOnChangeCallback<T> = (newValue: T) => this.updateStorage(key, newValue);
     const storageAdapter: StorageAdapter<T> = new StorageAdapter<T>(adapter, callback);
     this.adapters[key] = storageAdapter;
 

@@ -12,6 +12,6 @@ describe('Observer.Observer', () => {
 
     observer.value = 'new';
     expect(observer.value).toEqual('new');
-    expect(callback).toHaveBeenCalledWith('init', 'new');
+    expect(callback).toHaveBeenCalledWith('new');
   });
 });

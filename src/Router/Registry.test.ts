@@ -68,11 +68,11 @@ describe('Router.Registry', () => {
     expect(page.url).toBe('../../../page/');
     expect(newPage.url).toBe('../../../new/page.html');
 
-    callback(observer.value, newPage);
+    callback(newPage);
     expect(page.url).toBe('../page/');
     expect(newPage.url).toBe('./page.html');
 
-    callback(observer.value, page);
+    callback(page);
     expect(page.url).toBe('./');
     expect(newPage.url).toBe('../new/page.html');
 

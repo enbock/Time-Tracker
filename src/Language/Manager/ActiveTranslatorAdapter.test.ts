@@ -16,13 +16,13 @@ describe('Language.Manager.ActiveTranslatorAdapter', () => {
     manager.getTranslator = jest.fn().mockResolvedValue(newTranslator);
     const adapter: ActiveTranslatorAdapter = new ActiveTranslatorAdapter(baseAdapter, manager, activeTranslator);
 
-    adapter.onChange('', 'de-de');
+    adapter.onChange('de-de');
     expect(baseAdapter.onChange).not.toHaveBeenCalled();
 
     setTimeout(
       () => {
         expect(activeTranslator.value).toBe(newTranslator);
-        expect(baseAdapter.onChange).toHaveBeenCalledWith('', 'de-de');
+        expect(baseAdapter.onChange).toHaveBeenCalledWith('de-de');
         done();
       },
       1

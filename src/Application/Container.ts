@@ -36,7 +36,7 @@ class Container {
     this.language = LanguageContainer;
     this.theme = ThemeContainer;
 
-    this.menuOpenStateAdapter = {onChange: ((oldValue, newValue) => {})};
+    this.menuOpenStateAdapter = {onChange: ((newValue) => {})};
     this.menuOpenState = new Observer<boolean>(
       this.storage.loadData<boolean>('menuOpenState', false),
       this.storage.attach<boolean>('menuOpenState', this.menuOpenStateAdapter)

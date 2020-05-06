@@ -50,7 +50,7 @@ export default class Action {
     this.closeMenu();
   }
 
-  protected async loadModule(oldValue: IPageData, newValue: IPageData): Promise<void> {
+  protected async loadModule(newValue: IPageData): Promise<void> {
     await this.moduleLoader.loadModule((newValue as IModulePageData).module);
   }
 }

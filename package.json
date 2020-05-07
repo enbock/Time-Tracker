@@ -5,11 +5,11 @@
   "description": "Experimental Project: Tracking start and end of working time.",
   "dependencies": {
     "jest": "^25.1.0",
-    "material-components-web": "latest",
+    "material-components-web": "^6.0.0",
     "material-design-icons": "latest",
-    "react": "latest",
-    "react-dom": "latest",
-    "typescript": "latest"
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "typescript": "^3.8.3"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",

@@ -2,10 +2,10 @@ export default class ListenerAdapter {
     constructor() {
         this.listeners = [];
     }
-    onChange(oldValue, newValue) {
+    onChange(newValue) {
         function callListener(listener) {
             setTimeout(function handler() {
-                listener(oldValue, newValue);
+                listener(newValue);
             }, 1);
         }
         this.listeners.forEach(callListener);

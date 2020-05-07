@@ -22,13 +22,13 @@ export default class Registry {
         this.updatePageUrlByDepth(registeredPage, this.observer.value.depth, false);
         this.dictionary[page.name] = registeredPage;
     }
-    updatePageData(oldValue, newValue) {
+    updatePageData(newValue) {
         Object.keys(this.dictionary).forEach((pageName) => {
             this.updatePageUrlByDepth(this.dictionary[pageName], newValue.depth, newValue.name == pageName);
         });
     }
     updatePageUrlByDepth(registeredPage, depth, removeDirectory) {
-        let relativeBack = '', index = 0, newUrl = '';
+        let relativeBack = '', index = 0, newUrl;
         if (removeDirectory) {
             newUrl = registeredPage.sourceUrl.replace(/.*\//, './');
         }

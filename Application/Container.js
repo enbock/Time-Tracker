@@ -16,7 +16,7 @@ class Container {
         this.storage = new DataStorage('application', window.localStorage);
         this.language = LanguageContainer;
         this.theme = ThemeContainer;
-        this.menuOpenStateAdapter = { onChange: ((oldValue, newValue) => { }) };
+        this.menuOpenStateAdapter = { onChange: ((newValue) => { }) };
         this.menuOpenState = new Observer(this.storage.loadData('menuOpenState', false), this.storage.attach('menuOpenState', this.menuOpenStateAdapter));
         this.moduleStateAdapter = new ListenerAdapter();
         this.moduleState = new Observer(null, this.moduleStateAdapter);

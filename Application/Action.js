@@ -28,7 +28,7 @@ export default class Action {
         this.router.changePage(page);
         this.closeMenu();
     }
-    async loadModule(oldValue, newValue) {
+    async loadModule(newValue) {
         await this.moduleLoader.loadModule(newValue.module);
     }
 }

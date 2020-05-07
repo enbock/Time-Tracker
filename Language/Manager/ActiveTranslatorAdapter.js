@@ -4,10 +4,10 @@ export default class ActiveTranslatorAdapter {
         this.baseAdapter = baseAdapter;
         this.manager = manager;
     }
-    onChange(oldValue, newValue) {
+    onChange(newValue) {
         this.manager.getTranslator(newValue).then((translator) => {
             this.activeTranslator.value = translator;
-            this.baseAdapter.onChange(oldValue, newValue);
+            this.baseAdapter.onChange(newValue);
         });
     }
 }

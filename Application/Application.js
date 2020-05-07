@@ -18,13 +18,13 @@ export default class Application extends React.Component {
     }
     componentDidMount() {
     }
-    onLanguageLoaded(oldValue, newValue) {
+    onLanguageLoaded(newValue) {
         this.setState({ loadedLanguage: newValue });
     }
-    onMenuChange(oldValue, newValue) {
+    onMenuChange(newValue) {
         this.setState({ menuOpen: newValue });
     }
-    onModuleLoaded(oldValue, newValue) {
+    onModuleLoaded(newValue) {
         this.setState({ loadedPage: newValue });
     }
     render() {

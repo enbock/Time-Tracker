@@ -7,8 +7,7 @@ export default class Observer {
         return this.current;
     }
     set value(newValue) {
-        const oldValue = this.value;
         this.current = newValue;
-        this.adapter.onChange(oldValue, newValue);
+        this.adapter.onChange(newValue);
     }
 }

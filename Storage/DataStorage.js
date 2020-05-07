@@ -6,7 +6,7 @@ export default class DataStorage {
         this.adapters = {};
     }
     attach(key, adapter) {
-        const callback = (oldValue, newValue) => this.updateStorage(key, newValue);
+        const callback = (newValue) => this.updateStorage(key, newValue);
         const storageAdapter = new StorageAdapter(adapter, callback);
         this.adapters[key] = storageAdapter;
         return storageAdapter;

@@ -1,34 +1,28 @@
-
-import Container from "./Container.js";
 import ApplicationView from "./View/Application.js";
-export default class Application extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            loadedLanguage: Container.language.observer.value,
-            menuOpen: Container.menuOpenState.value,
-            loadedPage: null,
-            shownPage: ''
-        };
-        this.adapter = Container.applicationActionAdapter;
-        this.moduleLoader = Container.moduleLoader;
-        Container.language.adapter.addListener(this.onLanguageLoaded.bind(this));
-        Container.moduleStateAdapter.addListener(this.onModuleLoaded.bind(this));
-        Container.menuOpenStateAdapter.onChange = this.onMenuChange.bind(this);
+export default class Application {
+    constructor(adapter, presenter) {
+        this.presenter = presenter;
+        this.adapter = adapter;
+        this.renderCallback = this.render.bind(this);
     }
-    componentDidMount() {
+    attachToLanguage(adapter) {
+        adapter.addListener(this.renderCallback);
     }
-    onLanguageLoaded(newValue) {
-        this.setState({ loadedLanguage: newValue });
+    attachToModuleState(adapter) {
+        adapter.addListener(this.renderCallback);
     }
-    onMenuChange(newValue) {
-        this.setState({ menuOpen: newValue });
+    attachToMenuOpenState(adapter) {
+        adapter.onChange = this.renderCallback;
     }
-    onModuleLoaded(newValue) {
-        this.setState({ loadedPage: newValue });
+    attachToContainerNode(containerNode) {
+        if (containerNode == null)
+            return;
+        this.view = new ApplicationView(containerNode, this.adapter);
     }
     render() {
-        const model = Container.applicationPresenter.present();
-        return React.createElement(ApplicationView, { model: model, adapter: this.adapter });
+        if (this.view == undefined)
+            return;
+        const model = this.presenter.present();
+        this.view.render(model);
     }
 }

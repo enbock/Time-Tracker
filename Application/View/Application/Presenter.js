@@ -9,7 +9,7 @@ export default class Presenter {
     }
     present() {
         const viewModel = new Model();
-        const translator = this.translator.value;
+        //const translator: Translator = this.translator.value;
         viewModel.topAppBar = this.topAppBarPresenter.present();
         viewModel.sideMenu = this.sideMenuPresenter.present();
         viewModel.page = this.pagePresenter.present();

@@ -14,13 +14,12 @@ export default class SideMenu extends React.Component {
     }
     render() {
         const model = this.props.model;
-        const adapter = this.props.adapter;
         this.drawer && (this.drawer.open = model.isOpen);
         const translation = model.translation;
         const isActive = model.isActive;
         const url = model.url;
-        const menuEntries = model.pageNames.map((name) => {
-            return React.createElement("a", { key: 'menuEntry:' + name, className: 'mdc-list-item' + (isActive[name] ? ' mdc-list-item--activated' : ''), href: url[name], "aria-selected": isActive[name] ? 'true' : 'false', "data-testid": name, onClick: (event) => this.onMenuClick(event, name) },
+        const menuEntries = model.pageNames.map((name, index) => {
+            return React.createElement("a", { key: 'menuEntry:' + name, className: 'mdc-list-item' + (isActive[name] ? ' mdc-list-item--activated' : ''), href: url[name], "aria-selected": isActive[name] ? 'true' : 'false', "data-testid": name, tabIndex: index, onClick: (event) => this.onMenuClick(event, name) },
                 React.createElement("i", { className: "material-icons mdc-list-item__graphic", "aria-hidden": "true" }, name),
                 React.createElement("span", { className: "mdc-list-item__text" }, translation[name]));
         });

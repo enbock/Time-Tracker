@@ -5,6 +5,7 @@ import RouterContainer from "../Router/Container.js";
 import DataStorage from "../Storage/DataStorage.js";
 import ThemeContainer from "../Theme/Container.js";
 import Action from "./Action.js";
+import Application from "./Application.js";
 import ModuleLoader from "./ModuleLoader.js";
 import ApplicationPresenter from "./View/Application/Presenter.js";
 import ThemePresenter from "./View/Application/ThemePresenter.js";
@@ -28,6 +29,7 @@ class Container {
         this.pagePresenter = new PagePresenter(this.moduleState);
         this.themePresenter = new ThemePresenter(this.theme.currentTheme);
         this.applicationPresenter = new ApplicationPresenter(this.language.activeTranslator, this.topAppBarPresenter, this.sideMenuPresenter, this.pagePresenter, this.themePresenter);
+        this.application = new Application(this.applicationActionAdapter, this.applicationPresenter);
         this.setupDefaults();
     }
     setupDefaults() {
@@ -47,6 +49,9 @@ class Container {
         RouterContainer.registry.registerPage(settingsPage);
         RouterContainer.adapter.addListener(this.applicationActionAdapter.onPageChanged);
         RouterContainer.router.initialize(homePage);
+        this.application.attachToLanguage(this.language.adapter);
+        this.application.attachToMenuOpenState(this.menuOpenStateAdapter);
+        this.application.attachToModuleState(this.moduleStateAdapter);
     }
 }
 export default new Container();

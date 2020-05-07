@@ -2,9 +2,12 @@
 
 DIR=$(pwd)
 
+rm -rf cd $DIR/build 2>/dev/null
 ./scripts/copyFiles.sh develop
+while sleep 1; do ./scripts/correctImports.sh; done &
+
 cd $DIR/build
-npx http-server &
+npx http-server > $DIR/build/http.log 2>&1 &
 cd $DIR
-while sleep 10; do ./scripts/correctImports.sh; done &
+
 npx tsc --build tsconfig.json -w

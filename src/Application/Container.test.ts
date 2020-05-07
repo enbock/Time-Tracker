@@ -2,12 +2,19 @@ import LanguageContainer from '../Language/Container';
 import Observer from '../Observer/Observer';
 import RouterContainer from '../Router/Container';
 import Action from './Action';
+import Application from './Application';
 import Container from './Container';
 import ModuleLoader from './ModuleLoader';
 import Presenter from './View/Application/Presenter';
 
 jest.mock('./ModuleLoader');
-jest.mock('../Language/Container', () => ({setupDefaults: jest.fn()}));
+jest.mock(
+  '../Language/Container',
+  () => ({
+    setupDefaults: jest.fn(),
+    adapter: {addListener: jest.fn()}
+  })
+);
 jest.mock(
   '../Router/Container',
   () => ({
@@ -21,15 +28,17 @@ jest.mock(
 
 describe('Application.Container', () => {
   it('Get shared objects', () => {
-    Container.menuOpenStateAdapter.onChange(false, true);
+    Container.menuOpenStateAdapter.onChange(true);
 
     expect(Container.language).toEqual(LanguageContainer);
     expect(Container.applicationPresenter).toBeInstanceOf(Presenter);
     expect(Container.applicationAction).toBeInstanceOf(Action);
     expect(Container.menuOpenState).toBeInstanceOf(Observer);
     expect(Container.moduleLoader).toBeInstanceOf(ModuleLoader);
-    expect(RouterContainer.registry.registerPage).toBeCalledTimes(2);
-    expect(RouterContainer.router.initialize).toBeCalled();
-    expect(RouterContainer.adapter.addListener).toBeCalledWith(Container.applicationActionAdapter.onPageChanged);
+    expect(Container.application).toBeInstanceOf(Application);
+    expect(RouterContainer.registry.registerPage).toHaveBeenCalledTimes(2);
+    expect(RouterContainer.router.initialize).toHaveBeenCalled();
+    expect(RouterContainer.adapter.addListener).toHaveBeenCalledWith(Container.applicationActionAdapter.onPageChanged);
+    expect(LanguageContainer.adapter.addListener).toHaveBeenCalled();
   });
 });

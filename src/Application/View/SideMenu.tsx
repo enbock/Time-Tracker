@@ -33,7 +33,6 @@ export default class SideMenu extends React.Component<IProperties, IState> {
 
   render(): React.ReactElement {
     const model: Model = this.props.model;
-    const adapter: IAdapter = this.props.adapter;
     this.drawer && (this.drawer.open = model.isOpen);
 
     const translation: IPages<string> | any = model.translation;
@@ -41,13 +40,14 @@ export default class SideMenu extends React.Component<IProperties, IState> {
     const url: IPages<string> | any = model.url;
 
     const menuEntries: React.ReactElement[] = model.pageNames.map(
-      (name: string): React.ReactElement => {
+      (name: string, index:number): React.ReactElement => {
         return <a
           key={'menuEntry:' + name}
           className={'mdc-list-item' + (isActive[name] ? ' mdc-list-item--activated' : '')}
           href={url[name]}
           aria-selected={isActive[name] ? 'true' : 'false'}
           data-testid={name}
+          tabIndex={index}
 
           onClick={(event: React.MouseEvent<HTMLAnchorElement>) => this.onMenuClick(event, name)}
         >

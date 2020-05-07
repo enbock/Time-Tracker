@@ -49,7 +49,7 @@ export class ServiceWorkerManager {
   }
 
   installCache(event: InstallEvent) {
-    this.worker.skipWaiting(); // Not content immediately active (even partially)
+    this.worker.skipWaiting(); // No wait, content immediately active (even partially)
     event.waitUntil(this.cacheFiles());
   }
 

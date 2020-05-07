@@ -1,5 +1,5 @@
-import {render, RenderResult} from '@testing-library/react';
 import React from 'react';
+import {act} from 'react-dom/test-utils';
 import Application, {IAdapter} from './Application';
 import Model from './Application/Model';
 import {IProperties as ISideMenuProperties} from './SideMenu';
@@ -7,32 +7,33 @@ import {IProperties as ITopBarProperties} from './TopBar';
 
 jest.mock('./TopBar', () => (props: ITopBarProperties) => {
   props.adapter.onGithubClick();
-  return <div data-testid="topAppBar">{props.model.title}</div>;
+  return <div>{props.model.title}</div>;
 });
 jest.mock('./SideMenu', () => (props: ISideMenuProperties) => {
-  return <div data-testid="sideMenu">menu</div>;
+  return <div>{props.model.pageNames.map((title: string) => <span key={title}>{title}</span>)}</div>;
 });
 
 describe('Application.View.Application', () => {
   it('Show', async () => {
 
     const model: Model = new Model();
-    model.topAppBar.title = 'test';
-    const onGithubClick = jest.fn();
+    model.topAppBar.title = 'testTitle';
+    model.sideMenu.pageNames.push('testHome');
     const adapter: IAdapter = {
       onMenu: jest.fn(),
-      onGithubClick: onGithubClick,
+      onGithubClick: jest.fn(),
       onMenuClick: jest.fn(),
       onClose: jest.fn()
     };
     adapter.toString = () => 'action-adapter';
+    const container: HTMLElement = document.createElement('div');
 
-    const instance: RenderResult = render(<Application model={model} adapter={adapter} />);
+    act(() => {
+      const instance: Application = new Application(container, adapter);
+      instance.render(model);
+    });
 
-    let element: HTMLElement = await instance.findByTestId('topAppBar');
-    expect(element.textContent).toBe('test');
-    element = await instance.findByTestId('sideMenu');
-    expect(element.textContent).toBe('menu');
-    expect(onGithubClick).toHaveBeenCalled();
+    expect(container.textContent).toContain('testTitle');
+    expect(container.textContent).toContain('testHome');
   });
 });

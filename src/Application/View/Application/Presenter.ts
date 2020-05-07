@@ -6,7 +6,11 @@ import TopBarPresenter from '../TopBar/Presenter';
 import Model from './Model';
 import ThemePresenter from './ThemePresenter';
 
-export default class Presenter {
+export interface IPresenter {
+  present(): Model;
+}
+
+export default class Presenter implements IPresenter {
   protected topAppBarPresenter: TopBarPresenter;
   protected themePresenter: ThemePresenter;
   protected translator: IObserver<Translator>;
@@ -27,9 +31,9 @@ export default class Presenter {
     this.pagePresenter = pagePresenter;
   }
 
-  present() {
+  present(): Model {
     const viewModel: Model = new Model();
-    const translator: Translator = this.translator.value;
+    //const translator: Translator = this.translator.value;
 
     viewModel.topAppBar = this.topAppBarPresenter.present();
     viewModel.sideMenu = this.sideMenuPresenter.present();

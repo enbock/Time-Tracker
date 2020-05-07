@@ -6,7 +6,7 @@ import RouterContainer from '../Router/Container';
 import DataStorage from '../Storage/DataStorage';
 import ThemeContainer from '../Theme/Container';
 import Action from './Action';
-import {IAdapter, IModulePageData} from './Application';
+import Application, {IAdapter, IModulePageData} from './Application';
 import ModuleLoader from './ModuleLoader';
 import ApplicationPresenter from './View/Application/Presenter';
 import ThemePresenter from './View/Application/ThemePresenter';
@@ -30,13 +30,14 @@ class Container {
   applicationActionAdapter: IAdapter;
   storage: DataStorage;
   themePresenter: ThemePresenter;
+  application: Application;
 
   constructor() {
     this.storage = new DataStorage('application', window.localStorage);
     this.language = LanguageContainer;
     this.theme = ThemeContainer;
 
-    this.menuOpenStateAdapter = {onChange: ((newValue) => {})};
+    this.menuOpenStateAdapter = {onChange: ((newValue:boolean) => {})};
     this.menuOpenState = new Observer<boolean>(
       this.storage.loadData<boolean>('menuOpenState', false),
       this.storage.attach<boolean>('menuOpenState', this.menuOpenStateAdapter)
@@ -71,6 +72,7 @@ class Container {
       this.themePresenter
     );
 
+    this.application = new Application(this.applicationActionAdapter, this.applicationPresenter);
     this.setupDefaults();
   }
 
@@ -91,6 +93,10 @@ class Container {
     RouterContainer.registry.registerPage(settingsPage);
     RouterContainer.adapter.addListener(this.applicationActionAdapter.onPageChanged);
     RouterContainer.router.initialize(homePage);
+
+    this.application.attachToLanguage(this.language.adapter);
+    this.application.attachToMenuOpenState(this.menuOpenStateAdapter);
+    this.application.attachToModuleState(this.moduleStateAdapter);
   }
 }
 

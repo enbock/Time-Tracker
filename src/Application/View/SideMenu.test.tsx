@@ -58,6 +58,7 @@ describe('Application.View.SideMenu', () => {
     expect(textContent).toContain('Settings menu');
     expect(textContent).toContain('settings'); //icon
     expect(htmlContent).toContain('class="mdc-list-item" href="./settings/"');
+    expect(htmlContent).toContain('tabindex="0"');
   });
 
   it('Opens menu', async () => {

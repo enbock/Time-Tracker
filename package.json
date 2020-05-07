@@ -39,7 +39,7 @@
     ],
     "collectCoverageFrom": [
       "src/**/*.{ts,tsx}",
-      "!src/index.tsx"
+      "!src/index.{ts,tsx}"
     ],
     "setupFilesAfterEnv": [
       "@testing-library/jest-dom/extend-expect"

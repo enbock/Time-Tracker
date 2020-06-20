@@ -1,44 +1,74 @@
-import Translator from '../../../Language/Translator';
 import {IObserver} from '../../../Observer/Observer';
+import {Theme} from '../../../Theme/ThemesRegistry';
 import PagePresenter from '../Page/Presenter';
 import SideMenuPresenter from '../SideMenu/Presenter';
 import TopBarPresenter from '../TopBar/Presenter';
 import Model from './Model';
-import ThemePresenter from './ThemePresenter';
+import {IStyleUrlFormatter} from './StyleUrlFormatter';
 
 export interface IPresenter {
   present(): Model;
 }
 
 export default class Presenter implements IPresenter {
-  protected topAppBarPresenter: TopBarPresenter;
-  protected themePresenter: ThemePresenter;
-  protected translator: IObserver<Translator>;
-  protected sideMenuPresenter: SideMenuPresenter;
-  protected pagePresenter: PagePresenter;
+  private topAppBarPresenter: TopBarPresenter;
+  private styleUrlFormatter: IStyleUrlFormatter;
+  private currentTheme: IObserver<Theme>;
+  private sideMenuPresenter: SideMenuPresenter;
+  private pagePresenter: PagePresenter;
+  baseStyles: string[];
+  lastThemeStyles: string[];
+  lastTheme: string;
 
   constructor(
-    translator: IObserver<Translator>,
+    currentTheme: IObserver<Theme>,
     topAppBarPresenter: TopBarPresenter,
     sideMenuPresenter: SideMenuPresenter,
     pagePresenter: PagePresenter,
-    themePresenter: ThemePresenter
+    styleUrlFormatter: IStyleUrlFormatter
   ) {
-    this.themePresenter = themePresenter;
-    this.translator = translator;
+    this.currentTheme = currentTheme;
+    this.styleUrlFormatter = styleUrlFormatter;
     this.topAppBarPresenter = topAppBarPresenter;
     this.sideMenuPresenter = sideMenuPresenter;
     this.pagePresenter = pagePresenter;
+
+    this.baseStyles = [];
+    this.lastThemeStyles = [];
+    this.lastTheme = '';
   }
 
   present(): Model {
     const viewModel: Model = new Model();
-    //const translator: Translator = this.translator.value;
 
     viewModel.topAppBar = this.topAppBarPresenter.present();
     viewModel.sideMenu = this.sideMenuPresenter.present();
     viewModel.page = this.pagePresenter.present();
-    viewModel.theme = this.themePresenter.present();
+
+    if (this.baseStyles.length == 0) {
+      this.baseStyles = [
+        'material-components-web.min',
+        'material-components-web.icons',
+        'Application'
+      ]
+        .map(
+          (url: string) => {
+            return this.styleUrlFormatter.format(url);
+          }
+        );
+    }
+
+    const theme: Theme = this.currentTheme.value;
+    if (this.lastTheme != theme.name) {
+      this.lastTheme = theme.name;
+      this.lastThemeStyles = [];
+      this.lastThemeStyles.push(!theme.isBuildIn ? theme.url : this.styleUrlFormatter.format(theme.url));
+      this.lastThemeStyles.push(this.styleUrlFormatter.format('Theme/ThemePatch'));
+    }
+
+    viewModel.styleSet = [...this.baseStyles, ...this.lastThemeStyles];
+
+
 
     return viewModel;
   }

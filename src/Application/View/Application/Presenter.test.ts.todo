@@ -1,5 +1,5 @@
-import Translator from '../../../Language/Translator';
 import {IObserver} from '../../../Observer/Observer';
+import {Theme} from '../../../Theme/ThemesRegistry';
 import Page from '../Page';
 import PageModel from '../Page/Model';
 import PagePresenter from '../Page/Presenter';
@@ -9,59 +9,52 @@ import TopBarModel from '../TopBar/Model';
 import TopBarPresenter from '../TopBar/Presenter';
 import Model from './Model';
 import Presenter from './Presenter';
-import ThemeModel from './ThemeModel';
-import ThemePresenter from './ThemePresenter';
+import {IStyleUrlFormatter} from './StyleUrlFormatter';
 
 describe('Application.Presenter.ApplicationPresenter', () => {
   let topBarPresenter: TopBarPresenter, topBarPresentSpy: jest.Mock;
   let sideMenuPresenter: SideMenuPresenter, sideMenuPresentSpy: jest.Mock;
   let pagePresenter: PagePresenter, pagePresentSpy: jest.Mock;
-  let themePresenter: ThemePresenter, themePresentSpy: jest.Mock;
-  let translatorObserver: IObserver<Translator>;
-  let translator: Translator;
+  let styleUrlFormatter: IStyleUrlFormatter, themePresentSpy: jest.Mock;
+  let themeObserver: IObserver<Theme>;
+  let theme: Theme;
 
   beforeEach(() => {
-    translator = {} as Translator;
-    translatorObserver = {value: translator} as IObserver<Translator>;
+    theme = {} as Theme;
+    themeObserver = {value: theme} as IObserver<Theme>;
     topBarPresenter = {} as TopBarPresenter;
-    themePresenter = {} as ThemePresenter;
+    styleUrlFormatter = {format: jest.fn()};
     sideMenuPresenter = {} as SideMenuPresenter;
     pagePresenter = {} as PagePresenter;
 
     topBarPresentSpy = topBarPresenter.present = jest.fn();
     sideMenuPresentSpy = sideMenuPresenter.present = jest.fn();
     pagePresentSpy = pagePresenter.present = jest.fn();
-    themePresentSpy = themePresenter.present = jest.fn();
   });
 
   it('Present application data', () => {
     const presenter: Presenter = new Presenter(
-      translatorObserver,
+      themeObserver,
       topBarPresenter,
       sideMenuPresenter,
       pagePresenter,
-      themePresenter
+      styleUrlFormatter
     );
-    const translateSpy: jest.Mock = translator.translate = jest.fn();
     const topBarModel: TopBarModel = new TopBarModel();
     topBarModel.title = 'top title';
     const sideMenuModel: SideMenuModel = new SideMenuModel();
     sideMenuModel.isOpen = true;
     const pageModel: PageModel = new PageModel();
     pageModel.module = Page;
-    const themeModel: ThemeModel = new ThemeModel();
-    themeModel.source = 'theme';
 
     topBarPresentSpy.mockReturnValueOnce(topBarModel);
     sideMenuPresentSpy.mockReturnValueOnce(sideMenuModel);
     pagePresentSpy.mockReturnValueOnce(pageModel);
-    themePresentSpy.mockReturnValueOnce(themeModel);
 
     const expectedModel: Model = new Model();
     expectedModel.topAppBar = topBarModel;
     expectedModel.sideMenu = sideMenuModel;
     expectedModel.page = pageModel;
-    expectedModel.theme = themeModel;
 
     const result = presenter.present();
     expect(result).toEqual(expectedModel);

@@ -6,10 +6,10 @@ import RouterContainer from '../Router/Container';
 import DataStorage from '../Storage/DataStorage';
 import ThemeContainer from '../Theme/Container';
 import Action from './Action';
-import Application, {IAdapter, IModulePageData} from './Application';
+import Application, {IAdapter} from './Application';
 import ModuleLoader from './ModuleLoader';
 import ApplicationPresenter from './View/Application/Presenter';
-import ThemePresenter from './View/Application/ThemePresenter';
+import StyleUrlFormatter from './View/Application/StyleUrlFormatter';
 import PagePresenter from './View/Page/Presenter';
 import SideMenuPresenter from './View/SideMenu/Presenter';
 import TopBarPresenter from './View/TopBar/Presenter';
@@ -29,7 +29,7 @@ class Container {
   pagePresenter: PagePresenter;
   applicationActionAdapter: IAdapter;
   storage: DataStorage;
-  themePresenter: ThemePresenter;
+  styleUrlFormatter: StyleUrlFormatter;
   application: Application;
 
   constructor() {
@@ -63,13 +63,13 @@ class Container {
       RouterContainer.registry
     );
     this.pagePresenter = new PagePresenter(this.moduleState);
-    this.themePresenter = new ThemePresenter(this.theme.currentTheme);
+    this.styleUrlFormatter = new StyleUrlFormatter(RouterContainer.observer);
     this.applicationPresenter = new ApplicationPresenter(
-      this.language.activeTranslator,
+      this.theme.currentTheme,
       this.topAppBarPresenter,
       this.sideMenuPresenter,
       this.pagePresenter,
-      this.themePresenter
+      this.styleUrlFormatter
     );
 
     this.application = new Application(this.applicationActionAdapter, this.applicationPresenter);
@@ -77,22 +77,8 @@ class Container {
   }
 
   protected setupDefaults(): void {
-    const homePage: IModulePageData = {
-      depth: 0,
-      name: 'home',
-      url: './',
-      module: './HelloWorld'
-    };
-    const settingsPage: IModulePageData = {
-      depth: 1,
-      name: 'settings',
-      url: './settings/',
-      module: './Settings/Settings'
-    };
-    RouterContainer.registry.registerPage(homePage);
-    RouterContainer.registry.registerPage(settingsPage);
     RouterContainer.adapter.addListener(this.applicationActionAdapter.onPageChanged);
-    RouterContainer.router.initialize(homePage);
+    this.applicationActionAdapter.onPageChanged(RouterContainer.observer.value)
 
     this.application.attachToLanguage(this.language.adapter);
     this.application.attachToMenuOpenState(this.menuOpenStateAdapter);

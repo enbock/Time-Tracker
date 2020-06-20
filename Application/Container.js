@@ -8,7 +8,7 @@ import Action from "./Action.js";
 import Application from "./Application.js";
 import ModuleLoader from "./ModuleLoader.js";
 import ApplicationPresenter from "./View/Application/Presenter.js";
-import ThemePresenter from "./View/Application/ThemePresenter.js";
+import StyleUrlFormatter from "./View/Application/StyleUrlFormatter.js";
 import PagePresenter from "./View/Page/Presenter.js";
 import SideMenuPresenter from "./View/SideMenu/Presenter.js";
 import TopBarPresenter from "./View/TopBar/Presenter.js";
@@ -27,28 +27,14 @@ class Container {
         this.topAppBarPresenter = new TopBarPresenter(this.language.activeTranslator);
         this.sideMenuPresenter = new SideMenuPresenter(this.menuOpenState, this.language.activeTranslator, RouterContainer.observer, RouterContainer.registry);
         this.pagePresenter = new PagePresenter(this.moduleState);
-        this.themePresenter = new ThemePresenter(this.theme.currentTheme);
-        this.applicationPresenter = new ApplicationPresenter(this.language.activeTranslator, this.topAppBarPresenter, this.sideMenuPresenter, this.pagePresenter, this.themePresenter);
+        this.styleUrlFormatter = new StyleUrlFormatter(RouterContainer.observer);
+        this.applicationPresenter = new ApplicationPresenter(this.theme.currentTheme, this.topAppBarPresenter, this.sideMenuPresenter, this.pagePresenter, this.styleUrlFormatter);
         this.application = new Application(this.applicationActionAdapter, this.applicationPresenter);
         this.setupDefaults();
     }
     setupDefaults() {
-        const homePage = {
-            depth: 0,
-            name: 'home',
-            url: './',
-            module: './HelloWorld'
-        };
-        const settingsPage = {
-            depth: 1,
-            name: 'settings',
-            url: './settings/',
-            module: './Settings/Settings'
-        };
-        RouterContainer.registry.registerPage(homePage);
-        RouterContainer.registry.registerPage(settingsPage);
         RouterContainer.adapter.addListener(this.applicationActionAdapter.onPageChanged);
-        RouterContainer.router.initialize(homePage);
+        this.applicationActionAdapter.onPageChanged(RouterContainer.observer.value);
         this.application.attachToLanguage(this.language.adapter);
         this.application.attachToMenuOpenState(this.menuOpenStateAdapter);
         this.application.attachToModuleState(this.moduleStateAdapter);

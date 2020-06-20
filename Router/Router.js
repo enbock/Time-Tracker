@@ -6,7 +6,8 @@ export default class Router {
     attachTo(window) {
         window.addEventListener('popstate', this.onHistoryChange.bind(this));
     }
-    initialize(firstPage) {
+    initialize() {
+        const firstPage = this.currentPage.value;
         this.history.replaceState(firstPage, firstPage.name, firstPage.url);
         this.updatePage(firstPage);
     }
@@ -15,7 +16,7 @@ export default class Router {
         if (currentPage.name == newPage.name) {
             return;
         }
-        this.history.pushState(newPage, newPage.name, newPage.url);
+        this.history.replaceState(newPage, newPage.name, newPage.url);
         this.updatePage(newPage);
     }
     updatePage(page) {

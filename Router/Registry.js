@@ -1,9 +1,10 @@
 export default class Registry {
-    constructor(observer, adapter) {
+    constructor(observer) {
         this.observer = observer;
-        this.adapter = adapter;
         this.dictionary = {};
-        this.adapter.addListener(this.updatePageData.bind(this));
+    }
+    attachAdapter(adapter) {
+        adapter.addListener(this.updatePageData.bind(this));
     }
     getPages() {
         const pages = {};
@@ -19,7 +20,9 @@ export default class Registry {
             page: page,
             sourceUrl: page.url
         };
-        this.updatePageUrlByDepth(registeredPage, this.observer.value.depth, false);
+        if (this.observer.value != null) {
+            this.updatePageUrlByDepth(registeredPage, this.observer.value.depth, false);
+        }
         this.dictionary[page.name] = registeredPage;
     }
     updatePageData(newValue) {

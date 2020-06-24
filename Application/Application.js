@@ -3,7 +3,7 @@ export default class Application {
     constructor(adapter, presenter) {
         this.presenter = presenter;
         this.adapter = adapter;
-        this.renderCallback = this.render.bind(this);
+        this.renderCallback = this.run.bind(this);
     }
     attachToLanguage(adapter) {
         adapter.addListener(this.renderCallback);
@@ -19,7 +19,7 @@ export default class Application {
             return;
         this.view = new ApplicationView(containerNode, this.adapter);
     }
-    render() {
+    run() {
         if (this.view == undefined)
             return;
         const model = this.presenter.present();

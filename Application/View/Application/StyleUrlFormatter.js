@@ -5,7 +5,7 @@ export default class StyleUrlFormatter {
     format(url) {
         const currentPage = this.currentPage.value;
         let pathOffset = './';
-        if (currentPage.depth > 0) {
+        if (currentPage != null && currentPage.depth > 0) {
             let index;
             pathOffset = '';
             for (index = 0; index < currentPage.depth; index++) {

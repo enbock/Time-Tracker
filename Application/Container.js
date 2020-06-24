@@ -17,12 +17,12 @@ class Container {
         this.storage = new DataStorage('application', window.localStorage);
         this.language = LanguageContainer;
         this.theme = ThemeContainer;
-        this.menuOpenStateAdapter = { onChange: ((newValue) => { }) };
+        this.menuOpenStateAdapter = { onChange: (newValue) => { } };
         this.menuOpenState = new Observer(this.storage.loadData('menuOpenState', false), this.storage.attach('menuOpenState', this.menuOpenStateAdapter));
         this.moduleStateAdapter = new ListenerAdapter();
         this.moduleState = new Observer(null, this.moduleStateAdapter);
         this.moduleLoader = new ModuleLoader('../', this.moduleState);
-        this.applicationAction = new Action(this.menuOpenState, RouterContainer.router, RouterContainer.registry, this.moduleLoader);
+        this.applicationAction = new Action(this.menuOpenState, RouterContainer.observer, RouterContainer.router, RouterContainer.registry, RouterContainer.adapter, this.moduleLoader);
         this.applicationActionAdapter = this.applicationAction.adapter;
         this.topAppBarPresenter = new TopBarPresenter(this.language.activeTranslator);
         this.sideMenuPresenter = new SideMenuPresenter(this.menuOpenState, this.language.activeTranslator, RouterContainer.observer, RouterContainer.registry);
@@ -30,14 +30,15 @@ class Container {
         this.styleUrlFormatter = new StyleUrlFormatter(RouterContainer.observer);
         this.applicationPresenter = new ApplicationPresenter(this.theme.currentTheme, this.topAppBarPresenter, this.sideMenuPresenter, this.pagePresenter, this.styleUrlFormatter);
         this.application = new Application(this.applicationActionAdapter, this.applicationPresenter);
-        this.setupDefaults();
-    }
-    setupDefaults() {
         RouterContainer.adapter.addListener(this.applicationActionAdapter.onPageChanged);
-        this.applicationActionAdapter.onPageChanged(RouterContainer.observer.value);
         this.application.attachToLanguage(this.language.adapter);
         this.application.attachToMenuOpenState(this.menuOpenStateAdapter);
         this.application.attachToModuleState(this.moduleStateAdapter);
+        //Debug - SideAccess
+        // @ts-ignore
+        window.ApplicationContainer = this;
+        // @ts-ignore
+        window.RouterContainer = RouterContainer;
     }
 }
 export default new Container();

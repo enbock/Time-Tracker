@@ -15,7 +15,7 @@ export default class Presenter {
             settings: translator.translate('Application.SideMenu.Settings')
         };
         const pages = this.pageRegistry.getPages();
-        const activePage = this.routerObserver.value.name;
+        const activePage = this.routerObserver.value?.name || '';
         model.pageNames = Object.keys(pages);
         model.pageNames.forEach((name) => {
             const page = pages[name];

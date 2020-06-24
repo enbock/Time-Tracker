@@ -1,6 +1,8 @@
 export default class Action {
-    constructor(menuOpenState, router, routerRegistry, moduleLoader) {
+    constructor(menuOpenState, currentPage, router, routerRegistry, routerAdapter, moduleLoader) {
+        this.routerAdapter = routerAdapter;
         this.menuOpenState = menuOpenState;
+        this.currentPage = currentPage;
         this.router = router;
         this.routerRegistry = routerRegistry;
         this.moduleLoader = moduleLoader;
@@ -13,6 +15,30 @@ export default class Action {
             onClose: this.closeMenu.bind(this),
             onMenu: this.switchPage.bind(this)
         };
+    }
+    loadPageConfig() {
+        const homePage = {
+            depth: 0,
+            name: 'home',
+            rootUrl: './',
+            url: './',
+            module: './HelloWorld'
+        };
+        const settingsPage = {
+            depth: 1,
+            name: 'settings',
+            rootUrl: './settings/',
+            url: './settings/',
+            module: './Settings/Settings'
+        };
+        this.routerRegistry.registerPage(homePage);
+        this.routerRegistry.registerPage(settingsPage);
+        if (this.currentPage.value == null) {
+            this.router.changePage(homePage);
+        }
+        else {
+            this.routerAdapter.onChange(this.currentPage.value);
+        }
     }
     openGithubWindow() {
         window.open('https://github.com/enbock/Time-Tracker/', '_blank');

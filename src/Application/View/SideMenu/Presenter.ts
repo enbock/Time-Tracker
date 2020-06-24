@@ -6,14 +6,14 @@ import Model from './Model';
 
 export default class Presenter {
   menuOpenState: IObserver<boolean>;
-  routerObserver: IObserver<IPageData>;
+  routerObserver: IObserver<IPageData | null>;
   pageRegistry: PageRegistry;
   translator: IObserver<Translator>;
 
   constructor(
     menuOpenState: IObserver<boolean>,
     translator: IObserver<Translator>,
-    routerObserver: IObserver<IPageData>,
+    routerObserver: IObserver<IPageData | null>,
     pageRegistry: PageRegistry
   ) {
     this.translator = translator;
@@ -33,7 +33,7 @@ export default class Presenter {
     };
 
     const pages: IPageDictionary<IPageData> = this.pageRegistry.getPages();
-    const activePage = this.routerObserver.value.name;
+    const activePage: string = this.routerObserver.value?.name || '';
     model.pageNames = Object.keys(pages);
 
     model.pageNames.forEach(

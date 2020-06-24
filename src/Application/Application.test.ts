@@ -56,12 +56,12 @@ describe('Application', () => {
   });
 
   it('Can render', () => {
-    application.render();
+    application.run();
     expect(presentSpy).not.toHaveBeenCalled();
     expect(renderSpy).not.toHaveBeenCalled();
 
     application.attachToContainerNode(document.body);
-    application.render();
+    application.run();
     expect(presentSpy).toHaveBeenCalled();
     expect(renderSpy).toBeCalledWith(model);
   });
@@ -97,6 +97,13 @@ describe('Application', () => {
     menuOpenStateListener.onChange(true);
     expect(presentSpy).toHaveBeenCalled();
     expect(renderSpy).toBeCalledWith(model);
+  });
+
+  it('Does not render without container', () => {
+    application.attachToContainerNode(null);
+    menuOpenStateListener.onChange(true);
+    expect(presentSpy).not.toHaveBeenCalled();
+    expect(renderSpy).not.toBeCalledWith(model);
   });
 })
 ;

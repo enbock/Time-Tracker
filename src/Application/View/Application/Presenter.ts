@@ -59,6 +59,7 @@ export default class Presenter implements IPresenter {
     }
 
     const theme: Theme = this.currentTheme.value;
+
     if (this.lastTheme != theme.name) {
       this.lastTheme = theme.name;
       this.lastThemeStyles = [];
@@ -67,8 +68,6 @@ export default class Presenter implements IPresenter {
     }
 
     viewModel.styleSet = [...this.baseStyles, ...this.lastThemeStyles];
-
-
 
     return viewModel;
   }

@@ -4,7 +4,7 @@ import {IObserverAdapter} from '../Observer/Observer';
 import {IPageData} from '../Router/Router';
 import ApplicationView, {IAdapter as IViewAdapter} from './View/Application';
 import Model from './View/Application/Model';
-import {IPresenter as IApplicationPresenter}  from './View/Application/Presenter';
+import {IPresenter as IApplicationPresenter} from './View/Application/Presenter';
 
 export interface IModulePageData extends IPageData {
   module: string
@@ -23,7 +23,7 @@ export default class Application {
   constructor(adapter: IAdapter, presenter:IApplicationPresenter) {
     this.presenter = presenter;
     this.adapter = adapter;
-    this.renderCallback = this.render.bind(this);
+    this.renderCallback = this.run.bind(this);
   }
 
   attachToLanguage(adapter:ListenerAdapter<string>) {
@@ -43,7 +43,7 @@ export default class Application {
     this.view = new ApplicationView(containerNode, this.adapter);
   }
 
-  render() {
+  run() {
     if (this.view == undefined) return;
 
     const model: Model = this.presenter.present();

@@ -6,19 +6,19 @@ export interface IStyleUrlFormatter {
 }
 
 export default class StyleUrlFormatter {
-  protected currentPage: IObserver<IPageData>;
+  protected currentPage: IObserver<IPageData | null>;
 
-  constructor(currentPage: IObserver<IPageData>) {
+  constructor(currentPage: IObserver<IPageData | null>) {
     this.currentPage = currentPage;
   }
 
   format(url: string): string {
-    const currentPage: IPageData = this.currentPage.value;
+    const currentPage: IPageData | null = this.currentPage.value;
     let pathOffset = './';
-    if(currentPage.depth > 0) {
-      let index:number;
+    if (currentPage != null && currentPage.depth > 0) {
+      let index: number;
       pathOffset = '';
-      for(index = 0; index < currentPage.depth; index++) {
+      for (index = 0; index < currentPage.depth; index++) {
         pathOffset += '../';
       }
     }

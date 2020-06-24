@@ -37,7 +37,7 @@ class Container {
     this.language = LanguageContainer;
     this.theme = ThemeContainer;
 
-    this.menuOpenStateAdapter = {onChange: ((newValue:boolean) => {})};
+    this.menuOpenStateAdapter = {onChange: (newValue: boolean) => {}};
     this.menuOpenState = new Observer<boolean>(
       this.storage.loadData<boolean>('menuOpenState', false),
       this.storage.attach<boolean>('menuOpenState', this.menuOpenStateAdapter)
@@ -49,8 +49,10 @@ class Container {
 
     this.applicationAction = new Action(
       this.menuOpenState,
+      RouterContainer.observer,
       RouterContainer.router,
       RouterContainer.registry,
+      RouterContainer.adapter,
       this.moduleLoader
     );
     this.applicationActionAdapter = this.applicationAction.adapter;
@@ -73,16 +75,17 @@ class Container {
     );
 
     this.application = new Application(this.applicationActionAdapter, this.applicationPresenter);
-    this.setupDefaults();
-  }
 
-  protected setupDefaults(): void {
     RouterContainer.adapter.addListener(this.applicationActionAdapter.onPageChanged);
-    this.applicationActionAdapter.onPageChanged(RouterContainer.observer.value)
-
     this.application.attachToLanguage(this.language.adapter);
     this.application.attachToMenuOpenState(this.menuOpenStateAdapter);
     this.application.attachToModuleState(this.moduleStateAdapter);
+
+    //Debug - SideAccess
+    // @ts-ignore
+    window.ApplicationContainer = this;
+    // @ts-ignore
+    window.RouterContainer = RouterContainer;
   }
 }
 

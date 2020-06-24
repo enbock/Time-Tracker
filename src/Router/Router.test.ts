@@ -2,7 +2,7 @@ import {IObserver} from '../Observer/Observer';
 import Router, {IPageData} from './Router';
 
 describe('Router', () => {
-  let window: Window, history: History, pageObserver: IObserver<IPageData>;
+  let window: Window, history: History, pageObserver: IObserver<IPageData | null>;
 
   beforeEach(() => {
     // @ts-ignore
@@ -17,6 +17,7 @@ describe('Router', () => {
       value: {
         depth: 1,
         name: 'hello',
+        rootUrl: './hello/page.html',
         url: './hello/page.html'
       },
       adapter: {onChange: jest.fn()}
@@ -47,6 +48,7 @@ describe('Router', () => {
     const oldPage: IPageData = {
       depth: 1,
       name: 'before',
+      rootUrl: './before/page.html',
       url: './before/page.html'
     };
     const event: PopStateEvent = new PopStateEvent('popstate', {state: oldPage});
@@ -59,12 +61,27 @@ describe('Router', () => {
     const firstPage: IPageData = {
       depth: 0,
       name: 'first',
-      url: './new/page.html'
+      rootUrl: './new/page.html',
+      url: '../new/page.html'
     };
+    pageObserver.value = firstPage;
 
-    router.initialize(firstPage);
-    expect(pageObserver.value).toBe(firstPage);
+    router.initialize();
     expect(history.replaceState).toBeCalledWith(firstPage, 'first', './new/page.html');
+  });
+
+  it('Initialize without pages', () => {
+    const router: Router = new Router(pageObserver, history);
+    const firstPage: IPageData = {
+      depth: 0,
+      name: 'first',
+      rootUrl: './new/page.html',
+      url: '../new/page.html'
+    };
+    pageObserver.value = null;
+
+    router.initialize();
+    expect(history.replaceState).not.toBeCalled();
   });
 
   it('Change to a new page', () => {
@@ -72,16 +89,17 @@ describe('Router', () => {
     const newPage: IPageData = {
       depth: 1,
       name: 'new',
+      rootUrl: './new/page.html',
       url: './new/page.html'
     };
 
     router.changePage(newPage);
     expect(pageObserver.value).toBe(newPage);
-    expect(history.pushState).toBeCalledWith(newPage, 'new', './new/page.html');
-    expect(history.pushState).toBeCalledTimes(1);
+    expect(history.replaceState).toBeCalledWith(newPage, 'new', './new/page.html');
+    expect(history.replaceState).toBeCalledTimes(1);
 
     router.changePage(newPage);
-    expect(history.pushState).toBeCalledTimes(1);
+    expect(history.replaceState).toBeCalledTimes(1);
   });
 
 });

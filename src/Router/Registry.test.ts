@@ -4,7 +4,7 @@ import Registry from './Registry';
 import {IPageData} from './Router';
 
 describe('Router.Registry', () => {
-  let observer: IObserver<IPageData>, adapter: ListenerAdapter<IPageData>;
+  let observer: IObserver<IPageData | null>, adapter: ListenerAdapter<IPageData>;
 
   beforeEach(() => {
     adapter = new ListenerAdapter<IPageData>();
@@ -13,6 +13,7 @@ describe('Router.Registry', () => {
       value: {
         depth: 1,
         name: 'hello',
+        rootUrl: './hello/page.html',
         url: './hello/page.html'
       },
       adapter: adapter
@@ -23,19 +24,40 @@ describe('Router.Registry', () => {
     const page: IPageData = {
       depth: 1,
       name: 'page',
+      rootUrl: './page/',
       url: './page/'
     };
 
     observer.value = {
       depth: 3,
       name: 'old',
+      rootUrl: './this/is/old/',
       url: './this/is/old/'
     };
 
-    const registry: Registry = new Registry(observer, adapter);
+    const registry: Registry = new Registry(observer);
     registry.registerPage(page);
 
+    expect(page.rootUrl).toBe('./page/');
     expect(page.url).toBe('../../../page/');
+    expect(registry.getPages()).toEqual({'page': page});
+  });
+
+  it('Change url of page at register without current page', () => {
+    const page: IPageData = {
+      depth: 1,
+      name: 'page',
+      rootUrl: './page/',
+      url: './page/'
+    };
+
+    observer.value = null;
+
+    const registry: Registry = new Registry(observer);
+    registry.registerPage(page);
+
+    expect(page.rootUrl).toBe('./page/');
+    expect(page.url).toBe('./page/');
     expect(registry.getPages()).toEqual({'page': page});
   });
 
@@ -47,21 +69,25 @@ describe('Router.Registry', () => {
     const page: IPageData = {
       depth: 1,
       name: 'page',
+      rootUrl: './page/',
       url: './page/'
     };
     const newPage: IPageData = {
       depth: 1,
       name: 'newPage',
+      rootUrl: './new/page.html',
       url: './new/page.html'
     };
 
     observer.value = {
       depth: 3,
       name: 'old',
+      rootUrl: './this/is/old/',
       url: './this/is/old/'
     };
 
-    const registry: Registry = new Registry(observer, adapter);
+    const registry: Registry = new Registry(observer);
+    registry.attachAdapter(adapter);
     registry.registerPage(page);
     registry.registerPage(newPage);
 
@@ -74,6 +100,7 @@ describe('Router.Registry', () => {
 
     callback(page);
     expect(page.url).toBe('./');
+    expect(newPage.rootUrl).toBe('./new/page.html');
     expect(newPage.url).toBe('../new/page.html');
 
   });

@@ -26,8 +26,8 @@
   },
   "scripts": {
     "winDevServer": "powershell.exe -Command bash ./scripts/copyFiles.sh develop; cd build; npx http-server",
-    "startCompiler": "npx tsc --build tsconfig.json -w",
-    "watchCompiledScripts": "bash -c 'while sleep 10; do bash ./scripts/correctImports.sh; done'",
+    "startCompiler": "powershell.exe -Command npx tsc --build tsconfig.json -w",
+    "watchCompiledScripts": "powershell.exe -Command bash -c 'while sleep 3; do bash ./scripts/correctImports.sh; done'",
     "start": "sh scripts/start.sh",
     "test": "jest --coverage --verbose",
     "build": "sh scripts/build.sh",
@@ -60,7 +60,7 @@
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 70
+        "branches": 95
       }
     }
   }

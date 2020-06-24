@@ -16,4 +16,6 @@ done
 if test "$(cat /tmp/changed)" = "1" || grep "version = 'VERSION'" ./build/ServiceWorkerManager.js > /dev/null 2>/dev/null; then
   chmod +x ./scripts/indexFilesForServiceWorker.sh
   ./scripts/indexFilesForServiceWorker.sh
+else
+  echo "`date`: Nothing to update."
 fi

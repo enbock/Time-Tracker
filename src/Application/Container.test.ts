@@ -36,8 +36,6 @@ describe('Application.Container', () => {
     expect(Container.menuOpenState).toBeInstanceOf(Observer);
     expect(Container.moduleLoader).toBeInstanceOf(ModuleLoader);
     expect(Container.application).toBeInstanceOf(Application);
-    expect(RouterContainer.registry.registerPage).toHaveBeenCalledTimes(2);
-    expect(RouterContainer.router.initialize).toHaveBeenCalled();
     expect(RouterContainer.adapter.addListener).toHaveBeenCalledWith(Container.applicationActionAdapter.onPageChanged);
     expect(LanguageContainer.adapter.addListener).toHaveBeenCalled();
   });

@@ -2,15 +2,16 @@ import {IObserver} from '../Observer/Observer';
 
 export interface IPageData {
   name: string,
+  rootUrl: string
   url: string,
   depth: number
 }
 
 export default class Router {
-  currentPage: IObserver<IPageData>;
+  currentPage: IObserver<IPageData | null>;
   history: History;
 
-  constructor(pageObserver: IObserver<IPageData>, history: History) {
+  constructor(pageObserver: IObserver<IPageData | null>, history: History) {
     this.currentPage = pageObserver;
     this.history = history;
   }
@@ -20,19 +21,19 @@ export default class Router {
   }
 
   initialize(): void {
+    if (this.currentPage.value == null) return;
     const firstPage: IPageData = this.currentPage.value;
-    this.history.replaceState(firstPage, firstPage.name, firstPage.url);
+    this.history.replaceState(firstPage, firstPage.name, firstPage.rootUrl);
     this.updatePage(firstPage);
   }
 
   changePage(newPage: IPageData): void {
-    const currentPage = this.currentPage.value;
-    if (currentPage.name == newPage.name) {
+    const currentPage: IPageData | null = this.currentPage.value;
+    if (currentPage != null && currentPage.name == newPage.name) {
       return;
     }
 
     this.history.replaceState(newPage, newPage.name, newPage.url);
-
     this.updatePage(newPage);
   }
 
@@ -40,7 +41,7 @@ export default class Router {
     this.currentPage.value = page;
   }
 
-  onHistoryChange(event: PopStateEvent) {
+  onHistoryChange(event: PopStateEvent): void {
     const newPage: IPageData = event.state as IPageData;
     this.updatePage(newPage);
   }

@@ -13,15 +13,15 @@ export interface IPageDictionary<T> {
 
 export default class Registry {
   dictionary: IPageDictionary<IRegistryPageData>;
-  adapter: ListenerAdapter<IPageData>;
-  observer: IObserver<IPageData>;
+  observer: IObserver<IPageData | null>;
 
-  constructor(observer: IObserver<IPageData>, adapter: ListenerAdapter<IPageData>) {
+  constructor(observer: IObserver<IPageData | null>) {
     this.observer = observer;
-    this.adapter = adapter;
     this.dictionary = {};
+  }
 
-    this.adapter.addListener(this.updatePageData.bind(this));
+  attachAdapter(adapter: ListenerAdapter<IPageData>): void {
+    adapter.addListener(this.updatePageData.bind(this));
   }
 
   getPages(): IPageDictionary<IPageData> {
@@ -42,7 +42,9 @@ export default class Registry {
       sourceUrl: page.url
     };
 
-    this.updatePageUrlByDepth(registeredPage, this.observer.value.depth, false);
+    if (this.observer.value != null) {
+      this.updatePageUrlByDepth(registeredPage, this.observer.value.depth, false);
+    }
     this.dictionary[page.name] = registeredPage;
   }
 

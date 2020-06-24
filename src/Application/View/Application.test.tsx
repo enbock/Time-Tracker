@@ -19,6 +19,7 @@ describe('Application.View.Application', () => {
     const model: Model = new Model();
     model.topAppBar.title = 'testTitle';
     model.sideMenu.pageNames.push('testHome');
+    model.styleSet = ['./theme/style.css'];
     const adapter: IAdapter = {
       onMenu: jest.fn(),
       onGithubClick: jest.fn(),
@@ -35,5 +36,6 @@ describe('Application.View.Application', () => {
 
     expect(container.textContent).toContain('testTitle');
     expect(container.textContent).toContain('testHome');
+    expect(container.innerHTML).toContain('./theme/style.css');
   });
 });

@@ -13,6 +13,7 @@ export default class Presenter {
     const model: Model = new Model();
     const translator: Translator = this.translator.value;
     model.title = translator.translate('Application.TopBar.Title');
+    model.sourceButtonLabel = translator.translate('Application.TopBar.Github');
 
     return model;
   }

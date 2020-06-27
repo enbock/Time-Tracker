@@ -42,6 +42,7 @@ export default class TopBar extends React.Component<IProperties, IState> {
           <button
             className="mdc-top-app-bar__action-item mdc-icon-button mdc-icon-button"
             onClick={this.props.adapter.onGithubClick}
+            title={model.sourceButtonLabel}
             {...{'data-testid': 'github-button'}}
           >
             <svg

@@ -151,9 +151,6 @@
         <option name="TAB_SIZE" value="2" />
       </indentOptions>
     </codeStyleSettings>
-    <codeStyleSettings language="Markdown">
-      <option name="WRAP_ON_TYPING" value="1" />
-    </codeStyleSettings>
     <codeStyleSettings language="Twig">
       <indentOptions>
         <option name="CONTINUATION_INDENT_SIZE" value="2" />

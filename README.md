@@ -1,6 +1,6 @@
 # Time Tracker
 
-[![CircleCI](https://circleci.com/gh/enbock/Time-Tracker.svg?style=shield)](https://circleci.com/gh/enbock/Time-Tracker)
+[![Testing](https://github.com/enbock/Time-Tracker/workflows/Testing/badge.svg)](https://github.com/enbock/Time-Tracker/actions)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/enbock/Time-Tracker/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/enbock/Time-Tracker/?branch=develop)
 [![Code Coverage](https://scrutinizer-ci.com/g/enbock/Time-Tracker/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/enbock/Time-Tracker/?branch=develop)
 [![Build Status](https://scrutinizer-ci.com/g/enbock/Time-Tracker/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/enbock/Time-Tracker/build-status/develop)

@@ -4,7 +4,7 @@
   "homepage": "https://enbock.github.io/Time-Tracker/",
   "description": "Experimental Project: Tracking start and end of working time.",
   "dependencies": {
-    "material-components-web": "^6.0.0",
+    "material-components-web": "^7.0.0",
     "material-design-icons": "latest",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"

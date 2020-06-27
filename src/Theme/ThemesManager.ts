@@ -1,4 +1,4 @@
-import {IObserver} from '../Observer/Observer';
+import {IObserver} from '@enbock/state-value-observer/Observer';
 import ThemesRegistry, {Theme} from './ThemesRegistry';
 
 export default class ThemesManager {

@@ -1,4 +1,4 @@
-import {IObserver, IObserverAdapter} from '../../Observer/Observer';
+import {IObserver, IObserverAdapter} from '@enbock/state-value-observer/Observer';
 import Manager from '../Manager';
 import Translator from '../Translator';
 

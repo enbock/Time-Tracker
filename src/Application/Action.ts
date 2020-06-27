@@ -1,6 +1,6 @@
-import {IObserver, IObserverAdapter} from '../Observer/Observer';
-import RouterRegistry from '../Router/Registry';
-import Router, {IPageData} from '../Router/Router';
+import RouterRegistry from '@enbock/application-router/Registry';
+import Router, {IPageData} from '@enbock/application-router/Router';
+import {IObserver, IObserverAdapter} from '@enbock/state-value-observer/Observer';
 import {IAdapter, IModulePageData} from './Application';
 import ModuleLoader from './ModuleLoader';
 
@@ -40,17 +40,15 @@ export default class Action {
 
   public loadPageConfig() {
     const homePage: IModulePageData = {
-      depth: 0,
       name: 'home',
-      rootUrl: './',
-      url: './',
+      baseUrl: './',
+      currentUrl: './',
       module: './HelloWorld'
     };
     const settingsPage: IModulePageData = {
-      depth: 1,
       name: 'settings',
-      rootUrl: './settings/',
-      url: './settings/',
+      baseUrl: './settings/',
+      currentUrl: './settings/',
       module: './Settings/Settings'
     };
     this.routerRegistry.registerPage(homePage);
@@ -76,7 +74,13 @@ export default class Action {
   }
 
   protected switchPage(name: string): void {
-    const page: IPageData = this.routerRegistry.getPages()[name];
+    let page: IPageData | null = null;
+    this.routerRegistry.getPages().forEach(
+      function searchForName(item: IPageData): void {
+        if (item.name == name) page = item;
+      }
+    );
+    if (page == null) return;
     this.router.changePage(page);
     this.closeMenu();
   }

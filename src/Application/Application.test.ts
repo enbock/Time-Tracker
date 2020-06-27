@@ -1,6 +1,6 @@
+import ListenerAdapter from '@enbock/state-value-observer/ListenerAdapter';
+import {IObserverAdapter} from '@enbock/state-value-observer/Observer';
 import React from 'react';
-import ListenerAdapter from '../Observer/ListenerAdapter';
-import {IObserverAdapter} from '../Observer/Observer';
 import Application, {IAdapter} from './Application';
 import ApplicationView, {IAdapter as IViewAdapter} from './View/Application';
 import Model from './View/Application/Model';

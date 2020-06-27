@@ -1,10 +1,10 @@
-import Observer from '../Observer/Observer';
+import Observer from '@enbock/state-value-observer/Observer';
 import Container from './Container';
 import Manager from './Manager';
 import Translator from './Translator';
 
 jest.mock(
-  '../Storage/DataStorage',
+  '@enbock/simple-storage/DataStorage',
   () => () => ({
     loadData: jest.fn(),
     attach: jest.fn().mockReturnValue({onChange: jest.fn()})

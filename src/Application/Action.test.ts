@@ -1,11 +1,11 @@
-import {IObserver, IObserverAdapter} from '../Observer/Observer';
-import RouterRegistry from '../Router/Registry';
-import Router, {IPageData} from '../Router/Router';
+import RouterRegistry from '@enbock/application-router/Registry';
+import Router, {IPageData} from '@enbock/application-router/Router';
+import {IObserver, IObserverAdapter} from '@enbock/state-value-observer/Observer';
 import Action from './Action';
 import {IModulePageData} from './Application';
 import ModuleLoader from './ModuleLoader';
 
-describe('Application.Action', () => {
+describe(Action, function (): void {
   let menuOpenState: IObserver<boolean>,
     routerObserver: IObserver<IPageData | null>,
     router: Router,
@@ -16,17 +16,15 @@ describe('Application.Action', () => {
 
   beforeEach(() => {
     menuOpenState = {
-      value: false,
-      adapter: {onChange: (newValue) => {}}
+      value: false
     };
-    router = jest.genMockFromModule<Router>('../Router/Router');
-    routerRegistry = jest.genMockFromModule<RouterRegistry>('../Router/Registry');
+    router = jest.genMockFromModule<Router>('@enbock/application-router/Router');
+    routerRegistry = jest.genMockFromModule<RouterRegistry>('@enbock/application-router/Registry');
     moduleLoader = jest.genMockFromModule<ModuleLoader>('./ModuleLoader');
     routerAdapter = {
       onChange: jest.fn()
     };
     routerObserver = {
-      adapter: routerAdapter,
       value: null
     };
   });
@@ -72,12 +70,11 @@ describe('Application.Action', () => {
   it('Change page', () => {
     const action: Action = createTestObject();
     const page: IPageData = {
-      depth: 0,
       name: 'name',
-      rootUrl: 'rootUrl',
-      url: 'url'
+      baseUrl: 'rootUrl',
+      currentUrl: 'url'
     };
-    routerRegistry.getPages = jest.fn().mockReturnValue({name: page});
+    routerRegistry.getPages = jest.fn().mockReturnValue([page]);
     router.changePage = jest.fn();
     menuOpenState.value = true;
 
@@ -86,14 +83,29 @@ describe('Application.Action', () => {
     expect(menuOpenState.value).toBeFalsy();
   });
 
+  it('Change to not registered page will be ignored', function (): void {
+    const action: Action = createTestObject();
+    const page: IPageData = {
+      name: 'name',
+      baseUrl: 'rootUrl',
+      currentUrl: 'url'
+    };
+    routerRegistry.getPages = jest.fn().mockReturnValue([page]);
+    router.changePage = jest.fn();
+    menuOpenState.value = true;
+
+    action.adapter.onMenu('notRegistered');
+    expect(router.changePage).not.toHaveBeenCalled();
+    expect(menuOpenState.value).toBeTruthy();
+  });
+
   it('Load module on page change', async () => {
     const action: Action = createTestObject();
     const page: IModulePageData = {
       module: './New/Module',
-      depth: 0,
       name: 'name',
-      rootUrl: 'rootUrl',
-      url: 'url'
+      baseUrl: 'rootUrl',
+      currentUrl: 'url'
     };
     moduleLoader.loadModule = jest.fn().mockResolvedValue(undefined);
 
@@ -107,37 +119,33 @@ describe('Application.Action', () => {
     const action: Action = createTestObject();
     action.loadPageConfig();
 
-    const homePage: { depth: number; module: string; name: string; url: string; rootUrl: string } = {
-      depth: 0,
+    const homePage: IModulePageData = {
       name: 'home',
-      rootUrl: './',
-      url: './',
+      baseUrl: './',
+      currentUrl: './',
       module: './HelloWorld'
     };
     expect(routerRegistry.registerPage).toBeCalledWith(homePage);
     expect(routerRegistry.registerPage).toBeCalledWith({
-      depth: 1,
       name: 'settings',
-      rootUrl: './settings/',
-      url: './settings/',
+      baseUrl: './settings/',
+      currentUrl: './settings/',
       module: './Settings/Settings'
     });
     expect(router.changePage).toBeCalledWith(homePage);
   });
 
   it('Load page config and initialize module loader with last page', () => {
-    const homePage: { depth: number; module: string; name: string; url: string; rootUrl: string } = {
-      depth: 0,
+    const homePage: IModulePageData = {
       name: 'home',
-      rootUrl: './',
-      url: './',
+      baseUrl: './',
+      currentUrl: './',
       module: './HelloWorld'
     };
-    const lastPage: { depth: number; module: string; name: string; url: string; rootUrl: string } = {
-      depth: 1,
+    const lastPage: IModulePageData = {
       name: 'settings',
-      rootUrl: './settings/',
-      url: './settings/',
+      baseUrl: './settings/',
+      currentUrl: './settings/',
       module: './Settings/Settings'
     };
 

@@ -1,6 +1,6 @@
-import ListenerAdapter from '../Observer/ListenerAdapter';
-import Observer from '../Observer/Observer';
-import DataStorage from '../Storage/DataStorage';
+import DataStorage from '@enbock/simple-storage/DataStorage';
+import ListenerAdapter from '@enbock/state-value-observer/ListenerAdapter';
+import Observer from '@enbock/state-value-observer/Observer';
 import ThemesManager from './ThemesManager';
 import ThemesRegistry, {Theme} from './ThemesRegistry';
 

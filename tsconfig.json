@@ -15,7 +15,8 @@
     ],
     "rootDir": "src",
     "listEmittedFiles": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
   },
   "include": [
     "src/**/*"

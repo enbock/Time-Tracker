@@ -1,11 +1,11 @@
-import ListenerAdapter from '../Observer/ListenerAdapter';
-import Observer from '../Observer/Observer';
-import DataStorage from '../Storage/DataStorage';
-import Registry from './Registry';
-import Router, {IPageData} from './Router';
+import Registry from '@enbock/application-router/Registry';
+import Router, {IPageData} from '@enbock/application-router/Router';
+import DataStorage from '@enbock/simple-storage/DataStorage';
+import ListenerAdapter from '@enbock/state-value-observer/ListenerAdapter';
+import Observer from '@enbock/state-value-observer/Observer';
 
 class Container {
-  adapter: ListenerAdapter<IPageData>;
+  adapter: ListenerAdapter<IPageData | null>;
   observer: Observer<IPageData | null>;
   router: Router;
   registry: Registry;
@@ -13,7 +13,7 @@ class Container {
 
   constructor() {
     this.storage = new DataStorage('router', window.localStorage);
-    this.adapter = new ListenerAdapter<IPageData>();
+    this.adapter = new ListenerAdapter<IPageData | null>();
     this.observer = new Observer<IPageData | null>(
       this.storage.loadData('lastPage', null),
       this.storage.attach<IPageData | null>('lastPage', this.adapter)

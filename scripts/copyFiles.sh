@@ -29,3 +29,9 @@ cp -v node_modules/material-design-icons/iconfont/MaterialIcons-Regular.w* build
 # Hello Google Dev Team?!
 cat node_modules/@material/auto-init/index.d.ts | uniq >node_modules/@material/auto-init/index.d.ts.patch
 mv node_modules/@material/auto-init/index.d.ts.patch node_modules/@material/auto-init/index.d.ts
+
+find "node_modules/@enbock" -name "*.js" | while read file; do
+  target="$(echo "$file" | sed "s:^node_modules/@:build/Libraries/:")"
+  mkdir -p "$(dirname "$target")"
+  cp -v "$file" "$target"
+done

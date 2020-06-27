@@ -1,12 +1,11 @@
+import {IObserver} from '@enbock/state-value-observer/Observer';
 import {render, RenderResult} from '@testing-library/react';
-import React from 'react';
-import {IObserver} from '../Observer/Observer';
+import * as React from 'react';
 import ModuleLoader from './ModuleLoader';
 
 describe('Application.ModuleLoader', () => {
   it('Load a module', async () => {
     const moduleState: IObserver<typeof React.Component | null> = {
-      adapter: {onChange: (newValue) => {}},
       value: null
     };
 
@@ -22,7 +21,6 @@ describe('Application.ModuleLoader', () => {
 
   it('Reuse loaded module', async () => {
     const moduleState: IObserver<typeof React.Component | null> = {
-      adapter: {onChange: ( newValue) => {}},
       value: null
     };
 

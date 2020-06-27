@@ -1,31 +1,37 @@
-import {IObserver} from '../../../Observer/Observer';
-import {IPageData} from '../../../Router/Router';
+import {IPageData} from '@enbock/application-router/Router';
+import {IObserver} from '@enbock/state-value-observer/Observer';
 import StyleUrlFormatter from './StyleUrlFormatter';
 
 describe('Application.ThemePresenter', () => {
-  let observer: IObserver<IPageData>;
+  let observer: IObserver<IPageData | null>;
 
   beforeEach(() => {
-    observer = {} as IObserver<IPageData>;
+    observer = {} as IObserver<IPageData | null>;
   });
 
-  it('format build in style url on sub directory', () => {
+  it('format style url when current page is on sub directory', () => {
     observer.value = {
-      depth: 2,
+      baseUrl: './main/page/rootUrl',
       name: 'name',
-      url: 'url'
+      currentUrl: 'url'
     };
 
     expect(new StyleUrlFormatter(observer).format('test')).toEqual('../../Style/test.css');
   });
 
-  it('format build in style url on root', () => {
+  it('format style url current page is on root directory', () => {
     observer.value = {
-      depth: 0,
+      baseUrl: 'rootUrl',
       name: 'name',
-      url: 'url'
+      currentUrl: 'url'
     };
 
-    expect(new StyleUrlFormatter(observer).format('test',)).toEqual('./Style/test.css');
+    expect(new StyleUrlFormatter(observer).format('test')).toEqual('./Style/test.css');
+  });
+
+  it('format without current page', () => {
+    observer.value = null;
+
+    expect(new StyleUrlFormatter(observer).format('test')).toEqual('./Style/test.css');
   });
 });

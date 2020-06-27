@@ -1,5 +1,5 @@
+import Observer from '@enbock/state-value-observer/Observer';
 import LanguageContainer from '../Language/Container';
-import Observer from '../Observer/Observer';
 import RouterContainer from '../Router/Container';
 import Action from './Action';
 import Application from './Application';

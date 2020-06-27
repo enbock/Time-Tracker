@@ -1,4 +1,4 @@
-import {IObserver} from '../../../Observer/Observer';
+import {IObserver} from '@enbock/state-value-observer/Observer';
 import {Theme} from '../../../Theme/ThemesRegistry';
 import Page from '../Page';
 import PageModel from '../Page/Model';

@@ -1,7 +1,7 @@
 import * as mdc from 'material-components-web';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Model, {IPages} from './SideMenu/Model';
+import Model, {IMenuDictionary} from './SideMenu/Model';
 
 export interface IAdapter {
   onClose(): void
@@ -35,12 +35,12 @@ export default class SideMenu extends React.Component<IProperties, IState> {
     const model: Model = this.props.model;
     this.drawer && (this.drawer.open = model.isOpen);
 
-    const translation: IPages<string> | any = model.translation;
-    const isActive: IPages<boolean> | any = model.isActive;
-    const url: IPages<string> | any = model.url;
+    const translation: IMenuDictionary<string> = model.translation;
+    const isActive: IMenuDictionary<boolean> = model.isActive;
+    const url: IMenuDictionary<string> = model.url;
 
     const menuEntries: React.ReactElement[] = model.pageNames.map(
-      (name: string, index:number): React.ReactElement => {
+      (name: string, index: number): React.ReactElement => {
         return <a
           key={'menuEntry:' + name}
           className={'mdc-list-item' + (isActive[name] ? ' mdc-list-item--activated' : '')}

@@ -1,12 +1,13 @@
+import DataStorage from '@enbock/simple-storage/DataStorage';
+import ListenerAdapter from '@enbock/state-value-observer/ListenerAdapter';
+import Observer, {IObserverAdapter} from '@enbock/state-value-observer/Observer';
 import React from 'react';
 import LanguageContainer from '../Language/Container';
-import ListenerAdapter from '../Observer/ListenerAdapter';
-import Observer, {IObserverAdapter} from '../Observer/Observer';
 import RouterContainer from '../Router/Container';
-import DataStorage from '../Storage/DataStorage';
 import ThemeContainer from '../Theme/Container';
 import Action from './Action';
 import Application, {IAdapter} from './Application';
+import MenuOpenStateAdapter from './MenuOpenStateAdapter';
 import ModuleLoader from './ModuleLoader';
 import ApplicationPresenter from './View/Application/Presenter';
 import StyleUrlFormatter from './View/Application/StyleUrlFormatter';
@@ -37,7 +38,7 @@ class Container {
     this.language = LanguageContainer;
     this.theme = ThemeContainer;
 
-    this.menuOpenStateAdapter = {onChange: (newValue: boolean) => {}};
+    this.menuOpenStateAdapter = new MenuOpenStateAdapter();
     this.menuOpenState = new Observer<boolean>(
       this.storage.loadData<boolean>('menuOpenState', false),
       this.storage.attach<boolean>('menuOpenState', this.menuOpenStateAdapter)

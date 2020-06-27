@@ -1,14 +1,12 @@
-import {IObserver} from '../Observer/Observer';
+import {IObserver} from '@enbock/state-value-observer/Observer';
 import ThemesManager from './ThemesManager';
 import ThemesRegistry, {Theme} from './ThemesRegistry';
 
 describe('Theme.ThemeManager', () => {
-  let observer: IObserver<Theme>, onChangeSpy: jest.Mock, getThemeSpy: jest.Mock, manager: ThemesManager;
+  let observer: IObserver<Theme>, getThemeSpy: jest.Mock, manager: ThemesManager;
 
   beforeEach(() => {
-    onChangeSpy = jest.fn();
     observer = {
-      adapter: {onChange: onChangeSpy},
       value: {
         isBuildIn: true,
         name: 'old',

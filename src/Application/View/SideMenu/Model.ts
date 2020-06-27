@@ -1,29 +1,19 @@
-export interface IPages<T> {
-  home: T;
-  settings: T;
+export interface IMenuDictionary<T> {
+  [name: string]: T
 }
 
 export default class Model {
   isOpen: boolean;
-  translation: IPages<string>;
-  isActive: IPages<boolean>;
-  url: IPages<string>;
+  translation: IMenuDictionary<string>;
+  isActive: IMenuDictionary<boolean>;
+  url: IMenuDictionary<string>;
   pageNames: string[];
 
   constructor() {
     this.isOpen = false;
-    this.isActive = {
-      home: false,
-      settings: false
-    };
-    this.url = {
-      home: '',
-      settings: ''
-    };
-    this.translation = {
-      home: '',
-      settings: ''
-    };
+    this.isActive = {};
+    this.url = {};
+    this.translation = {};
     this.pageNames = [];
   }
 }

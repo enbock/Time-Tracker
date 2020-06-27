@@ -1,7 +1,7 @@
+import PageRegistry from '@enbock/application-router/Registry';
+import {IPageData} from '@enbock/application-router/Router';
+import {IObserver} from '@enbock/state-value-observer/Observer';
 import Translator from '../../../Language/Translator';
-import {IObserver} from '../../../Observer/Observer';
-import PageRegistry, {IPageDictionary} from '../../../Router/Registry';
-import {IPageData} from '../../../Router/Router';
 import Model from './Model';
 
 export default class Presenter {
@@ -32,15 +32,15 @@ export default class Presenter {
       settings: translator.translate('Application.SideMenu.Settings')
     };
 
-    const pages: IPageDictionary<IPageData> = this.pageRegistry.getPages();
+    const pages: IPageData[] = this.pageRegistry.getPages();
     const activePage: string = this.routerObserver.value?.name || '';
-    model.pageNames = Object.keys(pages);
 
-    model.pageNames.forEach(
-      (name: string) => {
-        const page: IPageData = pages[name];
-        (model.isActive as any)[name] = (activePage == page.name);
-        (model.url as any)[name] = page.url;
+    model.pageNames = [];
+    pages.forEach(
+      (page: IPageData) => {
+        model.pageNames.push(page.name);
+        model.isActive[page.name] = (activePage == page.name);
+        model.url[page.name] = page.currentUrl;
       }
     );
 

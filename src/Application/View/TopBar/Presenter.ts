@@ -1,5 +1,5 @@
+import {IObserver} from '@enbock/state-value-observer/Observer';
 import Translator from '../../../Language/Translator';
-import {IObserver} from '../../../Observer/Observer';
 import Model from './Model';
 
 export default class Presenter {

@@ -1,5 +1,6 @@
 {
   "Application.TopBar.Title": "Time Tracker",
+  "Application.TopBar.Github": "To the source on Github",
   "Application.SideMenu.Home": "Home",
   "Application.SideMenu.Settings": "Settings"
 }

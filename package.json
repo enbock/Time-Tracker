@@ -33,8 +33,7 @@
     "watchCompiledScripts": "powershell.exe -Command bash -c 'while sleep 3; do bash ./scripts/correctImports.sh; done'",
     "start": "sh scripts/start.sh",
     "test": "jest",
-    "build": "sh scripts/build.sh",
-    "deploy": "npx gh-pages -m 'auto commit [ci skip]' -d build"
+    "build": "sh scripts/build.sh"
   },
   "jest": {
     "roots": [

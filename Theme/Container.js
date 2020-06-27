@@ -1,6 +1,6 @@
-import ListenerAdapter from "../Observer/ListenerAdapter.js";
-import Observer from "../Observer/Observer.js";
-import DataStorage from "../Storage/DataStorage.js";
+import DataStorage from "../Libraries/enbock/simple-storage/DataStorage.js";
+import ListenerAdapter from "../Libraries/enbock/state-value-observer/ListenerAdapter.js";
+import Observer from "../Libraries/enbock/state-value-observer/Observer.js";
 import ThemesManager from "./ThemesManager.js";
 import ThemesRegistry from "./ThemesRegistry.js";
 class Container {

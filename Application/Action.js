@@ -18,17 +18,15 @@ export default class Action {
     }
     loadPageConfig() {
         const homePage = {
-            depth: 0,
             name: 'home',
-            rootUrl: './',
-            url: './',
+            baseUrl: './',
+            currentUrl: './',
             module: './HelloWorld'
         };
         const settingsPage = {
-            depth: 1,
             name: 'settings',
-            rootUrl: './settings/',
-            url: './settings/',
+            baseUrl: './settings/',
+            currentUrl: './settings/',
             module: './Settings/Settings'
         };
         this.routerRegistry.registerPage(homePage);
@@ -50,7 +48,13 @@ export default class Action {
         this.menuOpenState.value = false;
     }
     switchPage(name) {
-        const page = this.routerRegistry.getPages()[name];
+        let page = null;
+        this.routerRegistry.getPages().forEach(function searchForName(item) {
+            if (item.name == name)
+                page = item;
+        });
+        if (page == null)
+            return;
         this.router.changePage(page);
         this.closeMenu();
     }

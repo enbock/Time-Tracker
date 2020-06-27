@@ -16,11 +16,11 @@ export default class Presenter {
         };
         const pages = this.pageRegistry.getPages();
         const activePage = this.routerObserver.value?.name || '';
-        model.pageNames = Object.keys(pages);
-        model.pageNames.forEach((name) => {
-            const page = pages[name];
-            model.isActive[name] = (activePage == page.name);
-            model.url[name] = page.url;
+        model.pageNames = [];
+        pages.forEach((page) => {
+            model.pageNames.push(page.name);
+            model.isActive[page.name] = (activePage == page.name);
+            model.url[page.name] = page.currentUrl;
         });
         return model;
     }

@@ -1,11 +1,12 @@
+import DataStorage from "../Libraries/enbock/simple-storage/DataStorage.js";
+import ListenerAdapter from "../Libraries/enbock/state-value-observer/ListenerAdapter.js";
+import Observer from "../Libraries/enbock/state-value-observer/Observer.js";
 import LanguageContainer from "../Language/Container.js";
-import ListenerAdapter from "../Observer/ListenerAdapter.js";
-import Observer from "../Observer/Observer.js";
 import RouterContainer from "../Router/Container.js";
-import DataStorage from "../Storage/DataStorage.js";
 import ThemeContainer from "../Theme/Container.js";
 import Action from "./Action.js";
 import Application from "./Application.js";
+import MenuOpenStateAdapter from "./MenuOpenStateAdapter.js";
 import ModuleLoader from "./ModuleLoader.js";
 import ApplicationPresenter from "./View/Application/Presenter.js";
 import StyleUrlFormatter from "./View/Application/StyleUrlFormatter.js";
@@ -17,7 +18,7 @@ class Container {
         this.storage = new DataStorage('application', window.localStorage);
         this.language = LanguageContainer;
         this.theme = ThemeContainer;
-        this.menuOpenStateAdapter = { onChange: (newValue) => { } };
+        this.menuOpenStateAdapter = new MenuOpenStateAdapter();
         this.menuOpenState = new Observer(this.storage.loadData('menuOpenState', false), this.storage.attach('menuOpenState', this.menuOpenStateAdapter));
         this.moduleStateAdapter = new ListenerAdapter();
         this.moduleState = new Observer(null, this.moduleStateAdapter);

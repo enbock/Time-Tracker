@@ -3,16 +3,16 @@ export default class Application {
     constructor(adapter, presenter) {
         this.presenter = presenter;
         this.adapter = adapter;
-        this.renderCallback = this.run.bind(this);
+        this.runCallback = this.run.bind(this);
     }
     attachToLanguage(adapter) {
-        adapter.addListener(this.renderCallback);
+        adapter.addListener(this.runCallback);
     }
     attachToModuleState(adapter) {
-        adapter.addListener(this.renderCallback);
+        adapter.addListener(this.runCallback);
     }
     attachToMenuOpenState(adapter) {
-        adapter.onChange = this.renderCallback;
+        adapter.onChange = this.runCallback;
     }
     attachToContainerNode(containerNode) {
         if (containerNode == null)

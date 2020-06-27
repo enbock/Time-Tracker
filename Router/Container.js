@@ -1,8 +1,8 @@
-import ListenerAdapter from "../Observer/ListenerAdapter.js";
-import Observer from "../Observer/Observer.js";
-import DataStorage from "../Storage/DataStorage.js";
-import Registry from "./Registry.js";
-import Router from "./Router.js";
+import Registry from "../Libraries/enbock/application-router/Registry.js";
+import Router from "../Libraries/enbock/application-router/Router.js";
+import DataStorage from "../Libraries/enbock/simple-storage/DataStorage.js";
+import ListenerAdapter from "../Libraries/enbock/state-value-observer/ListenerAdapter.js";
+import Observer from "../Libraries/enbock/state-value-observer/Observer.js";
 class Container {
     constructor() {
         this.storage = new DataStorage('router', window.localStorage);

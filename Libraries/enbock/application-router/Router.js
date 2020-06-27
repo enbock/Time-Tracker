@@ -10,7 +10,7 @@ export default class Router {
         if (this.currentPage.value == null)
             return;
         const firstPage = this.currentPage.value;
-        this.history.replaceState(firstPage, firstPage.name, firstPage.rootUrl);
+        this.history.replaceState(firstPage, firstPage.name, firstPage.baseUrl);
         this.updatePage(firstPage);
     }
     changePage(newPage) {
@@ -18,7 +18,7 @@ export default class Router {
         if (currentPage != null && currentPage.name == newPage.name) {
             return;
         }
-        this.history.replaceState(newPage, newPage.name, newPage.url);
+        this.history.replaceState(newPage, newPage.name, newPage.currentUrl);
         this.updatePage(newPage);
     }
     updatePage(page) {

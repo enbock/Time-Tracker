@@ -12,10 +12,10 @@ export default class DataStorage {
         return storageAdapter;
     }
     loadData(key, initialValue) {
-        const initJSON = this.storage.getItem(this.domain + '::' + key);
+        const serializedJsonData = this.storage.getItem(this.domain + '::' + key);
         let data = initialValue;
-        if (initJSON != null) {
-            data = JSON.parse(initJSON);
+        if (serializedJsonData != null) {
+            data = JSON.parse(serializedJsonData);
         }
         return data;
     }

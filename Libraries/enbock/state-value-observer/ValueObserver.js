@@ -1,4 +1,4 @@
-export default class Observer {
+export default class ValueObserver {
     constructor(initialValue, adapter) {
         this.current = initialValue;
         this.adapter = adapter;

@@ -1,6 +1,6 @@
 import DataStorage from "../Libraries/enbock/simple-storage/DataStorage.js";
 import ListenerAdapter from "../Libraries/enbock/state-value-observer/ListenerAdapter.js";
-import Observer from "../Libraries/enbock/state-value-observer/Observer.js";
+import ValueObserver from "../Libraries/enbock/state-value-observer/ValueObserver.js";
 import LanguageContainer from "../Language/Container.js";
 import RouterContainer from "../Router/Container.js";
 import ThemeContainer from "../Theme/Container.js";
@@ -19,9 +19,9 @@ class Container {
         this.language = LanguageContainer;
         this.theme = ThemeContainer;
         this.menuOpenStateAdapter = new MenuOpenStateAdapter();
-        this.menuOpenState = new Observer(this.storage.loadData('menuOpenState', false), this.storage.attach('menuOpenState', this.menuOpenStateAdapter));
+        this.menuOpenState = new ValueObserver(this.storage.loadData('menuOpenState', false), this.storage.attach('menuOpenState', this.menuOpenStateAdapter));
         this.moduleStateAdapter = new ListenerAdapter();
-        this.moduleState = new Observer(null, this.moduleStateAdapter);
+        this.moduleState = new ValueObserver(null, this.moduleStateAdapter);
         this.moduleLoader = new ModuleLoader('../', this.moduleState);
         this.applicationAction = new Action(this.menuOpenState, RouterContainer.observer, RouterContainer.router, RouterContainer.registry, RouterContainer.adapter, this.moduleLoader);
         this.applicationActionAdapter = this.applicationAction.adapter;

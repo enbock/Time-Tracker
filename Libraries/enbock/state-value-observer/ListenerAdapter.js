@@ -1,12 +1,20 @@
 export default class ListenerAdapter {
-    constructor() {
+    constructor(asyncCallbacks = true) {
+        this.asyncCallbacks = true;
+        this.asyncCallbacks = asyncCallbacks;
         this.listeners = [];
     }
     onChange(newValue) {
+        const runAsync = this.asyncCallbacks;
         function callListener(listener) {
-            setTimeout(function handler() {
+            if (runAsync) {
+                setTimeout(function handler() {
+                    listener(newValue);
+                }, 1);
+            }
+            else {
                 listener(newValue);
-            }, 1);
+            }
         }
         this.listeners.forEach(callListener);
     }

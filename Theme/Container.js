@@ -1,6 +1,6 @@
 import DataStorage from "../Libraries/enbock/simple-storage/DataStorage.js";
 import ListenerAdapter from "../Libraries/enbock/state-value-observer/ListenerAdapter.js";
-import Observer from "../Libraries/enbock/state-value-observer/Observer.js";
+import ValueObserver from "../Libraries/enbock/state-value-observer/ValueObserver.js";
 import ThemesManager from "./ThemesManager.js";
 import ThemesRegistry from "./ThemesRegistry.js";
 class Container {
@@ -8,7 +8,7 @@ class Container {
         this.storage = new DataStorage('theme', window.localStorage);
         this.registry = new ThemesRegistry();
         this.currentThemeAdapter = new ListenerAdapter();
-        this.currentTheme = new Observer(this.storage.loadData('currentTheme', {
+        this.currentTheme = new ValueObserver(this.storage.loadData('currentTheme', {
             isBuildIn: true,
             name: 'Google',
             url: 'Theme/Google'

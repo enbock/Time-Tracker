@@ -1,6 +1,6 @@
 import DataStorage from "../Libraries/enbock/simple-storage/DataStorage.js";
 import ListenerAdapter from "../Libraries/enbock/state-value-observer/ListenerAdapter.js";
-import Observer from "../Libraries/enbock/state-value-observer/Observer.js";
+import ValueObserver from "../Libraries/enbock/state-value-observer/ValueObserver.js";
 import AjaxLoader from "./Loader/Ajax.js";
 import Manager from "./Manager.js";
 import ActiveTranslatorAdapter from "./Manager/ActiveTranslatorAdapter.js";
@@ -13,10 +13,10 @@ class Container {
         this.loader = new AjaxLoader();
         this.manager = new Manager(this.loader, this.translatorFactory);
         this.adapter = new ListenerAdapter();
-        this.activeTranslator = new Observer(new Translator({}), { onChange: (newValue) => { } });
+        this.activeTranslator = new ValueObserver(new Translator({}), { onChange: (newValue) => { } });
         this.activeTranslatorAdapter = new ActiveTranslatorAdapter(this.adapter, this.manager, this.activeTranslator);
         this.observer =
-            new Observer('', this.storage.attach('languageSetup', this.activeTranslatorAdapter));
+            new ValueObserver('', this.storage.attach('languageSetup', this.activeTranslatorAdapter));
         this.setupDefaults();
     }
     setupDefaults() {

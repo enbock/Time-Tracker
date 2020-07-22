@@ -1,19 +1,19 @@
-export interface IValueMap {
+export interface ValueMap {
   [pattern: string]: string
 }
 
-export interface ILanguageData {
+export interface LanguageData {
   [key: string]: string
 }
 
 export default class Translator {
-  language: ILanguageData;
+  language: LanguageData;
 
-  constructor(languageData: ILanguageData) {
+  constructor(languageData: LanguageData) {
     this.language = languageData;
   }
 
-  public translate(key: string, valueMap: IValueMap = {}) {
+  public translate(key: string, valueMap: ValueMap = {}) {
     if (this.language.hasOwnProperty(key)) {
       let translated = String(this.language[key]);
       for (let pattern in valueMap) {

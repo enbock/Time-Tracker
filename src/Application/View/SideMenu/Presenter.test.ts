@@ -1,30 +1,30 @@
 import PageRegistry from '@enbock/application-router/Registry';
-import {IPageData} from '@enbock/application-router/Router';
-import {IObserver} from '@enbock/state-value-observer/Observer';
+import {PageData} from '@enbock/application-router/Router';
+import {Observer} from '@enbock/state-value-observer/ValueObserver';
 import Translator from '../../../Language/Translator';
 import Model from './Model';
 import Presenter from './Presenter';
 
 describe('Application.View.SideMenu.Presenter', () => {
   it('Present menu view data', () => {
-    const menuObserver: IObserver<boolean> = {
+    const menuObserver: Observer<boolean> = {
       value: true
     };
     const translator: Translator = new Translator({});
-    const activeTranslator: IObserver<Translator> = {
+    const activeTranslator: Observer<Translator> = {
       value: translator
     };
-    const homePage: IPageData = {
+    const homePage: PageData = {
       name: 'home',
       baseUrl: './home/',
       currentUrl: './home/'
     };
-    const settingsPage: IPageData = {
+    const settingsPage: PageData = {
       name: 'settings',
       baseUrl: './settings/',
       currentUrl: './settings/'
     };
-    const routerObserver: IObserver<IPageData | null> = {
+    const routerObserver: Observer<PageData | null> = {
       value: settingsPage
     };
     const pageRegistry: PageRegistry = new PageRegistry(routerObserver);
@@ -57,24 +57,24 @@ describe('Application.View.SideMenu.Presenter', () => {
   });
 
   it('Present menu view data without active page', () => {
-    const menuObserver: IObserver<boolean> = {
+    const menuObserver: Observer<boolean> = {
       value: true
     };
     const translator: Translator = new Translator({});
-    const activeTranslator: IObserver<Translator> = {
+    const activeTranslator: Observer<Translator> = {
       value: translator
     };
-    const homePage: IPageData = {
+    const homePage: PageData = {
       name: 'home',
       baseUrl: './home/',
       currentUrl: './home/'
     };
-    const settingsPage: IPageData = {
+    const settingsPage: PageData = {
       name: 'settings',
       baseUrl: './settings/',
       currentUrl: './settings/'
     };
-    const routerObserver: IObserver<IPageData | null> = {
+    const routerObserver: Observer<PageData | null> = {
       value: null
     };
     const pageRegistry: PageRegistry = new PageRegistry(routerObserver);

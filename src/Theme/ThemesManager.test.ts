@@ -1,9 +1,9 @@
-import {IObserver} from '@enbock/state-value-observer/Observer';
+import {Observer} from '@enbock/state-value-observer/ValueObserver';
 import ThemesManager from './ThemesManager';
 import ThemesRegistry, {Theme} from './ThemesRegistry';
 
 describe('Theme.ThemeManager', () => {
-  let observer: IObserver<Theme>, getThemeSpy: jest.Mock, manager: ThemesManager;
+  let observer: Observer<Theme>, getThemeSpy: jest.Mock, manager: ThemesManager;
 
   beforeEach(() => {
     observer = {

@@ -952,24 +952,24 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@enbock/application-router@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@enbock/application-router/-/application-router-1.0.2.tgz#3825e5705c2d2a95bf9b3e6b8b1e618e183ff86e"
-  integrity sha512-/aosIg8bCAw380k0PzlRa0T4eSKKC/41aK21DCZz/rlET3cJsoYNTWx0+fhR8OZngHMYKPmPNVgT+fK20JrPAA==
+"@enbock/application-router@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@enbock/application-router/-/application-router-2.0.0.tgz#8b3e6ef09869c927174038280677018c07d60854"
+  integrity sha512-MEDO4TVJjNgAv+j34hQcp8hYZeqQcozHJiGkOSZPd4ET0EjqWeL8bo4g9Yxqp0btvaac1TSjBbdV4TbsbhD3ow==
   dependencies:
-    "@enbock/state-value-observer" "^1.1.4"
+    "@enbock/state-value-observer" "^2.0.0"
 
-"@enbock/simple-storage@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@enbock/simple-storage/-/simple-storage-1.0.2.tgz#5daf557f7580d8cc3f6d045fac2ad1244454bbce"
-  integrity sha512-J+Tpr9Wlq4U+ZSuaejoRkAtcGBHxtGSUkpNCXcZvFyRArvGkXKr+JssWSYm0Tu9fU1ecbBatEzmJoWiFgK3nnw==
+"@enbock/simple-storage@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@enbock/simple-storage/-/simple-storage-2.0.0.tgz#dcf72757baab0bcad0fe3b6178666a5ff89a47d5"
+  integrity sha512-gr2ThK6BLgRK5iXfXZRt1vjzAoZ9laJ0qOP7DSfSD+K7XJOfFAy+NLSCtBj9gLX4n1t8qMc6CWQDhQlvDPWkZg==
   dependencies:
-    "@enbock/state-value-observer" "^1.1.4"
+    "@enbock/state-value-observer" "^2.0.0"
 
-"@enbock/state-value-observer@^1.1.4":
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/@enbock/state-value-observer/-/state-value-observer-1.1.4.tgz#8e875f0f3b5f1657ccbb8f84300e78307879a268"
-  integrity sha512-7yAG1nDTIDbjxLvOnuMVnk2iFnQ7y+5YOshZqZVSz1x5UQjB54/ASPPmI4fyU7QG8A7iArJ1vu9ilQI1p16Dbg==
+"@enbock/state-value-observer@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@enbock/state-value-observer/-/state-value-observer-2.0.0.tgz#e91ecd256e025b7c5e7e443af12e0ac9a30e29de"
+  integrity sha512-7YmRPhBrt8itiJ6CG/vpHa8RaYjAF6kbxvWiWVUUCWJIbmdapgDPzuFA0dv0VMSf6uvfpBnAQbsVKWPeUTuUeA==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"

@@ -1,16 +1,16 @@
-import {IObserver} from '@enbock/state-value-observer/Observer';
+import {Observer} from '@enbock/state-value-observer/ValueObserver';
 import React from 'react';
 
-interface ILoadedModuleDictionary {
+interface LoadedModuleDictionary {
   [name: string]: typeof React.Component,
 }
 
 export default class ModuleLoader {
-  moduleState: IObserver<typeof React.Component | null>;
-  dictionary: ILoadedModuleDictionary;
+  moduleState: Observer<typeof React.Component | null>;
+  dictionary: LoadedModuleDictionary;
   pathToRoot: string;
 
-  constructor(pathToRoot: string, moduleState: IObserver<typeof React.Component | null>) {
+  constructor(pathToRoot: string, moduleState: Observer<typeof React.Component | null>) {
     this.moduleState = moduleState;
     this.dictionary = {};
     this.pathToRoot = pathToRoot;

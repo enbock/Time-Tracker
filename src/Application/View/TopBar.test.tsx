@@ -1,7 +1,7 @@
 import {fireEvent, render, RenderResult} from '@testing-library/react';
 import * as mdc from 'material-components-web';
 import React from 'react';
-import TopBar, {IAdapter} from './TopBar';
+import TopBar, {Adapter} from './TopBar';
 import Model from './TopBar/Model';
 
 jest.mock('material-components-web', () => ({topAppBar: {MDCTopAppBar: jest.fn()}}));
@@ -11,7 +11,7 @@ describe('Application.View.TopBar', () => {
     const model: Model = new Model();
     model.title = 'title';
     const onGithubClick = jest.fn();
-    const adapter: IAdapter = {
+    const adapter: Adapter = {
       onGithubClick: onGithubClick,
       onMenuClick: jest.fn()
     };

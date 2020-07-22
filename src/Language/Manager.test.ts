@@ -1,11 +1,11 @@
 import Loader from './Loader';
 import Manager from './Manager';
-import Translator, {ILanguageData} from './Translator';
+import Translator, {LanguageData} from './Translator';
 import Factory from './Translator/Factory';
 
 describe('Language.Manager', () => {
   let loaderSpy: jest.MockedFunction<(languageCode: string) => Promise<any>>,
-    createSpy: jest.MockedFunction<(languageData: ILanguageData) => Translator>,
+    createSpy: jest.MockedFunction<(languageData: LanguageData) => Translator>,
     loader: Loader,
     factory: Factory;
 
@@ -19,7 +19,7 @@ describe('Language.Manager', () => {
   });
 
   it('Loads language', async () => {
-    const languageData: ILanguageData = {'language': 'data'};
+    const languageData: LanguageData = {'language': 'data'};
     const translator: Translator = new Translator(languageData);
     loaderSpy.mockResolvedValueOnce(languageData);
     createSpy.mockReturnValueOnce(translator);
@@ -34,7 +34,7 @@ describe('Language.Manager', () => {
   });
 
   it('Reuse loaded language translator', async () => {
-    const languageData: ILanguageData = {'language': 'data'};
+    const languageData: LanguageData = {'language': 'data'};
     const translator: Translator = new Translator(languageData);
     loaderSpy.mockResolvedValueOnce(languageData);
     createSpy.mockReturnValueOnce(translator);

@@ -1,9 +1,10 @@
 import ListenerAdapter from '@enbock/state-value-observer/ListenerAdapter';
-import {IObserverAdapter} from '@enbock/state-value-observer/Observer';
+import {ObserverAdapter} from '@enbock/state-value-observer/ValueObserver';
 import React from 'react';
-import Application, {IAdapter} from './Application';
-import ApplicationView, {IAdapter as IViewAdapter} from './View/Application';
+import Application, {Adapter} from './Application';
+import ApplicationView, {Adapter as ViewAdapter} from './View/Application';
 import Model from './View/Application/Model';
+import Presenter from './View/Application/Presenter';
 
 jest.mock('./View/Application');
 
@@ -11,17 +12,17 @@ describe('Application', () => {
   let presentSpy: jest.Mock,
     languageListener: ListenerAdapter<string>,
     moduleListener: ListenerAdapter<typeof React.Component | null>,
-    menuOpenStateListener: IObserverAdapter<boolean>,
+    menuOpenStateListener: ObserverAdapter<boolean>,
     renderSpy: jest.Mock,
     model: Model,
-    applicationAdapter: IAdapter,
+    applicationAdapter: Adapter,
     application: Application;
 
   beforeEach(() => {
 
     languageListener = new ListenerAdapter<string>();
     moduleListener = new ListenerAdapter<typeof React.Component | null>();
-    menuOpenStateListener = new class implements IObserverAdapter<boolean> {
+    menuOpenStateListener = new class implements ObserverAdapter<boolean> {
       public onChange(newValue: boolean): void {
       }
     };
@@ -40,7 +41,7 @@ describe('Application', () => {
     };
 
     (ApplicationView as jest.Mock).mockImplementation(
-      (containerNode: Element | DocumentFragment | null, adapter: IViewAdapter) => {
+      (containerNode: Element | DocumentFragment | null, adapter: ViewAdapter) => {
         expect(containerNode).toBe(document.body);
         expect(adapter).toBe(applicationAdapter);
 
@@ -49,7 +50,9 @@ describe('Application', () => {
         };
       }
     );
-    application = new Application(applicationAdapter, {present: presentSpy});
+    const presenter: Presenter = jest.genMockFromModule<Presenter>('./View/Application/Presenter');
+    presenter.present = presentSpy;
+    application = new Application(applicationAdapter, presenter);
     application.attachToModuleState(moduleListener);
     application.attachToLanguage(languageListener);
     application.attachToMenuOpenState(menuOpenStateListener);

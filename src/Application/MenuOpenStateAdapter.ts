@@ -1,6 +1,6 @@
-import {IObserverAdapter} from '@enbock/state-value-observer/Observer';
+import {ObserverAdapter} from '@enbock/state-value-observer/ValueObserver';
 
-export default class MenuOpenStateAdapter implements IObserverAdapter<boolean> {
+export default class MenuOpenStateAdapter implements ObserverAdapter<boolean> {
   private currentState: boolean;
 
   constructor() {

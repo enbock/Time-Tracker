@@ -3,23 +3,23 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Model from './TopBar/Model';
 
-export interface IAdapter {
+export interface Adapter {
   onGithubClick(): void,
   onMenuClick(): void
 }
 
-export interface IProperties {
+export interface Properties {
   model: Model
-  adapter: IAdapter
+  adapter: Adapter
 }
 
-interface IState {
+interface State {
 }
 
-export default class TopBar extends React.Component<IProperties, IState> {
+export default class TopBar extends React.Component<Properties, State> {
   topAppBar: mdc.topAppBar.MDCTopAppBar | undefined;
 
-  constructor(props: IProperties) {
+  constructor(props: Properties) {
     super(props);
   }
 

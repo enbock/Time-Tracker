@@ -1,15 +1,15 @@
 import React from 'react';
 import Model from './Page/Model';
 
-interface IProperties {
+interface Properties {
   model: Model
 }
 
-interface IState {
+interface State {
 
 }
 
-export default class Page extends React.Component<IProperties, IState> {
+export default class Page extends React.Component<Properties, State> {
   render(): React.ReactElement {
     return <div className="mdc-drawer-app-content mdc-top-app-bar--fixed-adjust">
       <main className="main-content" id="main-content">

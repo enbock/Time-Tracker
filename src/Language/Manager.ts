@@ -2,13 +2,13 @@ import Loader from './Loader';
 import Translator from './Translator';
 import TranslatorFactory from './Translator/Factory';
 
-interface ITranslators {
+interface Translators {
   [languageCode: string]: Translator;
 }
 
 export default class Manager {
   protected loader: Loader;
-  protected translators: ITranslators;
+  protected translators: Translators;
   protected translatorFactory: TranslatorFactory;
 
   constructor(loader: Loader, translatorFactory: TranslatorFactory) {

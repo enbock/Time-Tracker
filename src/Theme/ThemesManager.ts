@@ -1,16 +1,16 @@
-import {IObserver} from '@enbock/state-value-observer/Observer';
+import {Observer} from '@enbock/state-value-observer/ValueObserver';
 import ThemesRegistry, {Theme} from './ThemesRegistry';
 
 export default class ThemesManager {
-  protected observer: IObserver<Theme>;
+  protected observer: Observer<Theme>;
   protected registry: ThemesRegistry;
 
-  constructor(observer: IObserver<Theme>, registry: ThemesRegistry) {
+  constructor(observer: Observer<Theme>, registry: ThemesRegistry) {
     this.registry = registry;
     this.observer = observer;
   }
 
-  changeTheme(name: string) {
+  changeTheme(name: string): void {
     this.observer.value = this.registry.getTheme(name);
   }
 }

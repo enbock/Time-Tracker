@@ -1,13 +1,13 @@
 import DataStorage from '@enbock/simple-storage/DataStorage';
 import ListenerAdapter from '@enbock/state-value-observer/ListenerAdapter';
-import Observer from '@enbock/state-value-observer/Observer';
+import ValueObserver from '@enbock/state-value-observer/ValueObserver';
 import ThemesManager from './ThemesManager';
 import ThemesRegistry, {Theme} from './ThemesRegistry';
 
 class Container {
   registry: ThemesRegistry;
   currentThemeAdapter: ListenerAdapter<Theme>;
-  currentTheme: Observer<Theme>;
+  currentTheme: ValueObserver<Theme>;
   manager: ThemesManager;
   storage: DataStorage;
 
@@ -15,7 +15,7 @@ class Container {
     this.storage = new DataStorage('theme', window.localStorage);
     this.registry = new ThemesRegistry();
     this.currentThemeAdapter = new ListenerAdapter<Theme>();
-    this.currentTheme = new Observer<Theme>(
+    this.currentTheme = new ValueObserver<Theme>(
       this.storage.loadData<Theme>(
         'currentTheme',
         {

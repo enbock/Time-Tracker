@@ -1,11 +1,11 @@
-import {IObserver} from '@enbock/state-value-observer/Observer';
+import {Observer} from '@enbock/state-value-observer/ValueObserver';
 import Translator from '../../../Language/Translator';
 import Model from './Model';
 
 export default class Presenter {
-  protected translator: IObserver<Translator>;
+  protected translator: Observer<Translator>;
 
-  constructor(translator: IObserver<Translator>) {
+  constructor(translator: Observer<Translator>) {
     this.translator = translator;
   }
 

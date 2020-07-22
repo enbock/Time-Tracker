@@ -1,14 +1,14 @@
 import React from 'react';
 
-interface IProperties {
+interface Properties {
 
 }
 
-interface IState {
+interface State {
 
 }
 
-export default class HelloWorld extends React.Component<IProperties, IState> {
+export default class HelloWorld extends React.Component<Properties, State> {
   render(): React.ReactElement {
     return <h3>
       A new decade ... a new start ... 😉<br /><br />

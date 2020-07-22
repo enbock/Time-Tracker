@@ -1,7 +1,7 @@
-import Translator, {ILanguageData} from '../Translator';
+import Translator, {LanguageData} from '../Translator';
 
 export default class Factory {
-  createTranslator(languageData: ILanguageData) {
+  createTranslator(languageData: LanguageData) {
     return new Translator(languageData);
   }
 }

@@ -1,23 +1,23 @@
 import RouterRegistry from '@enbock/application-router/Registry';
-import Router, {IPageData} from '@enbock/application-router/Router';
-import {IObserver, IObserverAdapter} from '@enbock/state-value-observer/Observer';
-import {IAdapter, IModulePageData} from './Application';
+import Router, {PageData} from '@enbock/application-router/Router';
+import {Observer, ObserverAdapter} from '@enbock/state-value-observer/ValueObserver';
+import {Adapter, ModulePageData} from './Application';
 import ModuleLoader from './ModuleLoader';
 
 export default class Action {
-  private menuOpenState: IObserver<boolean>;
+  private menuOpenState: Observer<boolean>;
   private router: Router;
-  private routerAdapter: IObserverAdapter<IPageData | null>;
+  private routerAdapter: ObserverAdapter<PageData | null>;
   private routerRegistry: RouterRegistry;
   private moduleLoader: ModuleLoader;
-  private currentPage: IObserver<IPageData | null>;
+  private currentPage: Observer<PageData | null>;
 
   constructor(
-    menuOpenState: IObserver<boolean>,
-    currentPage: IObserver<IPageData | null>,
+    menuOpenState: Observer<boolean>,
+    currentPage: Observer<PageData | null>,
     router: Router,
     routerRegistry: RouterRegistry,
-    routerAdapter: IObserverAdapter<IPageData | null>,
+    routerAdapter: ObserverAdapter<PageData | null>,
     moduleLoader: ModuleLoader
   ) {
     this.routerAdapter = routerAdapter;
@@ -28,7 +28,7 @@ export default class Action {
     this.moduleLoader = moduleLoader;
   }
 
-  get adapter(): IAdapter {
+  get adapter(): Adapter {
     return {
       onPageChanged: this.loadModule.bind(this),
       onGithubClick: this.openGithubWindow.bind(this),
@@ -39,13 +39,13 @@ export default class Action {
   }
 
   public loadPageConfig() {
-    const homePage: IModulePageData = {
+    const homePage: ModulePageData = {
       name: 'home',
       baseUrl: './',
       currentUrl: './',
       module: './HelloWorld'
     };
-    const settingsPage: IModulePageData = {
+    const settingsPage: ModulePageData = {
       name: 'settings',
       baseUrl: './settings/',
       currentUrl: './settings/',
@@ -74,9 +74,9 @@ export default class Action {
   }
 
   protected switchPage(name: string): void {
-    let page: IPageData | null = null;
+    let page: PageData | null = null;
     this.routerRegistry.getPages().forEach(
-      function searchForName(item: IPageData): void {
+      function searchForName(item: PageData): void {
         if (item.name == name) page = item;
       }
     );
@@ -85,7 +85,7 @@ export default class Action {
     this.closeMenu();
   }
 
-  protected async loadModule(newValue: IPageData): Promise<void> {
-    await this.moduleLoader.loadModule((newValue as IModulePageData).module);
+  protected async loadModule(newValue: PageData): Promise<void> {
+    await this.moduleLoader.loadModule((newValue as ModulePageData).module);
   }
 }

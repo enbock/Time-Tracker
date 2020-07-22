@@ -1,14 +1,14 @@
 import React from 'react';
 
-interface IProperties {
+interface Properties {
   view: any
 }
 
-interface IState {
+interface State {
 
 }
 
-export default class Settings extends React.Component<IProperties, IState> {
+export default class Settings extends React.Component<Properties, State> {
   render(): React.ReactElement {
     const view: any = this.props.view;
 

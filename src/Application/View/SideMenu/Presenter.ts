@@ -1,19 +1,19 @@
 import PageRegistry from '@enbock/application-router/Registry';
-import {IPageData} from '@enbock/application-router/Router';
-import {IObserver} from '@enbock/state-value-observer/Observer';
+import {PageData} from '@enbock/application-router/Router';
+import {Observer} from '@enbock/state-value-observer/ValueObserver';
 import Translator from '../../../Language/Translator';
 import Model from './Model';
 
 export default class Presenter {
-  menuOpenState: IObserver<boolean>;
-  routerObserver: IObserver<IPageData | null>;
+  menuOpenState: Observer<boolean>;
+  routerObserver: Observer<PageData | null>;
   pageRegistry: PageRegistry;
-  translator: IObserver<Translator>;
+  translator: Observer<Translator>;
 
   constructor(
-    menuOpenState: IObserver<boolean>,
-    translator: IObserver<Translator>,
-    routerObserver: IObserver<IPageData | null>,
+    menuOpenState: Observer<boolean>,
+    translator: Observer<Translator>,
+    routerObserver: Observer<PageData | null>,
     pageRegistry: PageRegistry
   ) {
     this.translator = translator;
@@ -32,12 +32,12 @@ export default class Presenter {
       settings: translator.translate('Application.SideMenu.Settings')
     };
 
-    const pages: IPageData[] = this.pageRegistry.getPages();
+    const pages: PageData[] = this.pageRegistry.getPages();
     const activePage: string = this.routerObserver.value?.name || '';
 
     model.pageNames = [];
     pages.forEach(
-      (page: IPageData) => {
+      (page: PageData) => {
         model.pageNames.push(page.name);
         model.isActive[page.name] = (activePage == page.name);
         model.url[page.name] = page.currentUrl;

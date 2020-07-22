@@ -1,16 +1,16 @@
-import {IPageData} from '@enbock/application-router/Router';
-import {IObserver} from '@enbock/state-value-observer/Observer';
-import {IModulePageData} from '../Application/Application';
+import {PageData} from '@enbock/application-router/Router';
+import {Observer} from '@enbock/state-value-observer/ValueObserver';
+import {ModulePageData} from '../Application/Application';
 
 export default class RouterData {
-  private routerData: IObserver<IModulePageData | null>;
+  private routerData: Observer<ModulePageData | null>;
 
-  constructor(routerData: IObserver<IPageData | null>) {
-    this.routerData = routerData as IObserver<IModulePageData | null>;
+  constructor(routerData: Observer<PageData | null>) {
+    this.routerData = routerData as Observer<ModulePageData | null>;
   }
 
   migrateRouterInternalToV102(): void {
-    const pageData: IPageData | null | any = this.routerData.value;
+    const pageData: PageData | null | any = this.routerData.value;
     if (pageData == null || pageData.rootUrl == undefined) return;
 
     this.routerData.value = {

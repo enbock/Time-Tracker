@@ -1,16 +1,16 @@
 import RouterRegistry from '@enbock/application-router/Registry';
-import Router, {IPageData} from '@enbock/application-router/Router';
-import {IObserver, IObserverAdapter} from '@enbock/state-value-observer/Observer';
+import Router, {PageData} from '@enbock/application-router/Router';
+import {Observer, ObserverAdapter} from '@enbock/state-value-observer/ValueObserver';
 import Action from './Action';
-import {IModulePageData} from './Application';
+import {ModulePageData} from './Application';
 import ModuleLoader from './ModuleLoader';
 
 describe(Action, function (): void {
-  let menuOpenState: IObserver<boolean>,
-    routerObserver: IObserver<IPageData | null>,
+  let menuOpenState: Observer<boolean>,
+    routerObserver: Observer<PageData | null>,
     router: Router,
     routerRegistry: RouterRegistry,
-    routerAdapter: IObserverAdapter<IPageData | null>,
+    routerAdapter: ObserverAdapter<PageData | null>,
     moduleLoader: ModuleLoader
   ;
 
@@ -69,7 +69,7 @@ describe(Action, function (): void {
 
   it('Change page', () => {
     const action: Action = createTestObject();
-    const page: IPageData = {
+    const page: PageData = {
       name: 'name',
       baseUrl: 'rootUrl',
       currentUrl: 'url'
@@ -85,7 +85,7 @@ describe(Action, function (): void {
 
   it('Change to not registered page will be ignored', function (): void {
     const action: Action = createTestObject();
-    const page: IPageData = {
+    const page: PageData = {
       name: 'name',
       baseUrl: 'rootUrl',
       currentUrl: 'url'
@@ -101,7 +101,7 @@ describe(Action, function (): void {
 
   it('Load module on page change', async () => {
     const action: Action = createTestObject();
-    const page: IModulePageData = {
+    const page: ModulePageData = {
       module: './New/Module',
       name: 'name',
       baseUrl: 'rootUrl',
@@ -119,7 +119,7 @@ describe(Action, function (): void {
     const action: Action = createTestObject();
     action.loadPageConfig();
 
-    const homePage: IModulePageData = {
+    const homePage: ModulePageData = {
       name: 'home',
       baseUrl: './',
       currentUrl: './',
@@ -136,13 +136,13 @@ describe(Action, function (): void {
   });
 
   it('Load page config and initialize module loader with last page', () => {
-    const homePage: IModulePageData = {
+    const homePage: ModulePageData = {
       name: 'home',
       baseUrl: './',
       currentUrl: './',
       module: './HelloWorld'
     };
-    const lastPage: IModulePageData = {
+    const lastPage: ModulePageData = {
       name: 'settings',
       baseUrl: './settings/',
       currentUrl: './settings/',

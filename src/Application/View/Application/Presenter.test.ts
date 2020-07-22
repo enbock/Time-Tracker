@@ -1,4 +1,4 @@
-import {IObserver} from '@enbock/state-value-observer/Observer';
+import {Observer} from '@enbock/state-value-observer/ValueObserver';
 import {Theme} from '../../../Theme/ThemesRegistry';
 import Page from '../Page';
 import PageModel from '../Page/Model';
@@ -9,21 +9,22 @@ import TopBarModel from '../TopBar/Model';
 import TopBarPresenter from '../TopBar/Presenter';
 import Model from './Model';
 import Presenter from './Presenter';
-import {IStyleUrlFormatter} from './StyleUrlFormatter';
+import StyleUrlFormatter from './StyleUrlFormatter';
 
 describe('Application.Presenter.ApplicationPresenter', () => {
   let topBarPresenter: TopBarPresenter, topBarPresentSpy: jest.Mock;
   let sideMenuPresenter: SideMenuPresenter, sideMenuPresentSpy: jest.Mock;
   let pagePresenter: PagePresenter, pagePresentSpy: jest.Mock;
-  let styleUrlFormatter: IStyleUrlFormatter, themePresentSpy: jest.Mock;
-  let themeObserver: IObserver<Theme>;
+  let styleUrlFormatter: StyleUrlFormatter, themePresentSpy: jest.Mock;
+  let themeObserver: Observer<Theme>;
   let theme: Theme;
 
   beforeEach(() => {
     theme = {} as Theme;
-    themeObserver = {value: theme} as IObserver<Theme>;
+    themeObserver = {value: theme} as Observer<Theme>;
     topBarPresenter = {} as TopBarPresenter;
-    styleUrlFormatter = {format: jest.fn()};
+    styleUrlFormatter = jest.genMockFromModule<StyleUrlFormatter>('./StyleUrlFormatter');
+    styleUrlFormatter.format = jest.fn();
     sideMenuPresenter = {} as SideMenuPresenter;
     pagePresenter = {} as PagePresenter;
 

@@ -1,12 +1,12 @@
-import {IPageData} from '@enbock/application-router/Router';
-import {IObserver} from '@enbock/state-value-observer/Observer';
+import {PageData} from '@enbock/application-router/Router';
+import {Observer} from '@enbock/state-value-observer/ValueObserver';
 import StyleUrlFormatter from './StyleUrlFormatter';
 
 describe('Application.ThemePresenter', () => {
-  let observer: IObserver<IPageData | null>;
+  let observer: Observer<PageData | null>;
 
   beforeEach(() => {
-    observer = {} as IObserver<IPageData | null>;
+    observer = {} as Observer<PageData | null>;
   });
 
   it('format style url when current page is on sub directory', () => {

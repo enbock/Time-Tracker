@@ -1,13 +1,13 @@
-import {IObserver, IObserverAdapter} from '@enbock/state-value-observer/Observer';
+import {Observer, ObserverAdapter} from '@enbock/state-value-observer/ValueObserver';
 import Manager from '../Manager';
 import Translator from '../Translator';
 
-export default class ActiveTranslatorAdapter implements IObserverAdapter<string> {
-  protected baseAdapter: IObserverAdapter<string>;
+export default class ActiveTranslatorAdapter implements ObserverAdapter<string> {
+  protected baseAdapter: ObserverAdapter<string>;
   protected manager: Manager;
-  protected activeTranslator: IObserver<Translator>;
+  protected activeTranslator: Observer<Translator>;
 
-  constructor(baseAdapter: IObserverAdapter<string>, manager: Manager, activeTranslator: IObserver<Translator>) {
+  constructor(baseAdapter: ObserverAdapter<string>, manager: Manager, activeTranslator: Observer<Translator>) {
     this.activeTranslator = activeTranslator;
     this.baseAdapter = baseAdapter;
     this.manager = manager;

@@ -1,12 +1,12 @@
 import DataStorage from '@enbock/simple-storage/DataStorage';
 import ListenerAdapter from '@enbock/state-value-observer/ListenerAdapter';
-import Observer, {IObserverAdapter} from '@enbock/state-value-observer/Observer';
+import ValueObserver, {ObserverAdapter} from '@enbock/state-value-observer/ValueObserver';
 import React from 'react';
 import LanguageContainer from '../Language/Container';
 import RouterContainer from '../Router/Container';
 import ThemeContainer from '../Theme/Container';
 import Action from './Action';
-import Application, {IAdapter} from './Application';
+import Application, {Adapter} from './Application';
 import MenuOpenStateAdapter from './MenuOpenStateAdapter';
 import ModuleLoader from './ModuleLoader';
 import ApplicationPresenter from './View/Application/Presenter';
@@ -21,14 +21,14 @@ class Container {
   applicationPresenter: ApplicationPresenter;
   topAppBarPresenter: TopBarPresenter;
   applicationAction: Action;
-  menuOpenStateAdapter: IObserverAdapter<boolean>;
-  menuOpenState: Observer<boolean>;
+  menuOpenStateAdapter: ObserverAdapter<boolean>;
+  menuOpenState: ValueObserver<boolean>;
   sideMenuPresenter: SideMenuPresenter;
   moduleStateAdapter: ListenerAdapter<typeof React.Component | null>;
-  moduleState: Observer<typeof React.Component | null>;
+  moduleState: ValueObserver<typeof React.Component | null>;
   moduleLoader: ModuleLoader;
   pagePresenter: PagePresenter;
-  applicationActionAdapter: IAdapter;
+  applicationActionAdapter: Adapter;
   storage: DataStorage;
   styleUrlFormatter: StyleUrlFormatter;
   application: Application;
@@ -39,13 +39,13 @@ class Container {
     this.theme = ThemeContainer;
 
     this.menuOpenStateAdapter = new MenuOpenStateAdapter();
-    this.menuOpenState = new Observer<boolean>(
+    this.menuOpenState = new ValueObserver<boolean>(
       this.storage.loadData<boolean>('menuOpenState', false),
       this.storage.attach<boolean>('menuOpenState', this.menuOpenStateAdapter)
     );
 
     this.moduleStateAdapter = new ListenerAdapter<typeof React.Component | null>();
-    this.moduleState = new Observer<typeof React.Component | null>(null, this.moduleStateAdapter);
+    this.moduleState = new ValueObserver<typeof React.Component | null>(null, this.moduleStateAdapter);
     this.moduleLoader = new ModuleLoader('../', this.moduleState);
 
     this.applicationAction = new Action(

@@ -1,22 +1,22 @@
 import * as mdc from 'material-components-web';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Model, {IMenuDictionary} from './SideMenu/Model';
+import Model, {MenuDictionary} from './SideMenu/Model';
 
-export interface IAdapter {
+export interface Adapter {
   onClose(): void
   onMenu(name: string): void
 }
 
-export interface IProperties {
+export interface Properties {
   model: Model,
-  adapter: IAdapter
+  adapter: Adapter
 }
 
-interface IState {
+interface State {
 }
 
-export default class SideMenu extends React.Component<IProperties, IState> {
+export default class SideMenu extends React.Component<Properties, State> {
   drawer: mdc.drawer.MDCDrawer | any | undefined;
 
   componentDidMount(): void {
@@ -35,9 +35,9 @@ export default class SideMenu extends React.Component<IProperties, IState> {
     const model: Model = this.props.model;
     this.drawer && (this.drawer.open = model.isOpen);
 
-    const translation: IMenuDictionary<string> = model.translation;
-    const isActive: IMenuDictionary<boolean> = model.isActive;
-    const url: IMenuDictionary<string> = model.url;
+    const translation: MenuDictionary<string> = model.translation;
+    const isActive: MenuDictionary<boolean> = model.isActive;
+    const url: MenuDictionary<string> = model.url;
 
     const menuEntries: React.ReactElement[] = model.pageNames.map(
       (name: string, index: number): React.ReactElement => {

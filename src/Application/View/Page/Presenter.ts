@@ -1,11 +1,11 @@
-import {IObserver} from '@enbock/state-value-observer/Observer';
+import {Observer} from '@enbock/state-value-observer/ValueObserver';
 import React from 'react';
 import Model from './Model';
 
 export default class Presenter {
-  moduleState: IObserver<typeof React.Component | null>;
+  moduleState: Observer<typeof React.Component | null>;
 
-  constructor(moduleState: IObserver<typeof React.Component | null>) {
+  constructor(moduleState: Observer<typeof React.Component | null>) {
     this.moduleState = moduleState;
   }
 

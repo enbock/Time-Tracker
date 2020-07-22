@@ -1,13 +1,13 @@
-import {IObserver, IObserverAdapter} from '@enbock/state-value-observer/Observer';
+import {Observer, ObserverAdapter} from '@enbock/state-value-observer/ValueObserver';
 import Manager from '../Manager';
 import Translator from '../Translator';
 import ActiveTranslatorAdapter from './ActiveTranslatorAdapter';
 
 describe('Language.Manager.ActiveTranslatorAdapter', () => {
   it('Load translator before passing new language to observer', (done) => {
-    const baseAdapter: IObserverAdapter<string> = {onChange: jest.fn()},
+    const baseAdapter: ObserverAdapter<string> = {onChange: jest.fn()},
       manager: Manager = new Manager({loadLanguage: jest.fn()}, {createTranslator: jest.fn()}),
-      activeTranslator: IObserver<Translator> = {
+      activeTranslator: Observer<Translator> = {
         value: new Translator({})
       },
       newTranslator = new Translator({new: 'yes'});

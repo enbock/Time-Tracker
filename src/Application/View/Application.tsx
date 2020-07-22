@@ -2,23 +2,23 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Model from './Application/Model';
 import Page from './Page';
-import SideMenu, {IAdapter as ISideMenuAdapter} from './SideMenu';
-import TopBar, {IAdapter as ITopBarAdapter} from './TopBar';
+import SideMenu, {Adapter as SideMenuAdapter} from './SideMenu';
+import TopBar, {Adapter as TopBarAdapter} from './TopBar';
 
-export interface IAdapter extends ITopBarAdapter, ISideMenuAdapter {
+export interface Adapter extends TopBarAdapter, SideMenuAdapter {
 
 }
 
-export interface IProperties {
+export interface Properties {
   model: Model
-  adapter: IAdapter
+  adapter: Adapter
 }
 
 export default class Application {
-  adapter: IAdapter;
+  adapter: Adapter;
   containerNode: Element | DocumentFragment | null;
 
-  constructor(containerNode: Element | DocumentFragment | null, adapter: IAdapter) {
+  constructor(containerNode: Element | DocumentFragment | null, adapter: Adapter) {
     this.containerNode = containerNode;
     this.adapter = adapter;
   }

@@ -1,13 +1,13 @@
 import {fireEvent, render, RenderResult} from '@testing-library/react';
 import * as mdc from 'material-components-web';
 import React from 'react';
-import SideMenu, {IAdapter} from './SideMenu';
+import SideMenu, {Adapter} from './SideMenu';
 import Model from './SideMenu/Model';
 
 jest.mock('material-components-web', () => ({drawer: {MDCDrawer: jest.fn()}}));
 
 describe('Application.View.SideMenu', () => {
-  let attachToSpy: jest.Mock, model: Model, adapter: IAdapter, drawerMock: any;
+  let attachToSpy: jest.Mock, model: Model, adapter: Adapter, drawerMock: any;
 
   beforeEach(() => {
     attachToSpy = jest.fn();

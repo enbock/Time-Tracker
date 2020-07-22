@@ -1,26 +1,26 @@
-import {IPageData} from '@enbock/application-router/Router';
+import {PageData} from '@enbock/application-router/Router';
 import ListenerAdapter from '@enbock/state-value-observer/ListenerAdapter';
-import {IObserverAdapter} from '@enbock/state-value-observer/Observer';
+import {ObserverAdapter} from '@enbock/state-value-observer/ValueObserver';
 import React from 'react';
-import ApplicationView, {IAdapter as IViewAdapter} from './View/Application';
+import ApplicationView, {Adapter as ViewAdapter} from './View/Application';
 import Model from './View/Application/Model';
-import {IPresenter as IApplicationPresenter} from './View/Application/Presenter';
+import ApplicationPresenter from './View/Application/Presenter';
 
-export interface IModulePageData extends IPageData {
+export interface ModulePageData extends PageData {
   module: string
 }
 
-export interface IAdapter extends IViewAdapter {
-  onPageChanged(newValue: IPageData | null): void;
+export interface Adapter extends ViewAdapter {
+  onPageChanged(newValue: PageData | null): void;
 }
 
 export default class Application {
-  private readonly adapter: IAdapter;
-  private readonly presenter: IApplicationPresenter;
+  private readonly adapter: Adapter;
+  private readonly presenter: ApplicationPresenter;
   private view: ApplicationView | undefined;
   private readonly runCallback: () => void;
 
-  constructor(adapter: IAdapter, presenter: IApplicationPresenter) {
+  constructor(adapter: Adapter, presenter: ApplicationPresenter) {
     this.presenter = presenter;
     this.adapter = adapter;
     this.runCallback = this.run.bind(this);
@@ -34,7 +34,7 @@ export default class Application {
     adapter.addListener(this.runCallback);
   }
 
-  attachToMenuOpenState(adapter: IObserverAdapter<boolean>) {
+  attachToMenuOpenState(adapter: ObserverAdapter<boolean>) {
     adapter.onChange = this.runCallback;
   }
 

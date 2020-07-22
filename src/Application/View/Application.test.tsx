@@ -1,15 +1,15 @@
 import React from 'react';
 import {act} from 'react-dom/test-utils';
-import Application, {IAdapter} from './Application';
+import Application, {Adapter} from './Application';
 import Model from './Application/Model';
-import {IProperties as ISideMenuProperties} from './SideMenu';
-import {IProperties as ITopBarProperties} from './TopBar';
+import {Properties as SideMenuProperties} from './SideMenu';
+import {Properties as TopBarProperties} from './TopBar';
 
-jest.mock('./TopBar', () => (props: ITopBarProperties) => {
+jest.mock('./TopBar', () => (props: TopBarProperties) => {
   props.adapter.onGithubClick();
   return <div>{props.model.title}</div>;
 });
-jest.mock('./SideMenu', () => (props: ISideMenuProperties) => {
+jest.mock('./SideMenu', () => (props: SideMenuProperties) => {
   return <div>{props.model.pageNames.map((title: string) => <span key={title}>{title}</span>)}</div>;
 });
 
@@ -20,7 +20,7 @@ describe('Application.View.Application', () => {
     model.topAppBar.title = 'testTitle';
     model.sideMenu.pageNames.push('testHome');
     model.styleSet = ['./theme/style.css'];
-    const adapter: IAdapter = {
+    const adapter: Adapter = {
       onMenu: jest.fn(),
       onGithubClick: jest.fn(),
       onMenuClick: jest.fn(),

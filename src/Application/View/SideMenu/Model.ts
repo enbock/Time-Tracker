@@ -1,12 +1,12 @@
-export interface IMenuDictionary<T> {
+export interface MenuDictionary<T> {
   [name: string]: T
 }
 
 export default class Model {
   isOpen: boolean;
-  translation: IMenuDictionary<string>;
-  isActive: IMenuDictionary<boolean>;
-  url: IMenuDictionary<string>;
+  translation: MenuDictionary<string>;
+  isActive: MenuDictionary<boolean>;
+  url: MenuDictionary<string>;
   pageNames: string[];
 
   constructor() {

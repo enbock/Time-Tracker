@@ -1,19 +1,15 @@
-import {IObserver} from '@enbock/state-value-observer/Observer';
+import {Observer} from '@enbock/state-value-observer/ValueObserver';
 import {Theme} from '../../../Theme/ThemesRegistry';
 import PagePresenter from '../Page/Presenter';
 import SideMenuPresenter from '../SideMenu/Presenter';
 import TopBarPresenter from '../TopBar/Presenter';
 import Model from './Model';
-import {IStyleUrlFormatter} from './StyleUrlFormatter';
+import StyleUrlFormatter from './StyleUrlFormatter';
 
-export interface IPresenter {
-  present(): Model;
-}
-
-export default class Presenter implements IPresenter {
+export default class Presenter implements Presenter {
   private topAppBarPresenter: TopBarPresenter;
-  private styleUrlFormatter: IStyleUrlFormatter;
-  private currentTheme: IObserver<Theme>;
+  private styleUrlFormatter: StyleUrlFormatter;
+  private currentTheme: Observer<Theme>;
   private sideMenuPresenter: SideMenuPresenter;
   private pagePresenter: PagePresenter;
   baseStyles: string[];
@@ -21,11 +17,11 @@ export default class Presenter implements IPresenter {
   lastTheme: string;
 
   constructor(
-    currentTheme: IObserver<Theme>,
+    currentTheme: Observer<Theme>,
     topAppBarPresenter: TopBarPresenter,
     sideMenuPresenter: SideMenuPresenter,
     pagePresenter: PagePresenter,
-    styleUrlFormatter: IStyleUrlFormatter
+    styleUrlFormatter: StyleUrlFormatter
   ) {
     this.currentTheme = currentTheme;
     this.styleUrlFormatter = styleUrlFormatter;

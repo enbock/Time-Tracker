@@ -4,6 +4,8 @@ import {Observer, ObserverAdapter} from '@enbock/state-value-observer/ValueObser
 import {Adapter, ModulePageData} from './Application';
 import ModuleLoader from './ModuleLoader';
 
+class PageNotInRegistry extends Error {}
+
 export default class Action {
   private menuOpenState: Observer<boolean>;
   private router: Router;
@@ -74,15 +76,27 @@ export default class Action {
   }
 
   protected switchPage(name: string): void {
+    try {
+      const page: PageData = this.getPageFromRegistry(name);
+      this.router.changePage(page);
+      this.closeMenu();
+    } catch (notInRegistryError) {
+    }
+  }
+
+  private getPageFromRegistry(name: string): PageData {
     let page: PageData | null = null;
     this.routerRegistry.getPages().forEach(
       function searchForName(item: PageData): void {
         if (item.name == name) page = item;
       }
     );
-    if (page == null) return;
-    this.router.changePage(page);
-    this.closeMenu();
+
+    if (page === null) {
+      throw new PageNotInRegistry();
+    }
+
+    return page;
   }
 
   protected async loadModule(newValue: PageData): Promise<void> {

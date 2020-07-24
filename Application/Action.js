@@ -1,3 +1,5 @@
+class PageNotInRegistry extends Error {
+}
 export default class Action {
     constructor(menuOpenState, currentPage, router, routerRegistry, routerAdapter, moduleLoader) {
         this.routerAdapter = routerAdapter;
@@ -48,15 +50,24 @@ export default class Action {
         this.menuOpenState.value = false;
     }
     switchPage(name) {
+        try {
+            const page = this.getPageFromRegistry(name);
+            this.router.changePage(page);
+            this.closeMenu();
+        }
+        catch (notInRegistryError) {
+        }
+    }
+    getPageFromRegistry(name) {
         let page = null;
         this.routerRegistry.getPages().forEach(function searchForName(item) {
             if (item.name == name)
                 page = item;
         });
-        if (page == null)
-            return;
-        this.router.changePage(page);
-        this.closeMenu();
+        if (page === null) {
+            throw new PageNotInRegistry();
+        }
+        return page;
     }
     async loadModule(newValue) {
         await this.moduleLoader.loadModule(newValue.module);
